@@ -1,31 +1,21 @@
 import { useState } from 'react';
+import '../src/App.css';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Footer from './components/footer/Footer';
 import Navbar from './components/navbar/Navbar';
 import Home from './pages/Home';
-import styled from 'styled-components';
-import { Reset } from 'styled-reset';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 function App() {
-  const Layout = () => {
-    const LayoutPages = styled.main`
-      display: grid;
-      width: 100%;
-      overflow: hidden;
-      grid-template-areas:
-        'nv nv nv'
-        'main main main'
-        'fot fot fot';
-      grid-template-rows: 8rem auto 5rem;
-    `;
+  const queryClient = new QueryClient();
 
+  const Layout = () => {
     return (
-      <LayoutPages>
-        <Reset />
+      <div className="w-full relative grid overflow-hidden layout-grid-area grid-row-[8rem_auto_5rem]">
         <Navbar />
         <Outlet />
         <Footer />
-      </LayoutPages>
+      </div>
     );
   };
 
@@ -42,7 +32,11 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 }
 
 export default App;

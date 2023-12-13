@@ -1,6 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root::after,
-::before {
+::before,
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+.layout-grid-area {
+  grid-template-areas:
+    ' nav nav nav '
+    'main main main'
+    'fot fot fot';
+}
+
+.grid-area-main {
+  grid-area: main;
+}
+
+.grid-area-fot {
+  grid-area: fot;
+}
+
+.grid-area-nav {
+  grid-area: nav;
 }

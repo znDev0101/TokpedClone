@@ -5,161 +5,251 @@ import { faPhone, faMagnifyingGlass, faCartShopping, faBars, faLocationDot } fro
 import { faEnvelope, faBell } from '@fortawesome/free-regular-svg-icons';
 import { useState } from 'react';
 import SearchBarHeader from '../searchBarHeader/SearchBarHeader';
-import styled from 'styled-components';
+import ButtonPrimary from '../../components/button/Button';
 
 function Navbar() {
-  const Header = styled.header`
-    display: grid;
-    grid-area: nv;
-    @media (width < 500px) {
-      width: 100vw;
-      padding: 0.5rem 0.8rem;
-      grid-template-rows: 3rem 5rem;
-    }
-  `;
+  // const HeaderNav = styled.header`
+  //   width: 100%;
+  //   height: 500px;
+  //   display: grid;
+  //   grid-area: nv;
+  //   grid-row-gap: 1.3rem;
+  //   grid-template-rows: 3rem 5rem;
+  // `;
 
-  const NavbarOne = styled.div`
-    display: grid;
-    @media (width < 500px) {
-      grid-template-columns: 60vw 30vw;
-      column-gap: 1rem;
-      align-items: center;
-    }
-    @media (width < 400px) {
-      grid-template-columns: repeat(2, 50vw);
-    }
+  // // style navbar one
 
-    @media (width < 330px) {
-      grid-template-columns: 40vw 60vw;
-    }
-  `;
+  // const NavbarOne = styled.div`
+  //   display: grid;
+  //   grid-template-columns: 60% 40%;
+  //   padding: 0.8rem 1rem;
+  //   align-items: center;
+  //   grid-column-gap: 1rem;
+  //   @media (width > 900px) {
+  //     grid-template-columns: repeat(2, 1fr);
+  //   }
+  // `;
 
-  const NavbarTwo = styled.div`
-    display: grid;
+  // const ComponentSearchBar = styled.div`
+  //   width: 94%;
+  //   position: relative;
+  // `;
 
-    @media (width < 500px) {
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: auto auto;
-    }
-  `;
+  // const SeacrhBarNav = styled.input`
+  //   width: 80%;
+  //   height: 70%;
+  //   padding: 0.7rem 1.5rem;
+  //   border-radius: 8px;
+  //   border: 1px solid #857a7aeb;
+  // `;
 
-  const LocationHeaderOnMobile = styled.div`
-    display: flex;
-    column-gap: 0.5rem;
-    margin-top: 0.4rem;
-  `;
+  // const IconSearchBar = styled(FontAwesomeIcon)`
+  //   position: absolute;
+  //   top: 12px;
+  //   left: 6px;
+  //   color: #5a5353eb;
+  // `;
 
-  const DescriptionAddress = styled.span`
-    font-weight: bold;
-  `;
+  // const UlNav = styled.ul`
+  //   display: grid;
+  //   grid-template-columns: repeat(4, 1fr);
+  //   @media (width > 900px) {
+  //     grid-template-columns: repeat(5, 1fr);
+  //   }
+  // `;
 
-  const PromoHeader = styled.div`
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 2rem;
-    margin: 0.5rem 0 1rem 0;
-    grid-row: 2;
-  `;
+  // const ListNav = styled.li`
+  //   text-decoration: none;
+  // `;
 
-  const ProfileContent = styled.div`
-    display: flex;
-    column-gap: 0.6rem;
-    align-items: center;
-  `;
+  // // end style navbar one
 
-  const NameProfile = styled.div`
-    row-gap: 1rem;
-  `;
+  // // STYLE NAVBAR TWO ON MOBILE
+  // const NavbarTwoOnMobile = styled.div`
+  //   display: grid;
+  //   padding: 0 1rem;
+  //   grid-row-gap: 0.8rem;
+  //   grid-template-columns: repeat(2, 1fr);
+  //   grid-template-rows: repeat(2, max-content);
+  // `;
 
-  const ButtonPrimary = styled.button`
-    width: 6rem;
-    place-content: end;
-    background-color: #00aa5b;
-    color: #ffffff;
-    padding: 0.5rem 0.8rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 0.5rem;
-  `;
+  // const LocationUserAddress = styled.div`
+  //   display: grid;
+  //   grid-template-columns: repeat(3, max-content);
+  //   grid-column-gap: 0.7rem;
+  // `;
 
-  const UlNav = styled.ul`
-    display: grid;
-    column-gap: 1.2rem;
-    grid-template-columns: repeat(4, max-content);
-    place-content: center;
-    @media (width < 400px) {
-      place-content: start;
-      margin-left: 1rem;
-    }
-  `;
+  // const CurrentLocationUser = styled.span`
+  //   font-weight: bold;
+  // `;
 
-  const NavList = styled.li`
-    list-style: none;
-  `;
+  // const LoginUser = styled.div`
+  //   display: grid;
+  //   grid-template-columns: max-content 1fr;
+  //   grid-row: 2;
+  //   grid-column-gap: 27%;
+  // `;
 
-  const NavLink = styled(Link)`
-    text-decoration: none;
-  `;
+  // const ProfileUserContent = styled.div`
+  //   display: flex;
+  //   column-gap: 0.7rem;
+  //   align-items: center;
+  // `;
+
+  // const ProfileUser = styled.div`
+  //   display: flex;
+  // `;
+
+  // const ProfileImageUser = styled.img`
+  //   width: 40px;
+  //   height: 40px;
+  // `;
+
+  // const MessageUser = styled.p`
+  //   font-weight: bold;
+  // `;
+
+  // const MessageUserProfile = styled.div`
+  //   margin-top: 0.2rem;
+  //   color: #6d7588;
+  // `;
+
+  // // END STYLE NAVBAR TWO ON MOBILE
+
+  // const NavbarTwoOnDesktop = styled.div``;
 
   return (
     <>
-      {screen.width < 500 ? (
-        <Header>
-          <NavbarOne>
-            <SearchBarHeader iconSearch={faMagnifyingGlass} />
-            <nav>
-              <UlNav>
-                <NavList>
-                  <NavLink>
-                    <FontAwesomeIcon className="fa-lg" icon={faEnvelope} />
-                  </NavLink>
-                </NavList>
-                <NavList>
-                  <NavLink>
-                    <FontAwesomeIcon className="fa-lg" icon={faBell} />
-                  </NavLink>
-                </NavList>
-                <NavList>
-                  <NavLink>
-                    <FontAwesomeIcon className="fa-lg" icon={faCartShopping} />
-                  </NavLink>
-                </NavList>
-                <NavList>
-                  <NavLink>
-                    <FontAwesomeIcon className="fa-lg" icon={faBars} />
-                  </NavLink>
-                </NavList>
-              </UlNav>
-            </nav>
-          </NavbarOne>
-          {/* Navbar Two */}
-
-          <NavbarTwo>
-            <LocationHeaderOnMobile>
+      <header className="w-full h-[500px] grid gap-y-5 grid-rows-[3rem_5rem]  grid-area-nav ">
+        {/* Navbar One */}
+        <div className="grid grid-cols-[60%_40%] p-[0.8rem_1rem] align-middle gap-x-[1rem]">
+          {screen.width < 500 ? (
+            <>
+              <div className="relative">
+                <input type="text" placeholder="Cari di Tokopedia" className="border-[4px_solid_black]" />
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </div>
+              <nav>
+                <ul className="grid grid-cols-[repeat(4,1fr)]">
+                  <li>
+                    <Link>
+                      <FontAwesome></FontAwesome>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link>
+                      <FontAwesome></FontAwesome>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link>
+                      <FontAwesome></FontAwesome>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link>
+                      <FontAwesome></FontAwesome>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link>
+                      <FontAwesome></FontAwesome>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link>
+                      <FontAwesome></FontAwesome>
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
+            </>
+          ) : null}
+        </div>
+        {/* End Navbar one */}
+      </header>
+      {/* <HeaderNav>
+        <NavbarOne>
+          {screen.width < 500 ? (
+            <ComponentSearchBar>
+              <SeacrhBarNav placeholder="Cari di Tokopedia" />
+              <IconSearchBar icon={faMagnifyingGlass} />
+            </ComponentSearchBar>
+          ) : (
+            <p>Download Tokopedia</p>
+          )}
+          <nav>
+            <UlNav>
+              {screen.width < 500 ? (
+                <>
+                  <ListNav>
+                    <Link>
+                      <FontAwesomeIcon icon={faEnvelope} size="lg" />
+                    </Link>
+                  </ListNav>
+                  <ListNav>
+                    <Link>
+                      <FontAwesomeIcon icon={faBell} size="lg" />
+                    </Link>
+                  </ListNav>
+                  <ListNav>
+                    <Link>
+                      <FontAwesomeIcon icon={faCartShopping} size="lg" />
+                    </Link>
+                  </ListNav>
+                  <ListNav>
+                    <Link>
+                      <FontAwesomeIcon icon={faBars} size="lg" />
+                    </Link>
+                  </ListNav>
+                </>
+              ) : (
+                <>
+                  <ListNav>
+                    <Link></Link>
+                  </ListNav>
+                  <ListNav>
+                    <Link></Link>
+                  </ListNav>
+                  <ListNav>
+                    <Link></Link>
+                  </ListNav>
+                  <ListNav>
+                    <Link></Link>
+                  </ListNav>
+                  <ListNav>
+                    <Link></Link>
+                  </ListNav>
+                </>
+              )}
+            </UlNav>
+          </nav>
+        </NavbarOne>
+        {screen.width < 500 ? (
+          <NavbarTwoOnMobile>
+            <LocationUserAddress>
               <FontAwesomeIcon icon={faLocationDot} />
-              <p>
-                Di kirim ke <DescriptionAddress>Jakarta Selatan</DescriptionAddress>{' '}
-              </p>
-            </LocationHeaderOnMobile>
-            <PromoHeader>
-              <ProfileContent>
+              <div>
+                Dikirim ke <CurrentLocationUser>Pancoran, Jakarta Selatan</CurrentLocationUser>{' '}
+              </div>
+            </LocationUserAddress>
+            <LoginUser>
+              <ProfileUserContent>
+                <ProfileUser>
+                  <ProfileImageUser src="https://images.tokopedia.net/img/home/login_widget/toped_login.png?ect=4g" />
+                </ProfileUser>
                 <div>
-                  <img src="https://images.tokopedia.net/img/home/login_widget/toped_login.png?ect=4g" alt="profile" width={30} height={30} />
+                  <MessageUser>Hai, Tropper!</MessageUser>
+                  <MessageUserProfile>Akses semua fitur, yuk</MessageUserProfile>
                 </div>
-                <NameProfile>
-                  <p>Hai, Tropper!</p>
-                  <p>Akses semua fitur, yuk -</p>
-                </NameProfile>
-              </ProfileContent>
-              <ButtonPrimary type="button">Masuk</ButtonPrimary>
-            </PromoHeader>
-          </NavbarTwo>
-        </Header>
-      ) : (
-        <Header>
-          <h1>Hello 2</h1>
-        </Header>
-      )}
+              </ProfileUserContent>
+              <ButtonPrimary primary={'primary'} />
+            </LoginUser>
+          </NavbarTwoOnMobile>
+        ) : (
+          <NavbarTwoOnDesktop></NavbarTwoOnDesktop>
+        )}
+      </HeaderNav> */}
     </>
   );
 }
