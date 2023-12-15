@@ -16,7 +16,7 @@ function Home() {
   // `;
 
   return (
-    <div className="w-full grid-area-main">
+    <div className="w-full grid-area-main mt-[4.2rem]">
       <HomeProducts />
     </div>
   );

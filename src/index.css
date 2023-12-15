@@ -28,3 +28,7 @@
 .grid-area-nav {
   grid-area: nav;
 }
+
+.align_items_center {
+  align-items: center;
+}
