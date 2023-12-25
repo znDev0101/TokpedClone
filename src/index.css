@@ -10,25 +10,6 @@
   box-sizing: border-box;
 }
 
-.layout-grid-area {
-  grid-template-areas:
-    ' nav nav nav '
-    'main main main'
-    'fot fot fot';
-}
-
-.grid-area-main {
-  grid-area: main;
-}
-
-.grid-area-fot {
-  grid-area: fot;
-}
-
-.grid-area-nav {
-  grid-area: nav;
-}
-
 .align_items_center {
   align-items: center;
 }

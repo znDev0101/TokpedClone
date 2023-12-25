@@ -1,32 +1,54 @@
-import { useState } from 'react';
 import '../src/App.css';
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
-import Footer from './components/footer/Footer';
-import Navbar from './components/navbar/Navbar';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
+import ProductDetail from './pages/ProductDetail';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import Root from './routes/root';
+import Products from './pages/Products';
 
 function App() {
   const queryClient = new QueryClient();
 
-  const Layout = () => {
-    return (
-      <div className="w-full relative grid overflow-hidden layout-grid-area grid-row-[8rem_auto_5rem]">
-        <Navbar />
-        <Outlet />
-        <Footer />
-      </div>
-    );
-  };
-
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Layout />,
+      element: <Root />,
       children: [
         {
           path: '/',
           element: <Home />,
+        },
+        {
+          path: '/products/mens_clothing',
+          element: <Products />,
+        },
+        {
+          path: '/products/womens_clothing',
+          element: <Products />,
+        },
+        {
+          path: '/products/jewelery',
+          element: <Products />,
+        },
+        {
+          path: '/products/electronics',
+          element: <Products />,
+        },
+        {
+          path: '/product_mens_clothing_detail/:productId',
+          element: <ProductDetail />,
+        },
+        {
+          path: '/product_jewelery_detail/:productId',
+          element: <ProductDetail />,
+        },
+        {
+          path: '/product_electronics_detail/:productId',
+          element: <ProductDetail />,
+        },
+        {
+          path: '/product_detail/:productId',
+          element: <ProductDetail />,
         },
       ],
     },
