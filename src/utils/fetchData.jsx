@@ -3,28 +3,29 @@ import { useState } from 'react';
 
 export function fetchData(url) {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const controlled = new AbortController();
-    const getData = async (url) => {
+    setLoading(true);
+    const getData = async () => {
       try {
         const response = await fetch(url, {
           signal: controlled.signal,
           method: 'GET',
         });
         const results = await response.json();
+        setLoading(false);
         setData(results);
       } catch (error) {
         console.log(error.message);
       }
     };
-    getData(url);
-    console.log('component rendred success');
+    getData();
     return () => {
       controlled.abort();
-      console.log('request api cancel');
     };
   }, []);
 
-  return { data };
+  return { data, loading };
 }

@@ -11,25 +11,25 @@ function Category() {
         <FontAwesomeIcon icon={faList} size="2xl" />
         <p>Liat Semua</p>
       </div>
-      <Link to={`/products/mens_clothing`}>
+      <Link to={`/products/category/mens_clothing`}>
         <div className="">
           <FontAwesomeIcon icon={faSuitcase} size="2xl" />
           <p>backpack</p>
         </div>
       </Link>
-      <Link to={'/products/jewelery'}>
+      <Link to={'/products/category/jewelery'}>
         <div className="">
           <FontAwesomeIcon icon={faGem} size="2xl" />
           <p>Perhiasan</p>
         </div>
       </Link>
-      <Link to={`/products/electronics`}>
+      <Link to={`/products/category/electronics`}>
         <div className="">
           <FontAwesomeIcon icon={faList} size="2xl" />
           <p>Liat Semua</p>
         </div>
       </Link>
-      <Link to={`/products/womens_clothing`}>
+      <Link to={`/products/category/womens_clothing`}>
         <div className="">
           <FontAwesomeIcon icon={faList} size="2xl" />
           <p>Liat Semua</p>

@@ -5,7 +5,7 @@ import Button from '../button/Button';
 
 function NavbarOnProductDetail() {
   return (
-    <div className="w-full bg-white grid grid-cols-[max-content_1fr_1fr] fixed bottom-0 px-2 py-2 gap-x-2 items-center z-50">
+    <div className="w-full bg-white grid grid-cols-[max-content_1fr_1fr] fixed bottom-0 px-2 py-2 gap-x-2 items-center z-30">
       <div>
         <FontAwesomeIcon icon={faMessage} size="2xl" />
       </div>

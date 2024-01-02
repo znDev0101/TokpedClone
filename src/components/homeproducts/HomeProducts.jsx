@@ -6,9 +6,11 @@ import CardProducts from '../cardproducts/CardProducts';
 import NavbarOnMobile from '../navbaronmobile/NavbarOnMobile';
 import Button from '../button/Button';
 import Category from '../category/Category';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 function HomeProducts() {
-  const { data } = fetchData('https://fakestoreapi.com/products');
+  const { data, loading } = fetchData('https://fakestoreapi.com/products');
 
   return (
     <>
@@ -34,7 +36,7 @@ function HomeProducts() {
       ) : null}
       {/* Layout Products */}
       <Category />
-      <CardProducts dataProducts={data} urlPath={'/product_detail'} />
+      {loading ? <h1 className="text-4xl my-20 text-center">Loading...</h1> : <CardProducts dataProducts={data} urlPath={'/product_detail'} />}
       {screen.width < 500 ? <NavbarOnMobile /> : null}
     </>
   );

@@ -19,23 +19,27 @@ function App() {
           element: <Home />,
         },
         {
-          path: '/products/mens_clothing',
+          path: '/products/category/mens_clothing',
           element: <Products />,
         },
         {
-          path: '/products/womens_clothing',
+          path: '/products/category/womens_clothing',
           element: <Products />,
         },
         {
-          path: '/products/jewelery',
+          path: '/products/category/jewelery',
           element: <Products />,
         },
         {
-          path: '/products/electronics',
+          path: '/products/category/electronics',
           element: <Products />,
         },
         {
           path: '/product_mens_clothing_detail/:productId',
+          element: <ProductDetail />,
+        },
+        {
+          path: '/product_womens_clothing_detail/:productId',
           element: <ProductDetail />,
         },
         {

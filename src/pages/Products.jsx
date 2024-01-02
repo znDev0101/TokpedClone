@@ -1,37 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import CardProducts from '../components/cardproducts/CardProducts';
-import { fetchData } from '../utils/fetchData';
+import { useFilterCategory } from '../hooks/useFilterCategory';
 
 function Products() {
-  const { data } = fetchData('https://fakestoreapi.com/products');
-
+  const [filterKeyword, setFilterKeyword] = useState('');
   const { pathname } = useLocation();
+  const [filterCategory, setFilterCategory] = useState('');
 
-  const filterProducts = pathname.split('');
-  const filterProduct = filterProducts
-    .filter((data) => data !== '/' && data !== '_')
-    .toString()
-    .replace(/,/g, '')
-    .replace(/products/, '');
+  useEffect(() => {
+    const keywordManipulation = pathname.replace(/\/|products|category/g, '');
+    setFilterCategory(keywordManipulation);
+    if (keywordManipulation.match('mens_clothing')) {
+      let gender = [];
+      let result;
+      const manipulationStr = keywordManipulation.split('_');
+      manipulationStr[0].split('').forEach((element) => {
+        gender.push(element);
+      });
+      result = gender.splice(gender.length - 1, 0, "'").join('');
 
-  console.log(filterProduct);
+      setFilterKeyword(gender.join('') + ` ${manipulationStr[1]}`);
+    } else {
+      setFilterKeyword(keywordManipulation);
+    }
+  }, []);
 
-  const finalFilterResultProducts = data.filter(({ category }) => category === filterProduct);
-  const productMensClothing = data.filter(({ category }) => category === "men's clothing");
-  const productWomensClothing = data.filter(({ category }) => category === "women's clothing");
+  console.log(filterCategory);
 
-  return (
-    <>
-      {filterProduct.match('mensclothing') ? (
-        <CardProducts dataProducts={productMensClothing} urlPath={'/product_mens_clothing_detail'} />
-      ) : filterProduct.match('womensclothing') ? (
-        <CardProducts dataProducts={productWomensClothing} logicBackNavigation />
-      ) : (
-        <CardProducts dataProducts={finalFilterResultProducts} urlPath={`/product_${filterProduct}_detail`} />
-      )}
-    </>
-  );
+  const { data, isLoading } = useFilterCategory('https://fakestoreapi.com/products', filterKeyword);
+  if (isLoading) return <h1 className="text-4xl my-20 text-center">Loading...</h1>;
+  return <CardProducts dataProducts={data} urlPath={`/product_${filterCategory}_detail`} />;
 }
 
 export default Products;

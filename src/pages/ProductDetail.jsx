@@ -5,6 +5,7 @@ import { products } from '../data/data';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import NavbarOnProductDetail from '../components/navbaronproductdetail/NavbarOnProductDetail';
+import OthersProducts from '../components/othersproducts/OthersProducts';
 
 function ProductDetail() {
   const { productId } = useParams();
@@ -19,8 +20,8 @@ function ProductDetail() {
 
   return (
     <>
-      <div className="w-[93%] m-[70px_auto]">
-        <div className="grid grid-rows-[repeat(6,max_content)] gap-y-3">
+      <div className="w-[93%] mt-20 mx-auto">
+        <div className="grid grid-rows-[repeat(5,max_content)] gap-y-3">
           <div className="w-full h-96 flex items-center overflow-hidden ">
             <img src={image} alt="image-product" className="w-80 m-auto object-cover " />
           </div>
@@ -62,6 +63,7 @@ function ProductDetail() {
           </div>
         </div>
       </div>
+      <OthersProducts />
       <NavbarOnProductDetail />
     </>
   );
