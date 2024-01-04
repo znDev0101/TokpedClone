@@ -6,8 +6,6 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 function CardProducts({ dataProducts, urlPath }) {
   const { pathname } = useLocation();
 
-  console.log(urlPath);
-
   return (
     <div className={pathname !== '/' ? `w-[93%] m-[70px_auto]` : `w-[93%] m-[20px_auto]`}>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3">

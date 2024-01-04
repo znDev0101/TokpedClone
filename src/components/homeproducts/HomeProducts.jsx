@@ -1,43 +1,60 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { fetchData } from '../../utils/fetchData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { faLocationDot, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import CardProducts from '../cardproducts/CardProducts';
 import NavbarOnMobile from '../navbaronmobile/NavbarOnMobile';
 import Button from '../button/Button';
 import Category from '../category/Category';
+import ScrollToTop from '../scrolltotop/ScrollToTop';
 import { useState } from 'react';
-import { useEffect } from 'react';
+import { useContext } from 'react';
+import { MyContext } from '../../context/MyContext';
 
 function HomeProducts() {
   const { data, loading } = fetchData('https://fakestoreapi.com/products');
+  const [scrollPositionY, setScrollPositionY] = useState(null);
+
+  const contextValue = useContext(MyContext);
+
+  useEffect(() => {
+    function getScrollPositionY() {
+      setScrollPositionY(window.scrollY);
+    }
+    window.addEventListener('scroll', getScrollPositionY);
+    return () => {
+      removeEventListener('scroll', getScrollPositionY);
+    };
+  }, [window.scrollY]);
 
   return (
     <>
       {screen.width < 500 ? (
-        <div className="w-[93%] m-[4px_auto] grid grid-cols-[max-content_max-content] grid-rows-[repeat(2,max-content)] gap-y-3 justify-between  align_items_center">
-          <div className="grid grid-cols-[repeat(3,max-content)] gap-x-2">
-            <FontAwesomeIcon icon={faLocationDot} />
+        <div className="w-[95%] m-auto">
+          <div className=" items-center flex gap-x-2">
+            <FontAwesomeIcon icon={faLocationDot} size="lg" className="text-green-600" />
             <div className="text-sm">
-              DiKirim ke <span className="font-bold">Pancoran, Jakarta Selatan</span>
+              Dikirim ke <span className="font-bold">Pancoran, Jakarta Selatan</span>
             </div>
+            <FontAwesomeIcon icon={faCaretDown} size="lg" />
           </div>
-          {/* Profile user */}
-          <div className="flex row-[2] gap-x-2 ">
-            <img src="https://images.tokopedia.net/img/home/login_widget/toped_login.png?ect=4g" alt="profile-user" width={40} height={2} />
-            <div>
-              <p className="font-bold">Hai,Tropper!</p>
-              <p>Akses semua fitur, yuk!</p>
+          <div className="grid grid-cols-[2fr_1fr] mt-3 items-center">
+            <div className="flex gap-x-2 items-center">
+              <img src="https://images.tokopedia.net/img/home/login_widget/toped_login.png?ect=3g" alt="profile-img" className="w-9 h-10" />
+              <div>
+                <p className="font-bold">Hai,Tropper!</p>
+                <p>Akses semua fitur yuk!</p>
+              </div>
             </div>
+            <Button styleButton={'text-white ms-5 font-bold py-2 rounded-lg bg-green-600 justfiy-end'} textButton={'Masuk'} />
           </div>
-          <Button styleButton={'row-[2] font-bold text-white px-7 py-2 rounded-md bg-green-600'} textButton={'Masuk'} />
-          {/* End Profile User */}
         </div>
       ) : null}
       {/* Layout Products */}
       <Category />
       {loading ? <h1 className="text-4xl my-20 text-center">Loading...</h1> : <CardProducts dataProducts={data} urlPath={'/product_detail'} />}
-      {screen.width < 500 ? <NavbarOnMobile /> : null}
+      {scrollPositionY > 500 ? <>{!contextValue ? <ScrollToTop style={'fixed w-10 justify-center items-center flex h-10 bottom-20 right-8  rounded-full shadow-lg bg-white  z-50'} onClick={() => window.scrollTo(0, 0)} /> : null}</> : null}
+      {screen.width < 500 ? <>{!contextValue ? <NavbarOnMobile /> : null}</> : null}
     </>
   );
 }

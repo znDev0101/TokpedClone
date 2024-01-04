@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { fetchData } from '../utils/fetchData';
 import { products } from '../data/data';
@@ -6,15 +6,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import NavbarOnProductDetail from '../components/navbaronproductdetail/NavbarOnProductDetail';
 import OthersProducts from '../components/othersproducts/OthersProducts';
+import UlasanPembeli from '../components/ulasanpembeli/UlasanPembeli';
+import { dataUlasan } from '../utils/dataUlasan';
 
 function ProductDetail() {
   const { productId } = useParams();
+  const [dataLimit, setDataLimit] = useState([]);
 
   const { data } = fetchData(`https://fakestoreapi.com/products/${productId}`);
 
   const { id, title, description, image, price, rating, category } = data;
 
   useEffect(() => {
+    const limit = dataUlasan.slice(0, 2);
+    setDataLimit(limit);
     window.scrollTo(0, 0);
   }, []);
 
@@ -63,6 +68,7 @@ function ProductDetail() {
           </div>
         </div>
       </div>
+      <UlasanPembeli dataLimit={dataLimit} />
       <OthersProducts />
       <NavbarOnProductDetail />
     </>

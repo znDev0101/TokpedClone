@@ -1,5 +1,5 @@
 import React from 'react';
-import { faList, faSuitcase } from '@fortawesome/free-solid-svg-icons';
+import { faList, faSuitcase, faLaptop } from '@fortawesome/free-solid-svg-icons';
 import { faGem } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
@@ -14,7 +14,7 @@ function Category() {
       <Link to={`/products/category/mens_clothing`}>
         <div className="">
           <FontAwesomeIcon icon={faSuitcase} size="2xl" />
-          <p>backpack</p>
+          <p>Baju Pria</p>
         </div>
       </Link>
       <Link to={'/products/category/jewelery'}>
@@ -25,14 +25,14 @@ function Category() {
       </Link>
       <Link to={`/products/category/electronics`}>
         <div className="">
-          <FontAwesomeIcon icon={faList} size="2xl" />
-          <p>Liat Semua</p>
+          <FontAwesomeIcon icon={faLaptop} size="2xl" />
+          <p>Electronics</p>
         </div>
       </Link>
       <Link to={`/products/category/womens_clothing`}>
         <div className="">
           <FontAwesomeIcon icon={faList} size="2xl" />
-          <p>Liat Semua</p>
+          <p>Baju Wanita</p>
         </div>
       </Link>
     </div>
