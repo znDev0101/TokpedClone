@@ -6,7 +6,9 @@ import { faEnvelope, faBell } from '@fortawesome/free-regular-svg-icons';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { MyContext } from '../../context/MyContext';
-
+import { useDebounce } from '../../hooks/useDebounce';
+import { useFetch } from '../../hooks/useFetch';
+import { useEffect } from 'react';
 function Navbar({ setIsActive }) {
   const [seacrhKeyword, setSeacrhKeyword] = useState('');
 
@@ -15,6 +17,10 @@ function Navbar({ setIsActive }) {
   const navigate = useNavigate();
 
   const { pathname } = useLocation();
+
+  const searchDebounce = useDebounce(seacrhKeyword);
+
+  const { data } = useFetch(`https://fakestoreapi.com/products`);
 
   function handleClickSearchInput() {
     if (pathname === '/') {
@@ -26,47 +32,57 @@ function Navbar({ setIsActive }) {
     <>
       <header className="w-full bg-white fixed top-0 grid grid-rows-[2rem] py-3">
         {/* Navbar One */}
-        <div
-          className={
-            contextValue
-              ? `w-[90%] m-auto grid grid-cols-[max-content_2fr] items-center  gap-x-5`
-              : pathname !== '/'
-              ? `w-[95%] m-auto grid grid-cols-[max-content_2fr_1fr] items-center gap-x-4`
-              : `w-[95%] m-auto grid grid-cols-[2fr_1fr] align_items_center gap-x-5  justify-between`
-          }
-        >
-          {contextValue || pathname !== '/' ? <FontAwesomeIcon icon={faArrowLeft} size="xl" onClick={contextValue ? () => setIsActive(!contextValue) : () => navigate(-1)} /> : null}
-          <div className="w-full relative border border-gray-700 rounded-md">
-            <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" className="p-2" />
-            <input type="text" className="border-none outline-none absolute top-0 bottom-0 right-1 left-8" placeholder="Cari di Tokopedia" onClick={handleClickSearchInput} />
+        {screen.width < 500 ? (
+          <div
+            className={
+              contextValue
+                ? `w-[90%] m-auto grid grid-cols-[max-content_2fr] items-center  gap-x-5`
+                : pathname !== '/'
+                ? `w-[95%] m-auto grid grid-cols-[max-content_2fr_1fr] items-center gap-x-4`
+                : `w-[95%] m-auto grid grid-cols-[2fr_1fr] align_items_center gap-x-5  justify-between`
+            }
+          >
+            {contextValue || pathname !== '/' ? <FontAwesomeIcon icon={faArrowLeft} size="xl" onClick={contextValue ? () => setIsActive(!contextValue) : () => navigate(-1)} /> : null}
+            <div className="w-full relative border border-gray-700 rounded-md">
+              <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" className="p-2" />
+              <input
+                type="text"
+                className="border-none outline-none absolute top-0 bottom-0 right-1 left-8"
+                value={seacrhKeyword}
+                placeholder="Cari di Tokopedia"
+                onClick={handleClickSearchInput}
+                onChange={(e) => setSeacrhKeyword(e.target.value)}
+              />
+            </div>
+            {!contextValue ? (
+              <nav className="w-full">
+                <ul className="grid grid-cols-[repeat(4,max-content)] gap-x-4 justify-end">
+                  <li>
+                    <Link>
+                      <FontAwesomeIcon icon={faEnvelope} size="xl"></FontAwesomeIcon>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link>
+                      <FontAwesomeIcon icon={faBell} size="xl"></FontAwesomeIcon>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link>
+                      <FontAwesomeIcon icon={faCartShopping} size="xl"></FontAwesomeIcon>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link>
+                      <FontAwesomeIcon icon={faBars} size="xl"></FontAwesomeIcon>
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
+            ) : null}
           </div>
-          {!contextValue ? (
-            <nav className="w-full">
-              <ul className="grid grid-cols-[repeat(4,max-content)] gap-x-4 justify-end">
-                <li>
-                  <Link>
-                    <FontAwesomeIcon icon={faEnvelope} size="xl"></FontAwesomeIcon>
-                  </Link>
-                </li>
-                <li>
-                  <Link>
-                    <FontAwesomeIcon icon={faBell} size="xl"></FontAwesomeIcon>
-                  </Link>
-                </li>
-                <li>
-                  <Link>
-                    <FontAwesomeIcon icon={faCartShopping} size="xl"></FontAwesomeIcon>
-                  </Link>
-                </li>
-                <li>
-                  <Link>
-                    <FontAwesomeIcon icon={faBars} size="xl"></FontAwesomeIcon>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          ) : null}
-        </div>
+        ) : null}
+
         {/* End Navbar one */}
       </header>
       {contextValue ? (

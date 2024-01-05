@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { fetchData } from '../../utils/fetchData';
+import { useFetch } from '../../hooks/useFetch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import CardProducts from '../cardproducts/CardProducts';
@@ -12,7 +12,7 @@ import { useContext } from 'react';
 import { MyContext } from '../../context/MyContext';
 
 function HomeProducts() {
-  const { data, loading } = fetchData('https://fakestoreapi.com/products');
+  const { data, loading } = useFetch('https://fakestoreapi.com/products');
   const [scrollPositionY, setScrollPositionY] = useState(null);
 
   const contextValue = useContext(MyContext);
