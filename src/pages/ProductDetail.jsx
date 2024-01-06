@@ -68,7 +68,7 @@ function ProductDetail() {
         </div>
       </div>
       <UlasanPembeli dataLimit={dataLimit} />
-      <OthersProducts />
+      <OthersProducts idProduct={productId} categoryProducts={category} />
       <NavbarOnProductDetail />
     </>
   );

@@ -11,6 +11,7 @@ import { useFetch } from '../../hooks/useFetch';
 import { useEffect } from 'react';
 function Navbar({ setIsActive }) {
   const [seacrhKeyword, setSeacrhKeyword] = useState('');
+  const [resultSearch, setResultSearch] = useState([]);
 
   const contextValue = useContext(MyContext);
 
@@ -18,9 +19,17 @@ function Navbar({ setIsActive }) {
 
   const { pathname } = useLocation();
 
-  const searchDebounce = useDebounce(seacrhKeyword);
-
   const { data } = useFetch(`https://fakestoreapi.com/products`);
+
+  const valueDebounce = useDebounce(seacrhKeyword);
+
+  useEffect(() => {
+    if (valueDebounce.length !== 0) {
+      const result = data.filter(({ title }) => title.includes(seacrhKeyword));
+      test.push(result);
+      setResultSearch(result);
+    }
+  }, [valueDebounce]);
 
   function handleClickSearchInput() {
     if (pathname === '/') {
