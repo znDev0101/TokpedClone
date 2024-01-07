@@ -25,8 +25,7 @@ function Navbar({ setIsActive }) {
 
   useEffect(() => {
     if (valueDebounce.length !== 0) {
-      const result = data.filter(({ title }) => title.includes(seacrhKeyword));
-      test.push(result);
+      const result = data.filter(({ title }) => title.toLowerCase().includes(seacrhKeyword.toLowerCase()));
       setResultSearch(result);
     }
   }, [valueDebounce]);

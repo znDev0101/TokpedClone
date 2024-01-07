@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import Root from './routes/root';
+import Root from './routes/Root';
 import Products from './pages/Products';
 
 function App() {
