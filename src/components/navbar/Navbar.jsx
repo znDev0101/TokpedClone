@@ -47,7 +47,7 @@ function Navbar({ setIsActive }) {
                 ? `w-[90%] m-auto grid grid-cols-[max-content_2fr] items-center  gap-x-5`
                 : pathname !== '/'
                 ? `w-[95%] m-auto grid grid-cols-[max-content_2fr_1fr] items-center gap-x-4`
-                : `w-[95%] m-auto grid grid-cols-[2fr_1fr] align_items_center gap-x-5  justify-between`
+                : `w-[92%] m-auto border border-red-700 grid grid-cols-[2fr_1fr] align_items_center gap-x-5  justify-between`
             }
           >
             {contextValue || pathname !== '/' ? <FontAwesomeIcon icon={faArrowLeft} size="xl" onClick={contextValue ? () => setIsActive(!contextValue) : () => navigate(-1)} /> : null}
