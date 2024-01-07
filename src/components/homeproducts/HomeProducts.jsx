@@ -30,7 +30,7 @@ function HomeProducts() {
   return (
     <>
       {screen.width < 500 ? (
-        <div className="w-[95%] m-auto">
+        <div className="w-[92%] m-auto">
           <div className=" items-center flex gap-x-2">
             <FontAwesomeIcon icon={faLocationDot} size="lg" className="text-green-600" />
             <div className="text-sm">
