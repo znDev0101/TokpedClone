@@ -1,40 +1,58 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faCartShopping, faBars, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faCartShopping, faBars, faArrowLeft, faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelope, faBell } from '@fortawesome/free-regular-svg-icons';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { MyContext } from '../../context/MyContext';
 import { useDebounce } from '../../hooks/useDebounce';
-import { useFetch } from '../../hooks/useFetch';
-import { useEffect } from 'react';
+
 function Navbar({ setIsActive }) {
   const [seacrhKeyword, setSeacrhKeyword] = useState('');
-  const [resultSearch, setResultSearch] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState([]);
   const contextValue = useContext(MyContext);
 
   const navigate = useNavigate();
 
   const { pathname } = useLocation();
 
-  const { data } = useFetch(`https://fakestoreapi.com/products`);
-
   const valueDebounce = useDebounce(seacrhKeyword);
 
   useEffect(() => {
-    if (valueDebounce.length !== 0) {
-      const result = data.filter(({ title }) => title.toLowerCase().includes(seacrhKeyword.toLowerCase()));
-      setResultSearch(result);
+    if (pathname !== '/') {
+      setData([]);
+      setSeacrhKeyword('');
     }
-  }, [valueDebounce]);
+  }, [pathname]);
 
-  function handleClickSearchInput() {
-    if (pathname === '/') {
-      setIsActive(!contextValue);
-    }
-  }
+  useEffect(() => {
+    if (seacrhKeyword.length === 0) setData([]);
+  }, [seacrhKeyword]);
+
+  useEffect(() => {
+    const getData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch('https://fakestoreapi.com/products');
+        const result = await response.json();
+        const resultSearch = result.filter(({ title }) => title.toLowerCase().includes(seacrhKeyword.toLowerCase()));
+        if (resultSearch.length > 10) {
+          const coppyArr = resultSearch.slice(0, 10);
+          setData(coppyArr);
+          setIsLoading(false);
+        } else {
+          setData(resultSearch);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (seacrhKeyword.length > 0) getData();
+  }, [valueDebounce]);
 
   return (
     <>
@@ -50,15 +68,15 @@ function Navbar({ setIsActive }) {
                 : `w-[92%] m-auto grid grid-cols-[2fr_1fr] align_items_center gap-x-5  justify-between`
             }
           >
-            {contextValue || pathname !== '/' ? <FontAwesomeIcon icon={faArrowLeft} size="xl" onClick={contextValue ? () => setIsActive(!contextValue) : () => navigate(-1)} /> : null}
+            {contextValue || pathname !== '/' ? <FontAwesomeIcon icon={faArrowLeft} size="xl" onClick={contextValue ? () => setIsActive(false) : () => navigate(-1)} /> : null}
             <div className="w-full relative border border-gray-700 rounded-md">
               <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" className="p-2" />
               <input
                 type="text"
-                className="border-none outline-none absolute top-0 bottom-0 right-1 left-8"
+                className="border-none outline-none absolute top-0 bottom-0 right-1 left-8 placeholder:font-bold "
                 value={seacrhKeyword}
                 placeholder="Cari di Tokopedia"
-                onClick={handleClickSearchInput}
+                onClick={() => setIsActive(true)}
                 onChange={(e) => setSeacrhKeyword(e.target.value)}
               />
             </div>
@@ -94,17 +112,23 @@ function Navbar({ setIsActive }) {
         {/* End Navbar one */}
       </header>
       {contextValue ? (
-        <div className="fixed top-[-4px] w-[100%] h-[100vh] mt-14 z-50 bg-white">
-          <h5 className="font-bold text-lg mt-10 mx-3">Paling popular</h5>
-          {seacrhKeyword.length === 0 ? (
-            <div className="flex gap-x-4 mt-3 mx-4">
-              <Link to="/products/category/electronics">
-                <span className="border border-green-700 text-green-700 py-1 px-5 rounded-lg font-bold">electronics</span>
-              </Link>
-              <Link>
-                <span className="border border-green-700 text-green-700 py-1 px-5 rounded-lg font-bold">men's clothing</span>
-              </Link>
-            </div>
+        <div className="fixed top-[-4px] w-[100%] h-[100vh] mt-14 pt-5 z-50 bg-white px-5">
+          {seacrhKeyword.length > 0 ? (
+            isLoading ? (
+              <p className="text-2xl text-center mt-8 font-bold">Loading...</p>
+            ) : (
+              data.map(({ title, id }) => {
+                return (
+                  <div className="w-full grid grid-cols-[max-content_1fr]  items-center mb-5 gap-x-2" key={id}>
+                    <FontAwesomeIcon icon={faMagnifyingGlass} size="xl" />
+                    <Link to={`product_detail/${id}`} onClick={() => setIsActive(!contextValue)} className="grid grid-cols-[1fr_max-content] gap-x-1 items-center">
+                      <p>{title.slice(0, 20)}</p>
+                      <FontAwesomeIcon icon={faArrowUpRightFromSquare} size="xl" />
+                    </Link>
+                  </div>
+                );
+              })
+            )
           ) : null}
         </div>
       ) : null}

@@ -18,6 +18,10 @@ function HomeProducts() {
   const contextValue = useContext(MyContext);
 
   useEffect(() => {
+    alert('Masih tahap development, dan masih banyak bug');
+  }, []);
+
+  useEffect(() => {
     function getScrollPositionY() {
       setScrollPositionY(window.scrollY);
     }
@@ -53,7 +57,7 @@ function HomeProducts() {
       {/* Layout Products */}
       <Category />
       {loading ? <h1 className="text-4xl my-20 text-center">Loading...</h1> : <CardProducts dataProducts={data} urlPath={'/product_detail'} />}
-      {scrollPositionY > 500 ? <>{!contextValue ? <ScrollToTop style={'fixed w-10 justify-center items-center flex h-10 bottom-20 right-8  rounded-full shadow-lg bg-white  z-50'} onClick={() => window.scrollTo(0, 0)} /> : null}</> : null}
+      {scrollPositionY > 500 ? <>{!contextValue ? <ScrollToTop style={'fixed w-12 justify-center items-center flex h-12 bottom-20 right-6  rounded-full shadow-lg bg-white  z-50'} onClick={() => window.scrollTo(0, 0)} /> : null}</> : null}
       {screen.width < 500 ? <>{!contextValue ? <NavbarOnMobile /> : null}</> : null}
     </>
   );

@@ -7,7 +7,7 @@ function CardProducts({ dataProducts, urlPath }) {
   const { pathname } = useLocation();
 
   return (
-    <div className={pathname !== '/' ? `w-[93%] m-[70px_auto]` : `w-[93%] m-[20px_auto]`}>
+    <div className={pathname !== '/' ? `w-[93%] m-[70px_auto]` : `w-[93%] mx-auto mt-4 mb-20`}>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3">
         {dataProducts.map(({ id, category, title, image, price, rating }) => {
           return (
@@ -20,15 +20,15 @@ function CardProducts({ dataProducts, urlPath }) {
                   <h5>{title}</h5>
                 </div>
                 <div className="mt-4">
-                  <p>{price}</p>
+                  <p className="font-bold">{price}</p>
                 </div>
                 <div className="flex  text-gray-500 gap-x-[.2rem] items-center">
                   <div className="">
                     <FontAwesomeIcon icon={faStar} className={'text-yellow-300'} />
                   </div>
-                  <div className="">{rating.rate}</div>
-                  <div className="">|</div>
-                  <div className="">99+ Terjual</div>
+                  <div className="text-sm">{rating.rate}</div>
+                  <div className="text-sm">|</div>
+                  <div className="text-sm">99+ Terjual</div>
                 </div>
               </div>
             </Link>

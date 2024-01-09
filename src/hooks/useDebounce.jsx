@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
-export function useDebounce(value, delay = 800) {
-  const [debounceValue, setDebounceValue] = useState([]);
+export function useDebounce(keywordSearch, delay = 800) {
+  const [debounceValue, setDebounceValue] = useState('');
 
   useEffect(() => {
-    const setTime = setTimeout(() => {
-      setDebounceValue(value);
+    const time = setTimeout(() => {
+      setDebounceValue(keywordSearch);
     }, delay);
     return () => {
-      clearTimeout(setTime);
+      clearTimeout(time);
     };
-  }, [value, delay]);
+  }, [keywordSearch, delay]);
 
   return debounceValue;
 }
