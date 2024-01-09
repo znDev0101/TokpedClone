@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
@@ -6,6 +7,9 @@ import Root from './routes/Root';
 import Products from './pages/Products';
 
 function App() {
+  useEffect(() => {
+    alert('Masih tahap development, dan masih banyak bug');
+  }, []);
   const queryClient = new QueryClient();
 
   const router = createBrowserRouter([

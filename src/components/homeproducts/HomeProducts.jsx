@@ -18,10 +18,6 @@ function HomeProducts() {
   const contextValue = useContext(MyContext);
 
   useEffect(() => {
-    alert('Masih tahap development, dan masih banyak bug');
-  }, []);
-
-  useEffect(() => {
     function getScrollPositionY() {
       setScrollPositionY(window.scrollY);
     }
