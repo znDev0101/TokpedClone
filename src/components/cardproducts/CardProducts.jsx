@@ -12,7 +12,7 @@ function CardProducts({ dataProducts, urlPath }) {
         {dataProducts.map(({ id, category, title, image, price, rating }) => {
           return (
             <Link to={`${urlPath}/${id}`} key={id}>
-              <div className="w-full grid  grid-rows-[13rem_1rem_.5rem] h-[350px] border-solid border-2 border-gray-400 shadow-xl  align_items_center rounded-xl pt-5 p-2 gap-y-5">
+              <div className="w-full grid  grid-rows-[13rem_1rem_.5rem] h-[350px] border-solid border-2 border-gray-300 shadow-xl  align_items_center rounded-xl pt-5 p-2 gap-y-5">
                 <div className="object-cover m-auto">
                   <img src={image} alt="image-products" className="w-[120px] m-auto object-cover" />
                 </div>
