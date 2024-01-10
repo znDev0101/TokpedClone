@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useFetch } from '../../hooks/useFetch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { faLocationDot, faCaretDown, faXmark } from '@fortawesome/free-solid-svg-icons';
 import CardProducts from '../cardproducts/CardProducts';
 import NavbarOnMobile from '../navbaronmobile/NavbarOnMobile';
 import Button from '../button/Button';
@@ -10,12 +10,15 @@ import ScrollToTop from '../scrolltotop/ScrollToTop';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { MyContext } from '../../context/MyContext';
+import { useOutletContext } from 'react-router';
 
 function HomeProducts() {
   const { data, loading } = useFetch('https://fakestoreapi.com/products');
   const [scrollPositionY, setScrollPositionY] = useState(null);
 
   const contextValue = useContext(MyContext);
+
+  const [modal, setModal] = useOutletContext();
 
   useEffect(() => {
     function getScrollPositionY() {
@@ -29,6 +32,14 @@ function HomeProducts() {
 
   return (
     <>
+      {modal ? (
+        <div className="w-[90%] top-20  bottom-0 right-0 left-5 max-h-96 bg-green-600 absolute p-2 rounded-xl">
+          <div className="absolute top-0 right-0 bg-red-400 p-1 rounded-lg" onClick={() => setModal(!modal)}>
+            <FontAwesomeIcon icon={faXmark} size="2xl" className="text-white" />
+          </div>
+          <p className="text-white font-bold text-center">Masih tahap development dan masih banyak bug</p>
+        </div>
+      ) : null}
       {screen.width < 500 ? (
         <div className="w-[92%] m-auto">
           <div className=" items-center flex gap-x-2">

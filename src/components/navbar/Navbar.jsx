@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faCartShopping, faBars, faArrowLeft, faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
@@ -13,12 +13,21 @@ function Navbar({ setIsActive }) {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
   const contextValue = useContext(MyContext);
+  const [noResult, setNoResult] = useState(false);
 
   const navigate = useNavigate();
 
   const { pathname } = useLocation();
 
   const valueDebounce = useDebounce(seacrhKeyword);
+
+  useEffect(() => {
+    if (seacrhKeyword.length > 0 && data.length == 0) {
+      setNoResult(true);
+    } else {
+      setNoResult(false);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (pathname !== '/') {
@@ -38,6 +47,7 @@ function Navbar({ setIsActive }) {
         const response = await fetch('https://fakestoreapi.com/products');
         const result = await response.json();
         const resultSearch = result.filter(({ title }) => title.toLowerCase().includes(seacrhKeyword.toLowerCase()));
+
         if (resultSearch.length > 10) {
           const coppyArr = resultSearch.slice(0, 10);
           setData(coppyArr);
@@ -56,7 +66,7 @@ function Navbar({ setIsActive }) {
 
   return (
     <>
-      <header className="w-full bg-white fixed top-0 grid grid-rows-[2rem] py-3">
+      <header className="w-full bg-white fixed top-0 grid grid-rows-[2rem] py-3 z-50">
         {/* Navbar One */}
         {screen.width < 500 ? (
           <div
@@ -116,6 +126,8 @@ function Navbar({ setIsActive }) {
           {seacrhKeyword.length > 0 ? (
             isLoading ? (
               <p className="text-2xl text-center mt-8 font-bold">Loading...</p>
+            ) : noResult ? (
+              <p className="text-2xl mt-20 text-center font-bold">Pencarian tidak di temukan</p>
             ) : (
               data.map(({ title, id }) => {
                 return (

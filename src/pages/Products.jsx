@@ -26,8 +26,6 @@ function Products() {
     }
   }, []);
 
-  console.log(filterCategory);
-
   const { data, isLoading } = useFilterCategory('https://fakestoreapi.com/products', filterKeyword);
   if (isLoading) return <h1 className="text-4xl my-20 text-center">Loading...</h1>;
   return <CardProducts dataProducts={data} urlPath={`/product_${filterCategory}_detail`} />;
