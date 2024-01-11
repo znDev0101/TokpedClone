@@ -133,7 +133,7 @@ function Navbar({ setIsActive }) {
                 return (
                   <div className="w-full grid grid-cols-[max-content_1fr]  items-center mb-5 gap-x-2" key={id}>
                     <FontAwesomeIcon icon={faMagnifyingGlass} size="xl" />
-                    <Link to={`product_detail/${id}`} onClick={() => setIsActive(!contextValue)} className="grid grid-cols-[1fr_max-content] gap-x-1 items-center">
+                    <Link to={`/product_detail/${id}`} onClick={() => setIsActive(!contextValue)} className="grid grid-cols-[1fr_max-content] gap-x-1 items-center">
                       <p>{title.slice(0, 20)}</p>
                       <FontAwesomeIcon icon={faArrowUpRightFromSquare} size="xl" />
                     </Link>

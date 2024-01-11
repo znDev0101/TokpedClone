@@ -16,8 +16,8 @@ function OthersProducts({ idProduct, categoryProducts }) {
       <div className="px-4 w-full mb-20 overflow-x-scroll whitespace-nowrap">
         {data
           .filter(({ id, category }) => id != idProduct && category === categoryProducts)
-          .map(({ image, title, price, rating }) => {
-            return <CardOthersProducts image={image} title={title} price={price} rating={rating} />;
+          .map(({ image, title, price, rating, id }) => {
+            return <CardOthersProducts id={id} image={image} title={title} price={price} rating={rating} />;
           })}
       </div>
     </>

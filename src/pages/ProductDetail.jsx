@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import NavbarOnProductDetail from '../components/navbaronproductdetail/NavbarOnProductDetail';
 import OthersProducts from '../components/othersproducts/OthersProducts';
 import UlasanPembeli from '../components/ulasanpembeli/UlasanPembeli';
-import { dataUlasan } from '../utils/dataUlasan';
+import { dataUlasan } from '../data/dataUlasan';
 import { useFetch } from '../hooks/useFetch';
 
 function ProductDetail() {
   const { productId } = useParams();
   const [dataLimit, setDataLimit] = useState([]);
+
+  const { pathname } = useLocation();
 
   const { data } = useFetch(`https://fakestoreapi.com/products/${productId}`);
 

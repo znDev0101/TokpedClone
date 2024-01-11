@@ -12,9 +12,9 @@ function UlasanPembeli({ dataLimit }) {
           Lihat Semua
         </Link>
       </div>
-      {dataLimit.map(({ name, comment }) => {
+      {dataLimit.map(({ id, name, comment }) => {
         return (
-          <div className="grid grid-cols-[repeat(2,1fr)] grid-rows-[3,max-content] gap-y-2">
+          <div className="grid grid-cols-[repeat(2,1fr)] grid-rows-[3,max-content] gap-y-2" key={id}>
             {/* User Comment */}
             <div className="flex  gap-x-3 items-center">
               <FontAwesomeIcon icon={faUser} />
