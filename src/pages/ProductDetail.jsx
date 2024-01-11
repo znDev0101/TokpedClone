@@ -11,15 +11,16 @@ import { useFetch } from '../hooks/useFetch';
 function ProductDetail() {
   const { productId } = useParams();
   const [dataLimit, setDataLimit] = useState([]);
+  const { pathname } = useLocation();
 
   const { data, loading } = useFetch(`https://fakestoreapi.com/products/${productId}`);
 
-  const { id, title, description, image, price, rating, category } = data;
+  const { title, description, image, price, rating, category } = data;
 
   useEffect(() => {
     const limit = dataUlasan.slice(0, 2);
     setDataLimit(limit);
-  }, []);
+  }, [pathname]);
 
   return (
     <>

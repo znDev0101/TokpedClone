@@ -7,9 +7,11 @@ import { useState } from 'react';
 import { useContext } from 'react';
 import { MyContext } from '../../context/MyContext';
 import { useDebounce } from '../../hooks/useDebounce';
+import MainMenu from '../mainmenu/MainMenu';
 
 function Navbar({ setIsActive }) {
   const [seacrhKeyword, setSeacrhKeyword] = useState('');
+  const [isOpenMainMenu, setIsOpenMainMenu] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
   const contextValue = useContext(MyContext);
@@ -66,7 +68,7 @@ function Navbar({ setIsActive }) {
 
   return (
     <>
-      <header className="w-full bg-white fixed top-0 grid grid-rows-[2rem] py-3 z-50">
+      <header className="w-full bg-white fixed top-0 grid grid-rows-[2rem] py-3 z-40">
         {/* Navbar One */}
         {screen.width < 500 ? (
           <div
@@ -110,7 +112,7 @@ function Navbar({ setIsActive }) {
                   </li>
                   <li>
                     <Link>
-                      <FontAwesomeIcon icon={faBars} size="xl"></FontAwesomeIcon>
+                      <FontAwesomeIcon icon={faBars} size="xl" onClick={() => setIsOpenMainMenu(!isOpenMainMenu)}></FontAwesomeIcon>
                     </Link>
                   </li>
                 </ul>
@@ -118,7 +120,7 @@ function Navbar({ setIsActive }) {
             ) : null}
           </div>
         ) : null}
-
+        <MainMenu isOpenMainMenu={isOpenMainMenu} setIsOpenMainMenu={setIsOpenMainMenu} pathname={pathname} />
         {/* End Navbar one */}
       </header>
       {contextValue ? (
