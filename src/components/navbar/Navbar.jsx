@@ -111,9 +111,7 @@ function Navbar({ setIsActive }) {
                     </Link>
                   </li>
                   <li>
-                    <Link>
-                      <FontAwesomeIcon icon={faBars} size="xl" onClick={() => setIsOpenMainMenu(!isOpenMainMenu)}></FontAwesomeIcon>
-                    </Link>
+                    <FontAwesomeIcon icon={faBars} size="xl" onClick={() => setIsOpenMainMenu(!isOpenMainMenu)}></FontAwesomeIcon>
                   </li>
                 </ul>
               </nav>
