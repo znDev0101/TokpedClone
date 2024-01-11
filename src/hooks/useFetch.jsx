@@ -6,6 +6,7 @@ export function useFetch(url) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const controlled = new AbortController();
     setLoading(true);
     const getData = async () => {
@@ -25,7 +26,7 @@ export function useFetch(url) {
     return () => {
       controlled.abort();
     };
-  }, []);
+  }, [url]);
 
   return { data, loading };
 }

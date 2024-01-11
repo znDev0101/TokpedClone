@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router';
 import { useFetch } from '../../hooks/useFetch';
 import CardOthersProducts from '../cardothersproducts/CardOthersProducts';
 
 function OthersProducts({ idProduct, categoryProducts }) {
   const { data } = useFetch(`https://fakestoreapi.com/products`);
+
+  const { pathname } = useLocation();
 
   return (
     <>

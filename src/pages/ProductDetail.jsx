@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import NavbarOnProductDetail from '../components/navbaronproductdetail/NavbarOnProductDetail';
@@ -12,24 +12,21 @@ function ProductDetail() {
   const { productId } = useParams();
   const [dataLimit, setDataLimit] = useState([]);
 
-  const { pathname } = useLocation();
-
-  const { data } = useFetch(`https://fakestoreapi.com/products/${productId}`);
+  const { data, loading } = useFetch(`https://fakestoreapi.com/products/${productId}`);
 
   const { id, title, description, image, price, rating, category } = data;
 
   useEffect(() => {
     const limit = dataUlasan.slice(0, 2);
     setDataLimit(limit);
-    window.scrollTo(0, 0);
   }, []);
 
   return (
     <>
       <div className="w-[93%] mt-20 mx-auto">
         <div className="grid grid-rows-[repeat(5,max_content)] gap-y-3">
-          <div className="w-full h-96 flex items-center overflow-hidden ">
-            <img src={image} alt="image-product" className="w-80 m-auto object-cover " />
+          <div className="w-full h-96 flex items-center overflow-hidden m-auto">
+            {loading ? <p className="text-2xl font-bold text-center">Image Loading...</p> : <img src={image} alt="image-product" className="w-80 m-auto object-cover " />}
           </div>
           {/* TITLE PRODUCTS */}
           <div className="">
