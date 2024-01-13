@@ -12,21 +12,17 @@ function CardProducts({ dataProducts, urlPath }) {
         {dataProducts.map(({ id, category, title, image, price, rating }) => {
           return (
             <Link to={`${urlPath}/${id}`} key={id}>
-              <div className="w-full grid  grid-rows-[18rem_2rem] h-[365px] border-solid border-2 border-gray-300 shadow-xl  align_items_center rounded-xl gap-y-2">
-                <div className="w-full h-60 m-auto flex items-center overflow-hidden px-3">
-                  <img src={image} alt="image-products" className="object-cover bg-cover" />
+              <div className="w-full grid grid-rows-[17rem_1.2rem_1.2rem_1.2rem] border-2 border-gray-300 rounded-md shadow-md gap-y-2 pb-3">
+                <div className="w-full h-full flex items-center overflow-hidden pt-8 px-3 m-auto">
+                  <img src={image} alt="image-product" className="object-cover" />
                 </div>
-                <div className="flex flex-col gap-y-1 ms-1">
-                  <h5>{title.slice(0, 19)}</h5>
-                  <p className="font-bold">{price}</p>
-                  <div className="flex  text-gray-500 gap-x-[.2rem] items-center">
-                    <div className="">
-                      <FontAwesomeIcon icon={faStar} className={'text-yellow-300'} />
-                    </div>
-                    <div className="text-sm">{rating.rate}</div>
-                    <div className="text-sm">|</div>
-                    <div className="text-sm">99+ Terjual</div>
-                  </div>
+                <h5 className="px-2 h-5 overflow-hidden">{title.slice(0, 17)}</h5>
+                <h5 className="px-2 font-bold">{price}</h5>
+                <div className="flex items-center gap-x-2 ms-2">
+                  <FontAwesomeIcon icon={faStar} className="text-yellow-300" />
+                  <span className="text-gray-600">{rating?.rate}</span>
+                  <span className="text-gray-600">|</span>
+                  <span className="text-gray-600">Terjual 99+</span>
                 </div>
               </div>
             </Link>

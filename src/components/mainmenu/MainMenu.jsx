@@ -9,7 +9,11 @@ const MainMenu = ({ isOpenMainMenu, setIsOpenMainMenu, pathname }) => {
   return (
     <>
       {isOpenMainMenu ? (
-        <div className="w-full absolute top-0 bottom-0 left-0 right-0 h-screen  bg-white z-50 transition ease-in-out delay-75  translate-x-0">
+        <div
+          className={
+            isOpenMainMenu ? `w-full absolute top-0 bottom-0 left-0 right-0 h-screen bg-white z-50 transition ease-in-out delay-75  translate-y-0` : `w-full absolute  bottom-0 left-0 right-0 h-screen  bg-white z-50 -translate-y-[100%]`
+          }
+        >
           <div className="w-[90%] m-auto grid grid-rows-2 grid-cols-[repeat(2,1fr)] mt-2 gap-y-8 gap-x-2">
             <div className="flex gap-x-5 items-center">
               <FontAwesomeIcon icon={faXmark} size="2xl" onClick={() => setIsOpenMainMenu(!isOpenMainMenu)} />
