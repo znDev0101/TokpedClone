@@ -16,7 +16,7 @@ function HomeProducts() {
   const { data, loading } = useFetch('https://fakestoreapi.com/products');
   const [scrollPositionY, setScrollPositionY] = useState(null);
 
-  const contextValue = useContext(MyContext);
+  const { isActive, isOpenMainMenu } = useContext(MyContext);
 
   const [modal, setModal] = useOutletContext();
 
@@ -41,7 +41,7 @@ function HomeProducts() {
         </div>
       ) : null}
       {screen.width < 500 ? (
-        <div className="w-[92%] m-auto">
+        <div className={`w-[92%] m-auto`}>
           <div className=" items-center flex gap-x-2">
             <FontAwesomeIcon icon={faLocationDot} size="lg" className="text-green-600" />
             <div className="text-sm">
@@ -64,8 +64,8 @@ function HomeProducts() {
       {/* Layout Products */}
       <Category />
       {loading ? <h1 className="text-4xl my-20 text-center">Loading...</h1> : <CardProducts dataProducts={data} urlPath={'/product_detail'} />}
-      {scrollPositionY > 500 ? <>{!contextValue ? <ScrollToTop style={'fixed w-12 justify-center items-center flex h-12 bottom-20 right-6  rounded-full shadow-lg bg-white  z-42'} onClick={() => window.scrollTo(0, 0)} /> : null}</> : null}
-      {screen.width < 500 ? <>{!contextValue ? <NavbarOnMobile /> : null}</> : null}
+      {scrollPositionY > 500 ? <>{!{ isActive } ? <ScrollToTop style={'fixed w-12 justify-center items-center flex h-12 bottom-20 right-6  rounded-full shadow-lg bg-white  z-42'} onClick={() => window.scrollTo(0, 0)} /> : null}</> : null}
+      {screen.width < 500 ? <>{!{ isActive } ? <NavbarOnMobile /> : null}</> : null}
     </>
   );
 }

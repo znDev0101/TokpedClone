@@ -9,7 +9,7 @@ const MainMenu = ({ isOpenMainMenu, setIsOpenMainMenu, pathname }) => {
   return (
     <>
       {isOpenMainMenu ? (
-        <div className="w-full absolute top-0 bottom-0 left-0 right-0 h-screen  bg-white z-50">
+        <div className="w-full absolute top-0 bottom-0 left-0 right-0 h-screen  bg-white z-50 transition ease-in-out delay-75  translate-x-0">
           <div className="w-[90%] m-auto grid grid-rows-2 grid-cols-[repeat(2,1fr)] mt-2 gap-y-8 gap-x-2">
             <div className="flex gap-x-5 items-center">
               <FontAwesomeIcon icon={faXmark} size="2xl" onClick={() => setIsOpenMainMenu(!isOpenMainMenu)} />
@@ -22,7 +22,7 @@ const MainMenu = ({ isOpenMainMenu, setIsOpenMainMenu, pathname }) => {
             <div className="mt-5 ms-5">
               <Link to="/" className="row-[3] col-[1]" onClick={() => setIsOpenMainMenu(!isOpenMainMenu)}>
                 <FontAwesomeIcon icon={faHome} size="lg" />
-                <span className="ms-3 text-lg">Kembali ke Home</span>
+                <span className="ms-3 text-md">Kembali ke Home</span>
               </Link>
             </div>
           ) : null}
@@ -31,25 +31,25 @@ const MainMenu = ({ isOpenMainMenu, setIsOpenMainMenu, pathname }) => {
             <ul className="flex flex-col gap-y-8">
               <li>
                 <Link className="flex gap-x-3 items-center">
-                  <FontAwesomeIcon icon={faNoteSticky} size="xl" />
-                  <span className="text-lg">Daftar Transaksi</span>
+                  <FontAwesomeIcon icon={faNoteSticky} size="lg" />
+                  <span className="text-md">Daftar Transaksi</span>
                 </Link>
               </li>
               <li>
                 <Link className="flex gap-x-3 items-center">
-                  <FontAwesomeIcon icon={faStar} size="xl" />
-                  <span className="text-lg">Ulasan</span>
+                  <FontAwesomeIcon icon={faStar} size="lg" />
+                  <span className="text-md">Ulasan</span>
                 </Link>
               </li>
               <li>
                 <Link className="flex gap-x-3 items-center">
-                  <FontAwesomeIcon icon={faHeart} size="xl" />
-                  <span className="text-lg">Wishlist</span>
+                  <FontAwesomeIcon icon={faHeart} size="lg" />
+                  <span className="text-md">Wishlist</span>
                 </Link>
               </li>
               <li>
                 <Link className="flex gap-x-3 items-center">
-                  <FontAwesomeIcon icon={faShop} size="xl" />
+                  <FontAwesomeIcon icon={faShop} size="lg" />
                   <span>Toko yang di-follow</span>
                 </Link>
               </li>
@@ -60,20 +60,20 @@ const MainMenu = ({ isOpenMainMenu, setIsOpenMainMenu, pathname }) => {
             <ul className="flex flex-col gap-y-8">
               <li>
                 <Link className="flex gap-x-3 items-center">
-                  <FontAwesomeIcon icon={faUser} size="xl" />
-                  <span className="text-lg">Pesanan Dikomplain</span>
+                  <FontAwesomeIcon icon={faUser} size="lg" />
+                  <span className="text-md">Pesanan Dikomplain</span>
                 </Link>
               </li>
               <li>
                 <Link className="flex gap-x-3 items-center">
-                  <FontAwesomeIcon icon={faCircleInfo} size="xl" />
-                  <span className="text-lg">Bantuan</span>
+                  <FontAwesomeIcon icon={faCircleInfo} size="lg" />
+                  <span className="text-md">Bantuan</span>
                 </Link>
               </li>
               <li>
                 <Link className="flex gap-x-3 items-center">
-                  <FontAwesomeIcon icon={faQrcode} size="xl" />
-                  <span className="text-lg">Scan Kode QR</span>
+                  <FontAwesomeIcon icon={faQrcode} size="lg" />
+                  <span className="text-md">Scan Kode QR</span>
                 </Link>
               </li>
             </ul>

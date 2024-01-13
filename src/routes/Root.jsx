@@ -7,6 +7,7 @@ import { MyContext } from '../context/MyContext';
 
 function Root() {
   const [isActive, setIsActive] = useState(false);
+  const [isOpenMainMenu, setIsOpenMainMenu] = useState(false);
 
   const [modal, setModal] = useState(false);
 
@@ -15,9 +16,9 @@ function Root() {
   }, []);
 
   return (
-    <div className="w-full relative overflow-hidden ">
-      <MyContext.Provider value={isActive}>
-        <Navbar setIsActive={setIsActive} />
+    <div className="w-full relative overflow-hidden">
+      <MyContext.Provider value={{ isActive, isOpenMainMenu }}>
+        <Navbar setIsActive={setIsActive} isOpenMainMenu={isOpenMainMenu} setIsOpenMainMenu={setIsOpenMainMenu} />
         <Outlet context={[modal, setModal]} />
         <Footer />
       </MyContext.Provider>

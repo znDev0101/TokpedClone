@@ -9,12 +9,11 @@ import { MyContext } from '../../context/MyContext';
 import { useDebounce } from '../../hooks/useDebounce';
 import MainMenu from '../mainmenu/MainMenu';
 
-function Navbar({ setIsActive }) {
+function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
   const [seacrhKeyword, setSeacrhKeyword] = useState('');
-  const [isOpenMainMenu, setIsOpenMainMenu] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
-  const contextValue = useContext(MyContext);
+  const { isActive } = useContext(MyContext);
   const [noResult, setNoResult] = useState(false);
 
   const navigate = useNavigate();
@@ -73,14 +72,14 @@ function Navbar({ setIsActive }) {
         {screen.width < 500 ? (
           <div
             className={
-              contextValue
+              isActive
                 ? `w-[90%] m-auto grid grid-cols-[max-content_2fr] items-center  gap-x-5`
                 : pathname !== '/'
                 ? `w-[95%] m-auto grid grid-cols-[max-content_2fr_1fr] items-center gap-x-4`
                 : `w-[92%] m-auto grid grid-cols-[2fr_1fr] align_items_center gap-x-5  justify-between`
             }
           >
-            {contextValue || pathname !== '/' ? <FontAwesomeIcon icon={faArrowLeft} size="xl" onClick={contextValue ? () => setIsActive(false) : () => navigate(-1)} /> : null}
+            {isActive || pathname !== '/' ? <FontAwesomeIcon icon={faArrowLeft} size="xl" onClick={isActive ? () => setIsActive(false) : () => navigate(-1)} /> : null}
             <div className="w-full relative border border-gray-700 rounded-md">
               <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" className="p-2" />
               <input
@@ -92,7 +91,7 @@ function Navbar({ setIsActive }) {
                 onChange={(e) => setSeacrhKeyword(e.target.value)}
               />
             </div>
-            {!contextValue ? (
+            {!isActive ? (
               <nav className="w-full">
                 <ul className="grid grid-cols-[repeat(4,max-content)] gap-x-4 justify-end">
                   <li>
@@ -121,7 +120,7 @@ function Navbar({ setIsActive }) {
         <MainMenu isOpenMainMenu={isOpenMainMenu} setIsOpenMainMenu={setIsOpenMainMenu} pathname={pathname} />
         {/* End Navbar one */}
       </header>
-      {contextValue ? (
+      {isActive ? (
         <div className="fixed top-[-4px] w-[100%] h-[100vh] mt-14 pt-5 z-50 bg-white px-5">
           {seacrhKeyword.length > 0 ? (
             isLoading ? (
@@ -133,7 +132,7 @@ function Navbar({ setIsActive }) {
                 return (
                   <div className="w-full grid grid-cols-[max-content_1fr]  items-center mb-5 gap-x-2" key={id}>
                     <FontAwesomeIcon icon={faMagnifyingGlass} size="xl" />
-                    <Link to={`/product_detail/${id}`} onClick={() => setIsActive(!contextValue)} className="grid grid-cols-[1fr_max-content] gap-x-1 items-center">
+                    <Link to={`/product_detail/${id}`} onClick={() => setIsActive(!isActive)} className="grid grid-cols-[1fr_max-content] gap-x-1 items-center">
                       <p>{title.slice(0, 20)}</p>
                       <FontAwesomeIcon icon={faArrowUpRightFromSquare} size="xl" />
                     </Link>

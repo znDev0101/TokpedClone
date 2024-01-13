@@ -12,23 +12,21 @@ function CardProducts({ dataProducts, urlPath }) {
         {dataProducts.map(({ id, category, title, image, price, rating }) => {
           return (
             <Link to={`${urlPath}/${id}`} key={id}>
-              <div className="w-full grid  grid-rows-[13rem_1rem_.5rem] h-[350px] border-solid border-2 border-gray-300 shadow-xl  align_items_center rounded-xl pt-5 p-2 gap-y-5">
-                <div className="object-cover m-auto">
-                  <img src={image} alt="image-products" className="w-[120px] m-auto object-cover" />
+              <div className="w-full grid  grid-rows-[18rem_2rem] h-[365px] border-solid border-2 border-gray-300 shadow-xl  align_items_center rounded-xl gap-y-2">
+                <div className="w-full h-60 m-auto flex items-center overflow-hidden px-3">
+                  <img src={image} alt="image-products" className="object-cover bg-cover" />
                 </div>
-                <div className="h-[50px] overflow-hidden">
-                  <h5>{title}</h5>
-                </div>
-                <div className="mt-4">
+                <div className="flex flex-col gap-y-1 ms-1">
+                  <h5>{title.slice(0, 19)}</h5>
                   <p className="font-bold">{price}</p>
-                </div>
-                <div className="flex  text-gray-500 gap-x-[.2rem] items-center">
-                  <div className="">
-                    <FontAwesomeIcon icon={faStar} className={'text-yellow-300'} />
+                  <div className="flex  text-gray-500 gap-x-[.2rem] items-center">
+                    <div className="">
+                      <FontAwesomeIcon icon={faStar} className={'text-yellow-300'} />
+                    </div>
+                    <div className="text-sm">{rating.rate}</div>
+                    <div className="text-sm">|</div>
+                    <div className="text-sm">99+ Terjual</div>
                   </div>
-                  <div className="text-sm">{rating.rate}</div>
-                  <div className="text-sm">|</div>
-                  <div className="text-sm">99+ Terjual</div>
                 </div>
               </div>
             </Link>
