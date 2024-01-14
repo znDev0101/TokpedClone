@@ -67,13 +67,13 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
 
   return (
     <>
-      <header className="w-full bg-white fixed top-0 grid grid-rows-[2rem] py-3 z-40">
+      <header className="w-full bg-white fixed top-0 grid grid-rows-[2rem] py-3 z-50">
         {/* Navbar One */}
         {screen.width < 500 ? (
           <div
             className={
               isActive
-                ? `w-[90%] m-auto grid grid-cols-[max-content_2fr] items-center  gap-x-5`
+                ? `w-[90%] m-auto grid grid-cols-[max-content_2fr] items-center  gap-x-5 duration-300`
                 : pathname !== '/'
                 ? `w-[95%] m-auto grid grid-cols-[max-content_2fr_1fr] items-center gap-x-4`
                 : `w-[92%] m-auto grid grid-cols-[2fr_1fr] align_items_center gap-x-5  justify-between`
