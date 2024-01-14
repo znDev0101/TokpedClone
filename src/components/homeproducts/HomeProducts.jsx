@@ -15,8 +15,9 @@ import { useOutletContext } from 'react-router';
 function HomeProducts() {
   const { data, loading } = useFetch('https://fakestoreapi.com/products');
   const [scrollPositionY, setScrollPositionY] = useState(null);
+  const [arrowToTop, setArrowToTop] = useState(false);
 
-  const { isActive, isOpenMainMenu } = useContext(MyContext);
+  const { isActive } = useContext(MyContext);
 
   const [modal, setModal] = useOutletContext();
 
@@ -24,6 +25,13 @@ function HomeProducts() {
     function getScrollPositionY() {
       setScrollPositionY(window.scrollY);
     }
+
+    if (scrollPositionY > 500) {
+      setArrowToTop(true);
+    } else {
+      setArrowToTop(false);
+    }
+
     window.addEventListener('scroll', getScrollPositionY);
     return () => {
       removeEventListener('scroll', getScrollPositionY);
@@ -64,7 +72,20 @@ function HomeProducts() {
       {/* Layout Products */}
       <Category />
       {loading ? <h1 className="text-4xl my-20 text-center">Loading...</h1> : <CardProducts dataProducts={data} urlPath={'/product_detail'} />}
-      {scrollPositionY > 500 ? <>{!isActive ? <ScrollToTop style={'fixed w-12 justify-center items-center flex h-12 bottom-20 right-6 rounded-full shadow-lg bg-white  z-50'} onClick={() => window.scrollTo(0, 0)} /> : null}</> : null}
+      {scrollPositionY > 500 ? (
+        <>
+          {!isActive ? (
+            <ScrollToTop
+              style={
+                arrowToTop
+                  ? 'fixed w-12 justify-center items-center flex h-12 bottom-20 right-6 rounded-full shadow-lg bg-white  z-50 duration-300 translate-y-70'
+                  : 'fixed w-12 justify-center items-center flex h-12 bottom-0 right-6 rounded-full shadow-lg bg-white'
+              }
+              onClick={() => window.scrollTo(0, 0)}
+            />
+          ) : null}
+        </>
+      ) : null}
       {screen.width < 500 ? <>{!isActive ? <NavbarOnMobile /> : null}</> : null}
     </>
   );
