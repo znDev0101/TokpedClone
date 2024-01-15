@@ -14,7 +14,7 @@ import { useOutletContext } from 'react-router';
 
 function HomeProducts() {
   const { data, loading } = useFetch('https://fakestoreapi.com/products');
-  const [scrollPositionY, setScrollPositionY] = useState(null);
+  const [windowScrollY, setWindowScrollY] = useState(0);
   const [arrowToTop, setArrowToTop] = useState(false);
 
   const { isActive } = useContext(MyContext);
@@ -22,21 +22,19 @@ function HomeProducts() {
   const [modal, setModal] = useOutletContext();
 
   useEffect(() => {
-    function getScrollPositionY() {
-      setScrollPositionY(window.scrollY);
-    }
-
-    if (scrollPositionY > 500) {
-      setArrowToTop(true);
-    } else {
-      setArrowToTop(false);
-    }
-
-    window.addEventListener('scroll', getScrollPositionY);
-    return () => {
-      removeEventListener('scroll', getScrollPositionY);
+    const getScrollY = () => {
+      setWindowScrollY(window.scrollY);
+      if (window.scrollY > windowScrollY) {
+        setArrowToTop(false);
+      } else {
+        setArrowToTop(true);
+      }
     };
-  }, [window.scrollY]);
+    window.addEventListener('scroll', getScrollY);
+    return () => {
+      removeEventListener('scroll', getScrollY);
+    };
+  }, [windowScrollY]);
 
   return (
     <>
@@ -72,14 +70,14 @@ function HomeProducts() {
       {/* Layout Products */}
       <Category />
       {loading ? <h1 className="text-4xl my-20 text-center">Loading...</h1> : <CardProducts dataProducts={data} urlPath={'/product_detail'} />}
-      {scrollPositionY > 500 ? (
+      {windowScrollY > 400 ? (
         <>
           {!isActive ? (
             <ScrollToTop
               style={
                 arrowToTop
-                  ? 'fixed w-12 justify-center items-center flex h-12 bottom-20 right-6 rounded-full shadow-lg bg-white  z-50 duration-300 translate-y-70'
-                  : 'fixed w-12 justify-center items-center flex h-12 bottom-0 right-6 rounded-full shadow-lg bg-white'
+                  ? 'fixed w-12 justify-center items-center flex h-12 bottom-20 right-6 rounded-full shadow-lg bg-white z-50 duration-300 translate-y-0 '
+                  : 'fixed w-12 justify-center items-center flex h-12 bottom-0 right-6 rounded-full shadow-lg bg-white duration-300 translate-y-full'
               }
               onClick={() => window.scrollTo(0, 0)}
             />
