@@ -4,6 +4,7 @@ import ProductDetail from './pages/ProductDetail';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Root from './routes/Root';
 import Products from './pages/Products';
+import { Login } from './pages/Login';
 
 function App() {
   const queryClient = new QueryClient();
@@ -16,6 +17,10 @@ function App() {
         {
           path: '/',
           element: <Home />,
+        },
+        {
+          path: '/login',
+          element: <Login />,
         },
         {
           path: '/products/category/mens_clothing',

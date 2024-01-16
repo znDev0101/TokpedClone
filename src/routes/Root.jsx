@@ -8,7 +8,7 @@ import { MyContext } from '../context/MyContext';
 function Root() {
   const [isActive, setIsActive] = useState(false);
   const [isOpenMainMenu, setIsOpenMainMenu] = useState(false);
-
+  const [countCart, setCountCart] = useState(0);
   const [modal, setModal] = useState(false);
 
   useEffect(() => {
@@ -16,13 +16,13 @@ function Root() {
   }, []);
 
   return (
-    <div className="w-full relative overflow-hidden">
-      <MyContext.Provider value={{ isActive, isOpenMainMenu }}>
+    <MyContext.Provider value={{ isActive, isOpenMainMenu, countCart, setCountCart }}>
+      <div className="w-full relative overflow-hidden">
         <Navbar setIsActive={setIsActive} isOpenMainMenu={isOpenMainMenu} setIsOpenMainMenu={setIsOpenMainMenu} />
         <Outlet context={[modal, setModal]} />
         <Footer />
-      </MyContext.Provider>
-    </div>
+      </div>
+    </MyContext.Provider>
   );
 }
 

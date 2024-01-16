@@ -24,12 +24,13 @@ function HomeProducts() {
   useEffect(() => {
     const getScrollY = () => {
       setWindowScrollY(window.scrollY);
-      if (window.scrollY > windowScrollY) {
-        setArrowToTop(false);
-      } else {
+      if (window.scrollY < windowScrollY) {
         setArrowToTop(true);
+      } else {
+        setArrowToTop(false);
       }
     };
+
     window.addEventListener('scroll', getScrollY);
     return () => {
       removeEventListener('scroll', getScrollY);

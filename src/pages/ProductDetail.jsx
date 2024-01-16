@@ -7,10 +7,12 @@ import OthersProducts from '../components/othersproducts/OthersProducts';
 import UlasanPembeli from '../components/ulasanpembeli/UlasanPembeli';
 import { dataUlasan } from '../data/dataUlasan';
 import { useFetch } from '../hooks/useFetch';
+import VarianProduct from '../components/varianproduct/VarianProduct';
 
 function ProductDetail() {
   const { productId } = useParams();
   const [dataLimit, setDataLimit] = useState([]);
+  const [isOpenVarianProduct, setIsOpenVarianProduct] = useState(false);
   const { pathname } = useLocation();
 
   const { data, loading } = useFetch(`https://fakestoreapi.com/products/${productId}`);
@@ -69,7 +71,8 @@ function ProductDetail() {
       </div>
       <UlasanPembeli dataLimit={dataLimit} />
       <OthersProducts idProduct={productId} categoryProducts={category} />
-      <NavbarOnProductDetail />
+      <NavbarOnProductDetail isOpenVarianProduct={isOpenVarianProduct} setIsOpenVarianProduct={setIsOpenVarianProduct} />
+      <VarianProduct imageProduct={image} isOpenVarianProduct={isOpenVarianProduct} setIsOpenVarianProduct={setIsOpenVarianProduct} />
     </>
   );
 }
