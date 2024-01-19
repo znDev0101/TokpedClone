@@ -19,7 +19,7 @@ function Root() {
   return (
     <MyContext.Provider value={{ isActive, isOpenMainMenu, countCart, setCountCart }}>
       <div className="w-full relative overflow-hidden">
-        <ToastContainer />
+        <ToastContainer className="mb-14" />
         <Navbar setIsActive={setIsActive} isOpenMainMenu={isOpenMainMenu} setIsOpenMainMenu={setIsOpenMainMenu} />
         <Outlet context={[modal, setModal]} />
         <Footer />

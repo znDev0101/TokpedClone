@@ -28,8 +28,8 @@ function ProductDetail() {
   }, [pathname]);
 
   const handleToast = () => {
-    toast.success('🦄 Wow so easy!', {
-      position: 'top-right',
+    toast.success('Berhasil menambahkan ke keranjang', {
+      position: 'bottom-right',
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -88,13 +88,12 @@ function ProductDetail() {
       </div>
       <UlasanPembeli dataLimit={dataLimit} />
       <OthersProducts idProduct={productId} categoryProducts={category} />
-      {!isOpenVarianProduct && (
-        <NavbarOnProductDetail
-          style={'w-full bg-white grid grid-cols-[max-content_1fr_1fr] fixed bottom-0 px-2 py-2 gap-x-2 items-center'}
-          handleClick={category !== 'jewelery' && !/^1[3-4]$/.test(productId) ? () => setIsOpenVarianProduct(true) : handleToast}
-        />
-      )}
-      {category !== 'jewelery' && !/^1[3-4]$/.test(productId) ? <VarianProduct imageProduct={image} price={price} productId={productId} isOpenVarianProduct={isOpenVarianProduct} setIsOpenVarianProduct={setIsOpenVarianProduct} /> : null}
+
+      <NavbarOnProductDetail
+        style={'w-full bg-white grid grid-cols-[max-content_1fr_1fr] fixed bottom-0 px-2 py-2 gap-x-2 items-center'}
+        handleClick={category !== 'jewelery' && !/^1[3-4]$/.test(productId) ? () => setIsOpenVarianProduct(true) : handleToast}
+      />
+      {category !== 'jewelery' && !/^1[3-4]$/.test(productId) && <VarianProduct imageProduct={image} price={price} productId={productId} isOpenVarianProduct={isOpenVarianProduct} setIsOpenVarianProduct={setIsOpenVarianProduct} />}
     </>
   );
 }

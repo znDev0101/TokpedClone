@@ -16,7 +16,7 @@ const VarianProduct = ({ productId, isOpenVarianProduct, setIsOpenVarianProduct,
 
   const handleToast = () => {
     toast.success('Berhasil menambahkan ke keranjang', {
-      position: 'top-right',
+      position: 'bottom-right',
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
