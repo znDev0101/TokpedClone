@@ -1,8 +1,8 @@
 import React from 'react';
 
-function Button({ styleButton, textButton, handleClickOpenVarianProduct }) {
+function Button({ styleButton, textButton, handleClick }) {
   return (
-    <button className={`${styleButton}`} onClick={handleClickOpenVarianProduct}>
+    <button className={`${styleButton}`} onClick={handleClick}>
       {textButton}
     </button>
   );

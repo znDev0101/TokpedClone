@@ -8,6 +8,9 @@ import UlasanPembeli from '../components/ulasanpembeli/UlasanPembeli';
 import { dataUlasan } from '../data/dataUlasan';
 import { useFetch } from '../hooks/useFetch';
 import VarianProduct from '../components/varianproduct/VarianProduct';
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function ProductDetail() {
   const { productId } = useParams();
@@ -15,14 +18,28 @@ function ProductDetail() {
   const [isOpenVarianProduct, setIsOpenVarianProduct] = useState(false);
   const { pathname } = useLocation();
 
-  const { data, loading } = useFetch(`https://fakestoreapi.com/products/${productId}`);
+  const { data: dataDetail, loading } = useFetch(`https://fakestoreapi.com/products/${productId}`);
 
-  const { title, description, image, price, rating, category } = data;
+  const { title, description, image, price, rating, category } = dataDetail;
 
   useEffect(() => {
     const limit = dataUlasan.slice(0, 2);
     setDataLimit(limit);
   }, [pathname]);
+
+  const handleToast = () => {
+    toast.success('🦄 Wow so easy!', {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+      transition: Bounce,
+    });
+  };
 
   return (
     <>
@@ -71,8 +88,13 @@ function ProductDetail() {
       </div>
       <UlasanPembeli dataLimit={dataLimit} />
       <OthersProducts idProduct={productId} categoryProducts={category} />
-      <NavbarOnProductDetail isOpenVarianProduct={isOpenVarianProduct} setIsOpenVarianProduct={setIsOpenVarianProduct} />
-      <VarianProduct imageProduct={image} isOpenVarianProduct={isOpenVarianProduct} setIsOpenVarianProduct={setIsOpenVarianProduct} />
+      {!isOpenVarianProduct && (
+        <NavbarOnProductDetail
+          style={'w-full bg-white grid grid-cols-[max-content_1fr_1fr] fixed bottom-0 px-2 py-2 gap-x-2 items-center'}
+          handleClick={category !== 'jewelery' && !/^1[3-4]$/.test(productId) ? () => setIsOpenVarianProduct(true) : handleToast}
+        />
+      )}
+      {category !== 'jewelery' && !/^1[3-4]$/.test(productId) ? <VarianProduct imageProduct={image} price={price} productId={productId} isOpenVarianProduct={isOpenVarianProduct} setIsOpenVarianProduct={setIsOpenVarianProduct} /> : null}
     </>
   );
 }

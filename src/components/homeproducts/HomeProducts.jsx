@@ -10,12 +10,13 @@ import ScrollToTop from '../scrolltotop/ScrollToTop';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { MyContext } from '../../context/MyContext';
-import { useOutletContext } from 'react-router';
+import { useNavigate, useOutletContext } from 'react-router';
 
 function HomeProducts() {
   const { data, loading } = useFetch('https://fakestoreapi.com/products');
   const [windowScrollY, setWindowScrollY] = useState(0);
   const [arrowToTop, setArrowToTop] = useState(false);
+  const navigate = useNavigate();
 
   const { isActive } = useContext(MyContext);
 
@@ -49,14 +50,14 @@ function HomeProducts() {
       ) : null}
       {screen.width < 500 ? (
         <div className={`w-[92%] m-auto`}>
-          <div className=" items-center flex gap-x-2">
+          <div className="items-center flex gap-x-2">
             <FontAwesomeIcon icon={faLocationDot} size="lg" className="text-green-600" />
             <div className="text-sm">
               Dikirim ke <span className="font-bold">Pancoran, Jakarta Selatan</span>
             </div>
             <FontAwesomeIcon icon={faCaretDown} size="lg" />
           </div>
-          <div className="grid grid-cols-[2fr_1fr] mt-3 items-center">
+          <div className=" grid grid-cols-[2fr_1fr] mt-3 items-center">
             <div className="flex gap-x-2 items-center">
               <img src="https://images.tokopedia.net/img/home/login_widget/toped_login.png?ect=3g" alt="profile-img" className="w-9 h-10" />
               <div>
@@ -64,7 +65,7 @@ function HomeProducts() {
                 <p>Akses semua fitur yuk!</p>
               </div>
             </div>
-            <Button styleButton={'text-white ms-5 font-bold py-2 rounded-lg bg-green-600 justfiy-end'} textButton={'Masuk'} />
+            <Button styleButton={' text-white ms-5 font-bold py-2 rounded-lg bg-green-600 '} textButton={'Masuk'} handleClick={() => navigate('/login')} />
           </div>
         </div>
       ) : null}

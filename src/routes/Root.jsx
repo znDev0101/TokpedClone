@@ -4,6 +4,7 @@ import Navbar from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
 import { useState } from 'react';
 import { MyContext } from '../context/MyContext';
+import { ToastContainer } from 'react-toastify';
 
 function Root() {
   const [isActive, setIsActive] = useState(false);
@@ -18,6 +19,7 @@ function Root() {
   return (
     <MyContext.Provider value={{ isActive, isOpenMainMenu, countCart, setCountCart }}>
       <div className="w-full relative overflow-hidden">
+        <ToastContainer />
         <Navbar setIsActive={setIsActive} isOpenMainMenu={isOpenMainMenu} setIsOpenMainMenu={setIsOpenMainMenu} />
         <Outlet context={[modal, setModal]} />
         <Footer />

@@ -5,7 +5,7 @@ import { faNoteSticky, faStar, faHeart } from '@fortawesome/free-regular-svg-ico
 import { Link } from 'react-router-dom';
 import Button from '../button/Button';
 
-const MainMenu = ({ isOpenMainMenu, setIsOpenMainMenu, pathname }) => {
+const MainMenu = ({ isOpenMainMenu, setIsOpenMainMenu, pathname, products }) => {
   return (
     <div className={isOpenMainMenu ? `w-full absolute top-0 bottom-0 left-0 right-0 h-screen bg-white z-50 duration-300 translate-y-0` : `w-full absolute top-0 bottom-0 left-0 right-0 h-screen  bg-white z-50 duration-300 translate-y-full`}>
       <div className="w-full pt-3 flex gap-x-5 items-center px-5">
