@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import NavbarOnProductDetail from '../components/navbaronproductdetail/NavbarOnProductDetail';
@@ -8,15 +8,24 @@ import UlasanPembeli from '../components/ulasanpembeli/UlasanPembeli';
 import { dataUlasan } from '../data/dataUlasan';
 import { useFetch } from '../hooks/useFetch';
 import VarianProduct from '../components/varianproduct/VarianProduct';
-import { ToastContainer, toast, Bounce } from 'react-toastify';
-
+import { toast, Bounce } from 'react-toastify';
+import { products } from '../data/data';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../redux/cartSlice/cartSlice';
 
 function ProductDetail() {
   const { productId } = useParams();
   const [dataLimit, setDataLimit] = useState([]);
   const [isOpenVarianProduct, setIsOpenVarianProduct] = useState(false);
-  const { pathname } = useLocation();
+  const [filterVarianProduct, setfilterVarianProduct] = useState([]);
+  const cart = useSelector((state) => state.cart.cartSlice);
+  const totalCart = useSelector((state) => state.cart.totalCart);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(totalCart);
+  }, [totalCart]);
 
   const { data: dataDetail, loading } = useFetch(`https://fakestoreapi.com/products/${productId}`);
 
@@ -25,20 +34,38 @@ function ProductDetail() {
   useEffect(() => {
     const limit = dataUlasan.slice(0, 2);
     setDataLimit(limit);
-  }, [pathname]);
+    const filterResult = products.filter(({ id }) => id == productId);
+    setfilterVarianProduct(filterResult);
+  }, []);
 
-  const handleToast = () => {
-    toast.success('Berhasil menambahkan ke keranjang', {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-      transition: Bounce,
-    });
+  const handleAddToCart = () => {
+    const conditionStock = cart.filter(({ id }) => id == productId);
+    if (conditionStock[0]?.stock === 0) {
+      toast.warn('Maaf stock barang sudah habis', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      });
+    } else {
+      toast.success('Berhasil menambahkan ke keranjang', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      });
+      dispatch(addToCart({ id: productId, value: filterVarianProduct }));
+    }
   };
 
   return (
@@ -91,9 +118,19 @@ function ProductDetail() {
 
       <NavbarOnProductDetail
         style={'w-full bg-white grid grid-cols-[max-content_1fr_1fr] fixed bottom-0 px-2 py-2 gap-x-2 items-center'}
-        handleClick={category !== 'jewelery' && !/^1[3-4]$/.test(productId) ? () => setIsOpenVarianProduct(true) : handleToast}
+        handleClick={category !== 'jewelery' && !/^1[3-4]$/.test(productId) ? () => setIsOpenVarianProduct(true) : handleAddToCart}
       />
-      {category !== 'jewelery' && !/^1[3-4]$/.test(productId) && <VarianProduct imageProduct={image} price={price} productId={productId} isOpenVarianProduct={isOpenVarianProduct} setIsOpenVarianProduct={setIsOpenVarianProduct} />}
+      {category !== 'jewelery' && !/^1[3-4]$/.test(productId) && (
+        <VarianProduct
+          filterVarianProduct={filterVarianProduct}
+          imageProduct={image}
+          price={price}
+          productId={productId}
+          isOpenVarianProduct={isOpenVarianProduct}
+          setIsOpenVarianProduct={setIsOpenVarianProduct}
+          handleClick={handleAddToCart}
+        />
+      )}
     </>
   );
 }

@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import Root from './routes/Root';
 import Products from './pages/Products';
 import { Login } from './pages/Login';
+import CartDetail from './components/cartDetail/CartDetail';
 
 function App() {
   const queryClient = new QueryClient();
@@ -21,6 +22,10 @@ function App() {
         {
           path: '/login',
           element: <Login />,
+        },
+        {
+          path: '/cart_detail',
+          element: <CartDetail />,
         },
         {
           path: '/products/category/mens_clothing',
@@ -54,6 +59,7 @@ function App() {
           path: '/product_electronics_detail/:productId',
           element: <ProductDetail />,
         },
+
         {
           path: '/product_detail/:productId',
           element: <ProductDetail />,

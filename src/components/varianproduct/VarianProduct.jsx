@@ -1,33 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { products } from '../../data/data';
-import { ToastContainer, toast, Bounce, Flip } from 'react-toastify';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import NavbarOnProductDetail from '../navbaronproductdetail/NavbarOnProductDetail';
 import 'react-toastify/dist/ReactToastify.css';
 
-const VarianProduct = ({ productId, isOpenVarianProduct, setIsOpenVarianProduct, imageProduct, price }) => {
-  const [filterVarianProduct, setfilterVarianProduct] = useState([]);
-
-  useEffect(() => {
-    const filterResult = products.filter(({ id }) => id == productId);
-    setfilterVarianProduct(filterResult);
-  }, []);
-
-  const handleToast = () => {
-    toast.success('Berhasil menambahkan ke keranjang', {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-      transition: Flip,
-    });
-  };
-
+const VarianProduct = ({ filterVarianProduct, isOpenVarianProduct, setIsOpenVarianProduct, imageProduct, price, handleClick }) => {
   return (
     <div
       className={
@@ -46,8 +23,12 @@ const VarianProduct = ({ productId, isOpenVarianProduct, setIsOpenVarianProduct,
         </div>
         <div className="flex flex-col">
           <h5 className="font-bold text-lg">{price}</h5>
-          {filterVarianProduct.map(({ stock }) => {
-            return <p>{stock}</p>;
+          {filterVarianProduct.map(({ stock, id }) => {
+            return (
+              <div key={id}>
+                <p>{stock}</p>
+              </div>
+            );
           })}
         </div>
       </div>
@@ -55,18 +36,25 @@ const VarianProduct = ({ productId, isOpenVarianProduct, setIsOpenVarianProduct,
       {filterVarianProduct[0]?.category == "men's clothing" || filterVarianProduct[0]?.category == "women's clothing" ? <h3 className="font-bold text-xl py-5 px-5">Warna:</h3> : <h3 className="font-bold text-xl py-5 px-5">Storage</h3>}
       {filterVarianProduct[0]?.category == "men's clothing" || filterVarianProduct[0]?.category == "women's clothing" ? (
         <>
-          <div className="flex px-5 gap-x-3">
-            {filterVarianProduct[0]?.warna.map((data) => {
-              return <p className="p-1 border border-gray-200 rounded-md px-2">{data}</p>;
+          <div className="flex px-5 gap-x-5">
+            {filterVarianProduct[0]?.warna.map((data, index) => {
+              return (
+                <div className="border border-gray-200 p-1" key={index}>
+                  <p>{data}</p>
+                </div>
+              );
             })}
           </div>
-
           {filterVarianProduct[0].hasOwnProperty('size') ? (
             <>
               <h3 className="font-bold text-xl py-5 px-5">Ukuran:</h3>
               <div className="flex px-5 gap-x-3">
-                {filterVarianProduct[0]?.size.map((data) => {
-                  return <p className="p-1 border border-gray-200 rounded-md px-2">{data}</p>;
+                {filterVarianProduct[0]?.size.map((data, index) => {
+                  return (
+                    <div className="border border-gray-200" key={index}>
+                      <p>{data}</p>
+                    </div>
+                  );
                 })}
               </div>
             </>
@@ -79,7 +67,7 @@ const VarianProduct = ({ productId, isOpenVarianProduct, setIsOpenVarianProduct,
           })}
         </div>
       )}
-      <NavbarOnProductDetail style={'w-full bg-white grid grid-cols-[max-content_1fr_1fr] fixed bottom-0 px-2 py-2 gap-x-2 items-center'} handleClick={handleToast} />
+      <NavbarOnProductDetail style={'w-full bg-white grid grid-cols-[max-content_1fr_1fr] fixed bottom-0 px-2 py-2 gap-x-2 items-center'} handleClick={handleClick} />
     </div>
   );
 };

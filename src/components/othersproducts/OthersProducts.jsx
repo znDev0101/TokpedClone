@@ -12,13 +12,7 @@ function OthersProducts({ idProduct, categoryProducts }) {
           <span className="text-green-700 font-bold">Lihat Semua</span>
         </div>
       </div>
-      <div className="px-4 w-full mb-20 overflow-x-scroll whitespace-nowrap">
-        {data
-          .filter(({ id, category }) => id != idProduct && category === categoryProducts)
-          .map(({ image, title, price, rating, id }) => {
-            return <CardOthersProducts id={id} image={image} title={title} price={price} rating={rating} />;
-          })}
-      </div>
+      <CardOthersProducts data={data} idProduct={idProduct} categoryProducts={categoryProducts} />
     </>
   );
 }

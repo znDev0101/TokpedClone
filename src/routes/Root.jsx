@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Outlet } from 'react-router';
+import { Outlet, useLocation, useParams } from 'react-router';
 import Navbar from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
 import { useState } from 'react';
@@ -9,7 +9,6 @@ import { ToastContainer } from 'react-toastify';
 function Root() {
   const [isActive, setIsActive] = useState(false);
   const [isOpenMainMenu, setIsOpenMainMenu] = useState(false);
-  const [countCart, setCountCart] = useState(0);
   const [modal, setModal] = useState(false);
 
   useEffect(() => {
@@ -17,7 +16,7 @@ function Root() {
   }, []);
 
   return (
-    <MyContext.Provider value={{ isActive, isOpenMainMenu, countCart, setCountCart }}>
+    <MyContext.Provider value={{ isActive, isOpenMainMenu }}>
       <div className="w-full relative overflow-hidden">
         <ToastContainer className="mb-14" />
         <Navbar setIsActive={setIsActive} isOpenMainMenu={isOpenMainMenu} setIsOpenMainMenu={setIsOpenMainMenu} />
