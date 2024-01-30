@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Link, useLocation, useNavigate, useOutletContext } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faCartShopping, faBars, faArrowLeft, faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
-import { faEnvelope, faBell } from '@fortawesome/free-regular-svg-icons';
+import { faEnvelope, faBell, faHeart } from '@fortawesome/free-regular-svg-icons';
 import { useState } from 'react';
 import { useDebounce } from '../../hooks/useDebounce';
 import MainMenu from '../mainmenu/MainMenu';
@@ -102,26 +102,41 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
               )}
               {!isActive ? (
                 <nav className="w-full">
-                  <ul className="grid grid-cols-[repeat(4,max-content)] gap-x-4 justify-end">
-                    <li>
-                      <Link>
-                        <FontAwesomeIcon icon={faEnvelope} size="xl" />
-                      </Link>
-                    </li>
-                    <li className="relative">
-                      <Link>
-                        <FontAwesomeIcon icon={faBell} size="xl" />
-                      </Link>
-                    </li>
-                    <li className="relative">
-                      <Link to="/cart_detail">
-                        <FontAwesomeIcon icon={faCartShopping} size="xl" />
-                        <span className="absolute w-max h-max bottom-4 -right-3 text-center rounded-full text-sm bg-green-600 text-white font-bold px-[.4rem]">{totalCart !== 0 && totalCart}</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <FontAwesomeIcon icon={faBars} size="xl" onClick={() => setIsOpenMainMenu(!isOpenMainMenu)}></FontAwesomeIcon>
-                    </li>
+                  <ul className={pathname === '/cart_detail' ? 'grid grid-cols-[repeat(2,max-content)] gap-x-4 justify-end' : 'grid grid-cols-[repeat(4,max-content)] gap-x-4 justify-end'}>
+                    {pathname === '/cart_detail' ? (
+                      <>
+                        <li>
+                          <Link>
+                            <FontAwesomeIcon icon={faHeart} size="xl" />
+                          </Link>
+                        </li>
+                        <li>
+                          <FontAwesomeIcon icon={faBars} size="xl" onClick={() => setIsOpenMainMenu(!isOpenMainMenu)}></FontAwesomeIcon>
+                        </li>
+                      </>
+                    ) : (
+                      <>
+                        <li>
+                          <Link>
+                            <FontAwesomeIcon icon={faEnvelope} size="xl" />
+                          </Link>
+                        </li>
+                        <li className="relative">
+                          <Link>
+                            <FontAwesomeIcon icon={faBell} size="xl" />
+                          </Link>
+                        </li>
+                        <li className="relative">
+                          <Link to="/cart_detail">
+                            <FontAwesomeIcon icon={faCartShopping} size="xl" />
+                            <span className="absolute w-max h-max bottom-4 -right-3 text-center rounded-full text-sm bg-green-600 text-white font-bold px-[.4rem]">{totalCart !== 0 && totalCart}</span>
+                          </Link>
+                        </li>
+                        <li>
+                          <FontAwesomeIcon icon={faBars} size="xl" onClick={() => setIsOpenMainMenu(!isOpenMainMenu)}></FontAwesomeIcon>
+                        </li>
+                      </>
+                    )}
                   </ul>
                 </nav>
               ) : null}

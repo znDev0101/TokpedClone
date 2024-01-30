@@ -19,13 +19,8 @@ function ProductDetail() {
   const [dataLimit, setDataLimit] = useState([]);
   const [isOpenVarianProduct, setIsOpenVarianProduct] = useState(false);
   const [filterVarianProduct, setfilterVarianProduct] = useState([]);
-  const cart = useSelector((state) => state.cart.cartSlice);
-  const totalCart = useSelector((state) => state.cart.totalCart);
+  const { cartProduct } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log(totalCart);
-  }, [totalCart]);
 
   const { data: dataDetail, loading } = useFetch(`https://fakestoreapi.com/products/${productId}`);
 
@@ -39,7 +34,7 @@ function ProductDetail() {
   }, []);
 
   const handleAddToCart = () => {
-    const conditionStock = cart.filter(({ id }) => id == productId);
+    const conditionStock = cartProduct.filter(({ id }) => id == productId);
     if (conditionStock[0]?.stock === 0) {
       toast.warn('Maaf stock barang sudah habis', {
         position: 'bottom-right',
@@ -64,7 +59,7 @@ function ProductDetail() {
         theme: 'light',
         transition: Bounce,
       });
-      dispatch(addToCart({ id: productId, value: filterVarianProduct }));
+      dispatch(addToCart({ id: productId, value: filterVarianProduct, price: price }));
     }
   };
 

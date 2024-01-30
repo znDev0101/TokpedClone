@@ -3,8 +3,10 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import NavbarOnProductDetail from '../navbaronproductdetail/NavbarOnProductDetail';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from 'react-redux';
 
-const VarianProduct = ({ filterVarianProduct, isOpenVarianProduct, setIsOpenVarianProduct, imageProduct, price, handleClick }) => {
+const VarianProduct = ({ filterVarianProduct, productId, isOpenVarianProduct, setIsOpenVarianProduct, imageProduct, price, handleClick }) => {
+  const { cartProduct } = useSelector((state) => state.cart);
   return (
     <div
       className={
@@ -23,10 +25,10 @@ const VarianProduct = ({ filterVarianProduct, isOpenVarianProduct, setIsOpenVari
         </div>
         <div className="flex flex-col">
           <h5 className="font-bold text-lg">{price}</h5>
-          {filterVarianProduct.map(({ stock, id }) => {
+          {filterVarianProduct.map(({ id }) => {
             return (
               <div key={id}>
-                <p>{stock}</p>
+                <p>{cartProduct[2]?.stock}</p>
               </div>
             );
           })}

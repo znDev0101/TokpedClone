@@ -1,15 +1,12 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import Root from './routes/Root';
 import Products from './pages/Products';
 import { Login } from './pages/Login';
 import CartDetail from './components/cartDetail/CartDetail';
 
 function App() {
-  const queryClient = new QueryClient();
-
   const router = createBrowserRouter([
     {
       path: '/',
@@ -68,11 +65,7 @@ function App() {
     },
   ]);
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
