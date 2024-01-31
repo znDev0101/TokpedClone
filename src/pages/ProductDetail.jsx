@@ -20,6 +20,8 @@ function ProductDetail() {
   const [isOpenVarianProduct, setIsOpenVarianProduct] = useState(false);
   const [filterVarianProduct, setfilterVarianProduct] = useState([]);
   const { cartProduct } = useSelector((state) => state.cart);
+
+  const [stockProduct, setStockProduct] = useState(products[productId - 1]?.stock);
   const dispatch = useDispatch();
 
   const { data: dataDetail, loading } = useFetch(`https://fakestoreapi.com/products/${productId}`);
@@ -31,7 +33,9 @@ function ProductDetail() {
     setDataLimit(limit);
     const filterResult = products.filter(({ id }) => id == productId);
     setfilterVarianProduct(filterResult);
-  }, []);
+  }, [productId]);
+
+  console.log(filterVarianProduct);
 
   const handleAddToCart = () => {
     const conditionStock = cartProduct.filter(({ id }) => id == productId);
@@ -60,6 +64,7 @@ function ProductDetail() {
         transition: Bounce,
       });
       dispatch(addToCart({ id: productId, value: filterVarianProduct, price: price }));
+      setStockProduct((prev) => prev - 1);
     }
   };
 

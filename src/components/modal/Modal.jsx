@@ -4,7 +4,7 @@ const Modal = ({ showModal, setShowModal }) => {
   return (
     <>
       {showModal && (
-        <div className="w-[90%] m-[50%_auto] bg-white shadow-2xl shadow-gray-500 rounded-md p-3 border border-green-600 z-50">
+        <div className="w-[90%]  absolute top-52 bg-white shadow-2xl shadow-gray-500 rounded-md p-3 border border-green-600 z-50">
           <h2 className="text-center font-bold">Hapus Barang</h2>
           <p className="text-center">Product yang kamu pilih akan di hapus dari Keranjang</p>
           <div className="flex justify-center gap-x-5 mt-5">

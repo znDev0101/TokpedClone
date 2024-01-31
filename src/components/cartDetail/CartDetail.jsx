@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useFetch } from '../../hooks/useFetch';
 import CartProducts from '../cartproducts/CartProducts';
 import Modal from '../modal/Modal';
+import SumPrice from '../sumprice/SumPrice';
 
 const CartDetail = () => {
   const [showModal, setShowModal] = useState(false);
@@ -14,7 +15,7 @@ const CartDetail = () => {
   const { data, loading } = useFetch('https://fakestoreapi.com/products/');
 
   return (
-    <div className="w-full mt-16">
+    <div className="w-full mt-16 relative z-40">
       {cartProduct.length === 0 ? (
         <div className="flex flex-col px-5 gap-y-5">
           <div className="flex gap-x-5">
@@ -42,6 +43,7 @@ const CartDetail = () => {
               });
           })}
           <Modal showModal={showModal} setShowModal={setShowModal} />
+          <SumPrice />
         </>
       )}
     </div>

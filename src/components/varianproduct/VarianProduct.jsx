@@ -28,7 +28,7 @@ const VarianProduct = ({ filterVarianProduct, productId, isOpenVarianProduct, se
           {filterVarianProduct.map(({ id }) => {
             return (
               <div key={id}>
-                <p>{cartProduct[2]?.stock}</p>
+                <p>{filterVarianProduct[0].stock}</p>
               </div>
             );
           })}
