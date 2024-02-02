@@ -1,37 +1,64 @@
 import { faHeart, faNoteSticky } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { incrementCart, sumPrice } from '../../redux/cartSlice/cartSlice';
+import { toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const CartProducts = ({ id, title, image, price, stock, quantity, idCartProduct }) => {
-  const { totalPrice } = useSelector((state) => state.cart);
+import { incrementCart, selectCancelCartProduct, sumPrice, selectProduct, decrementCart, removeCart } from '../../redux/cartSlice/cartSlice';
+
+const CartProducts = ({ id, title, image, dataCartProduct, dataCart, priceProduct }) => {
+  const { totalPrice, cartProduct, selectedProduct } = useSelector((state) => state.cart);
   const [isChecked, setIsChecked] = useState(false);
   const dispatch = useDispatch();
 
   const [disable, setDisable] = useState(false);
 
+  const { price, stock, quantity } = dataCartProduct;
+  useEffect(() => {
+    if (isChecked) {
+      dispatch(selectProduct({ id, dataCart }));
+    }
+    if (!isChecked && selectedProduct.length !== 0) dispatch(selectCancelCartProduct({ id }));
+  }, [isChecked]);
+
+  useEffect(() => {
+    if (quantity === 0) {
+      dispatch(removeCart({ id }));
+      toast.warn('🗑️, belanjaan kamu di hapus dari keranjang', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      });
+    }
+  }, [quantity]);
+
   const handleIncrement = () => {
     if (stock !== 0) {
-      dispatch(incrementCart({ id, price }));
-    } else {
-      setDisable(true);
+      dispatch(incrementCart({ id, priceProduct }));
+      dispatch(sumPrice());
     }
+  };
+
+  const handleDecrement = () => {
+    dispatch(decrementCart({ id, priceProduct }));
   };
 
   const handleChecked = () => {
     setIsChecked(!isChecked);
-    dispatch(sumPrice());
-    if (isChecked) {
-      dispatch(sumPrice({ id }));
-    }
   };
 
   return (
     <div className="flex px-5 py-1 pt-4 gap-x-3" key={id}>
       <div className="w-5 h-5 mt-2">
-        <input type="checkbox" checked={isChecked} onClick={handleChecked} id={idCartProduct} className="w-full h-full" />
+        <input type="checkbox" checked={isChecked} onClick={handleChecked} className="w-full h-full" />
       </div>
       <div className="relative grid grid-cols-[max-content_1fr] h-full gap-x-5 w-full">
         <div className="w-32 h-32">
@@ -51,7 +78,9 @@ const CartProducts = ({ id, title, image, price, stock, quantity, idCartProduct 
               <FontAwesomeIcon icon={faHeart} />
             </div>
             <div className="flex justify-between items-center w-20 h-6 rounded-md border border-gray-500 absolute right-0 bottom-4 p-1 ">
-              <button className="text-xl text-green-600">-</button>
+              <button className="text-xl text-green-600" onClick={handleDecrement}>
+                -
+              </button>
               <span>{quantity}</span>
               <button className="text-xl text-green-600" disabled={disable} onClick={handleIncrement}>
                 +

@@ -35,8 +35,6 @@ function ProductDetail() {
     setfilterVarianProduct(filterResult);
   }, [productId]);
 
-  console.log(filterVarianProduct);
-
   const handleAddToCart = () => {
     const conditionStock = cartProduct.filter(({ id }) => id == productId);
     if (conditionStock[0]?.stock === 0) {
@@ -63,7 +61,7 @@ function ProductDetail() {
         theme: 'light',
         transition: Bounce,
       });
-      dispatch(addToCart({ id: productId, value: filterVarianProduct, price: price }));
+      dispatch(addToCart({ id: productId, value: filterVarianProduct, priceProduct: price }));
       setStockProduct((prev) => prev - 1);
     }
   };

@@ -1,7 +1,8 @@
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 import { useFetch } from '../../hooks/useFetch';
 import CartProducts from '../cartproducts/CartProducts';
 import Modal from '../modal/Modal';
@@ -10,7 +11,9 @@ import SumPrice from '../sumprice/SumPrice';
 const CartDetail = () => {
   const [showModal, setShowModal] = useState(false);
 
-  const { cartProduct, selectProduct } = useSelector((state) => state.cart);
+  const navigate = useNavigate();
+
+  const { cartProduct, selectedProduct, totalPrice } = useSelector((state) => state.cart);
 
   const { data, loading } = useFetch('https://fakestoreapi.com/products/');
 
@@ -25,7 +28,9 @@ const CartDetail = () => {
               <p className="text-sm">Yuk, isi dengan barang-barang impianmu!</p>
             </div>
           </div>
-          <button className="w-full bg-green-600 font-bold text-white py-1 rounded-md">Mulai belanja</button>
+          <button className="w-full bg-green-600 font-bold text-white py-1 rounded-md" onClick={() => navigate('/')}>
+            Mulai belanja
+          </button>
         </div>
       ) : (
         <>
@@ -35,11 +40,11 @@ const CartDetail = () => {
               Hapus
             </button>
           </div>
-          {cartProduct.map(({ id: idCartProduct, stock, quantity, price }) => {
+          {cartProduct.map((dataCartProduct) => {
             return data
-              .filter(({ id }) => id == idCartProduct)
-              .map(({ id: idProduct, title, image }) => {
-                return <CartProducts id={idProduct} idCartProduct={idCartProduct} price={price} quantity={quantity} stock={stock} title={title} image={image} />;
+              .filter(({ id }) => id == dataCartProduct.id)
+              .map(({ id: idProduct, title, image, price }) => {
+                return <CartProducts id={idProduct} priceProduct={price} dataCart={cartProduct} dataCartProduct={dataCartProduct} title={title} image={image} />;
               });
           })}
           <Modal showModal={showModal} setShowModal={setShowModal} />
