@@ -1,6 +1,6 @@
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { useFetch } from '../../hooks/useFetch';
@@ -13,7 +13,7 @@ const CartDetail = () => {
 
   const navigate = useNavigate();
 
-  const { cartProduct, selectedProduct, totalPrice } = useSelector((state) => state.cart);
+  const { cartProduct, selectedProduct, totalPrice, cartBoolean } = useSelector((state) => state.cart);
 
   const { data, loading } = useFetch('https://fakestoreapi.com/products/');
 

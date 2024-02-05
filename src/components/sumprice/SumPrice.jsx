@@ -1,17 +1,27 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { falseAllBooleanChecked, trueAllBooleanChecked } from '../../redux/cartSlice/cartSlice';
 import Button from '../button/Button';
 
 const SumPrice = () => {
-  const { totalPrice } = useSelector((state) => state.cart);
+  const { totalPrice, cartProduct } = useSelector((state) => state.cart);
 
-  const [first, setfirst] = useState(second);
+  const [isChecked, setIsChecked] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isChecked) dispatch(trueAllBooleanChecked());
+  }, [isChecked]);
+
+  const handleChange = () => {
+    setIsChecked(!isChecked);
+  };
 
   return (
     <div className="w-full fixed bottom-0 flex justify-between py-1 px-5 bg-white">
       <div className="flex gap-x-2 items-center">
         <div className="w-6 h-6">
-          <input type="checkbox" className="w-full h-full" onClick />
+          <input type="checkbox" className="w-full h-full" checked={isChecked} onChange={handleChange} />
         </div>
         <h5>Semua</h5>
       </div>

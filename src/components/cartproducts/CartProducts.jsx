@@ -1,27 +1,29 @@
 import { faHeart, faNoteSticky } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { incrementCart, selectCancelCartProduct, sumPrice, selectProduct, decrementCart, removeCart } from '../../redux/cartSlice/cartSlice';
+import { incrementCart, selectCancelCartProduct, sumPrice, selectProduct, decrementCart, removeCart, booleanChecked, booleanCart } from '../../redux/cartSlice/cartSlice';
 
 const CartProducts = ({ id, title, image, dataCartProduct, dataCart, priceProduct }) => {
-  const { totalPrice, cartProduct, selectedProduct } = useSelector((state) => state.cart);
-  const [isChecked, setIsChecked] = useState(false);
+  const { totalPrice, cartProduct, selectedProduct, cartBoolean } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-
-  const [disable, setDisable] = useState(false);
+  const [isChecked, setIsChecked] = useState([]);
 
   const { price, stock, quantity } = dataCartProduct;
+
   useEffect(() => {
-    if (isChecked) {
-      dispatch(selectProduct({ id, dataCart }));
+    const filterCartBoolean = cartBoolean.filter((data) => data.id === id);
+    setIsChecked(filterCartBoolean[0].boolean);
+    if (!isChecked) {
+      dispatch(selectProduct({ id }));
+    } else {
+      dispatch(selectCancelCartProduct({ id }));
     }
-    if (!isChecked && selectedProduct.length !== 0) dispatch(selectCancelCartProduct({ id }));
-  }, [isChecked]);
+  }, [cartBoolean]);
 
   useEffect(() => {
     if (quantity === 0) {
@@ -40,6 +42,10 @@ const CartProducts = ({ id, title, image, dataCartProduct, dataCart, priceProduc
     }
   }, [quantity]);
 
+  const handleChange = () => {
+    dispatch(booleanCart({ id }));
+  };
+
   const handleIncrement = () => {
     if (stock !== 0) {
       dispatch(incrementCart({ id, priceProduct }));
@@ -51,14 +57,10 @@ const CartProducts = ({ id, title, image, dataCartProduct, dataCart, priceProduc
     dispatch(decrementCart({ id, priceProduct }));
   };
 
-  const handleChecked = () => {
-    setIsChecked(!isChecked);
-  };
-
   return (
     <div className="flex px-5 py-1 pt-4 gap-x-3" key={id}>
       <div className="w-5 h-5 mt-2">
-        <input type="checkbox" checked={isChecked} onClick={handleChecked} className="w-full h-full" />
+        <input type="checkbox" checked={isChecked} onChange={handleChange} className="w-full h-full" />
       </div>
       <div className="relative grid grid-cols-[max-content_1fr] h-full gap-x-5 w-full">
         <div className="w-32 h-32">
@@ -82,7 +84,7 @@ const CartProducts = ({ id, title, image, dataCartProduct, dataCart, priceProduc
                 -
               </button>
               <span>{quantity}</span>
-              <button className="text-xl text-green-600" disabled={disable} onClick={handleIncrement}>
+              <button className="text-xl text-green-600" onClick={handleIncrement}>
                 +
               </button>
             </div>

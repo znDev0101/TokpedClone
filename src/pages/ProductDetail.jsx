@@ -61,7 +61,7 @@ function ProductDetail() {
         theme: 'light',
         transition: Bounce,
       });
-      dispatch(addToCart({ id: productId, value: filterVarianProduct, priceProduct: price }));
+      dispatch(addToCart({ id: productId, value: filterVarianProduct, description, title, priceProduct: price }));
       setStockProduct((prev) => prev - 1);
     }
   };
