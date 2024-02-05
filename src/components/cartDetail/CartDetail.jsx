@@ -1,21 +1,29 @@
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { useFetch } from '../../hooks/useFetch';
+import { resetTotalPrice } from '../../redux/cartSlice/cartSlice';
 import CartProducts from '../cartproducts/CartProducts';
 import Modal from '../modal/Modal';
 import SumPrice from '../sumprice/SumPrice';
 
 const CartDetail = () => {
   const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
   const { cartProduct, selectedProduct, totalPrice, cartBoolean } = useSelector((state) => state.cart);
 
   const { data, loading } = useFetch('https://fakestoreapi.com/products/');
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetTotalPrice());
+    };
+  }, []);
 
   return (
     <div className="w-full mt-16 relative z-40">

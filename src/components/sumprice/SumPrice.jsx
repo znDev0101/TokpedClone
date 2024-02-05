@@ -4,14 +4,37 @@ import { falseAllBooleanChecked, trueAllBooleanChecked } from '../../redux/cartS
 import Button from '../button/Button';
 
 const SumPrice = () => {
-  const { totalPrice, cartProduct } = useSelector((state) => state.cart);
+  const { totalPrice, cartProduct, cartBoolean } = useSelector((state) => state.cart);
 
   const [isChecked, setIsChecked] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (isChecked) dispatch(trueAllBooleanChecked());
+    if (!isChecked) {
+      let ifTrue = true;
+      for (let i = 0; i < cartBoolean.length; i++) {
+        if (!cartBoolean[i].boolean) {
+          ifTrue = false;
+          break;
+        }
+      }
+      if (ifTrue) dispatch(falseAllBooleanChecked());
+    }
   }, [isChecked]);
+
+  useEffect(() => {
+    let ifTrue = true;
+
+    for (let i = 0; i < cartBoolean.length; i++) {
+      if (!cartBoolean[i].boolean) {
+        ifTrue = false;
+        break;
+      }
+    }
+    if (ifTrue) setIsChecked(true);
+    if (!ifTrue) setIsChecked(false);
+  }, [cartBoolean]);
 
   const handleChange = () => {
     setIsChecked(!isChecked);

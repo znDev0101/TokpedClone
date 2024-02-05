@@ -18,12 +18,15 @@ const CartProducts = ({ id, title, image, dataCartProduct, dataCart, priceProduc
   useEffect(() => {
     const filterCartBoolean = cartBoolean.filter((data) => data.id === id);
     setIsChecked(filterCartBoolean[0].boolean);
-    if (!isChecked) {
+  }, [cartBoolean]);
+
+  useEffect(() => {
+    if (isChecked === true) {
       dispatch(selectProduct({ id }));
     } else {
       dispatch(selectCancelCartProduct({ id }));
     }
-  }, [cartBoolean]);
+  }, [isChecked]);
 
   useEffect(() => {
     if (quantity === 0) {
@@ -55,6 +58,7 @@ const CartProducts = ({ id, title, image, dataCartProduct, dataCart, priceProduc
 
   const handleDecrement = () => {
     dispatch(decrementCart({ id, priceProduct }));
+    dispatch(sumPrice());
   };
 
   return (

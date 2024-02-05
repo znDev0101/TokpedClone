@@ -31,23 +31,39 @@ export const cartSlice = createSlice({
     incrementCart: (state, action) => {
       const { id: idCartProduct, priceProduct } = action.payload;
       const findCartProduct = state.cartProduct.findIndex(({ id }) => id === idCartProduct);
+      const findSelectedProduct = state.selectedProduct.findIndex(({ id }) => id === idCartProduct);
+      const findBooleanCart = state.cartBoolean.findIndex(({ id }) => id === idCartProduct);
 
       if (findCartProduct >= 0) {
-        if (state.cartProduct[findCartProduct].stock !== 0) {
+        if (state.cartProduct[findCartProduct].stock !== 0 && !state.cartBoolean[findBooleanCart].boolean) {
           state.cartProduct[findCartProduct].stock -= 1;
           state.cartProduct[findCartProduct].quantity += 1;
           state.cartProduct[findCartProduct].price += priceProduct;
+        }
+        if (state.cartBoolean[findBooleanCart].boolean) {
+          state.cartProduct[findCartProduct].stock -= 1;
+          state.cartProduct[findCartProduct].quantity += 1;
+          state.cartProduct[findCartProduct].price += priceProduct;
+          state.selectedProduct[findSelectedProduct].price += priceProduct;
         }
       }
     },
     decrementCart: (state, action) => {
       const { id: idCartProduct, priceProduct } = action.payload;
       const findCartProduct = state.cartProduct.findIndex(({ id }) => id === idCartProduct);
+      const findSelectedProduct = state.selectedProduct.findIndex(({ id }) => id === idCartProduct);
+      const findBooleanCart = state.cartBoolean.findIndex(({ id }) => id === idCartProduct);
       if (findCartProduct >= 0) {
-        if (parseInt(state.cartProduct[findCartProduct].quantity) !== 0) {
+        if (parseInt(state.cartProduct[findCartProduct].quantity) !== 0 && !state.cartBoolean[findBooleanCart].boolean) {
           state.cartProduct[findCartProduct].stock += 1;
           state.cartProduct[findCartProduct].quantity -= 1;
           state.cartProduct[findCartProduct].price -= priceProduct;
+        }
+        if (state.cartBoolean[findBooleanCart].boolean) {
+          state.cartProduct[findCartProduct].stock += 1;
+          state.cartProduct[findCartProduct].quantity -= 1;
+          state.cartProduct[findCartProduct].price -= priceProduct;
+          state.selectedProduct[findSelectedProduct].price -= priceProduct;
         }
       }
     },
@@ -87,21 +103,22 @@ export const cartSlice = createSlice({
       state.cartBoolean[findCartProduct].boolean = !state.cartBoolean[findCartProduct].boolean;
     },
     trueAllBooleanChecked: (state, action) => {
-      for (let i = 0; i < state.cartProduct.length; i++) {
-        if (state.cartProduct[i].boolean !== true) {
-          state.cartProduct[i].boolean = true;
+      for (let i = 0; i < state.cartBoolean.length; i++) {
+        if (state.cartBoolean[i].boolean !== true) {
+          state.cartBoolean[i].boolean = true;
         }
       }
     },
     falseAllBooleanChecked: (state, action) => {
-      for (let i = 0; i < state.cartProduct.length; i++) {
-        if (state.cartProduct[i].boolean !== false) {
-          state.cartProduct[i].boolean = false;
-        }
+      for (let i = 0; i < state.cartBoolean.length; i++) {
+        state.cartBoolean[i].boolean = false;
       }
     },
     resetTotalPrice: (state) => {
       state.totalPrice = 0;
+      state.cartBoolean.map((data) => {
+        data.boolean = false;
+      });
     },
     removeCart: (state, action) => {
       const { id: idCartProduct } = action.payload;
