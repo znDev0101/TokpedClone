@@ -11,11 +11,14 @@ import SumPrice from '../sumprice/SumPrice';
 
 const CartDetail = () => {
   const [showModal, setShowModal] = useState(false);
+  const [isShowDeleteBtn, setIsShowDeleteBtn] = useState(false);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
   const { cartProduct, selectedProduct, totalPrice, cartBoolean } = useSelector((state) => state.cart);
+
+  console.log(cartBoolean);
 
   const { data, loading } = useFetch('https://fakestoreapi.com/products/');
 
@@ -25,10 +28,18 @@ const CartDetail = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (selectedProduct.length !== 0) {
+      setIsShowDeleteBtn(true);
+    } else {
+      setIsShowDeleteBtn(false);
+    }
+  }, [selectedProduct]);
+
   return (
-    <div className="w-full mt-16 relative z-40">
+    <div className={cartProduct.length < 4 ? 'w-full h-screen  pt-10 pb-16 z-40' : 'w-full   pt-10 pb-16 z-40'}>
       {cartProduct.length === 0 ? (
-        <div className="flex flex-col px-5 gap-y-5">
+        <div className="flex flex-col px-5 gap-y-5 mt-12">
           <div className="flex gap-x-5">
             <FontAwesomeIcon icon={faCartShopping} size="4x" className="text-green-600" />
             <div className="flex flex-col gap-y-1">
@@ -42,8 +53,8 @@ const CartDetail = () => {
         </div>
       ) : (
         <>
-          <div className="w-full grid grid-cols-[repeat(2,1fr)]  px-5">
-            <span>{} product terpilih</span>
+          <div className={isShowDeleteBtn ? 'w-full translate-y-full grid grid-cols-[repeat(2,1fr)] duration-300 px-5' : 'w-full -translate-y-28 grid grid-cols-[repeat(2,1fr)] duration-300 px-5'}>
+            <span>{selectedProduct.length} product terpilih</span>
             <button className="text-end font-bold text-green-600" onClick={() => setShowModal(!showModal)}>
               Hapus
             </button>

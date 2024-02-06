@@ -133,9 +133,21 @@ export const cartSlice = createSlice({
       }
       state.cartBoolean = state.cartBoolean.filter(({ id }) => id !== idCartProduct);
     },
+    btnDeleteCart: (state) => {
+      if (state.selectedProduct.length !== 0) {
+        for (let i = 0; i < state.selectedProduct.length; i++) {
+          state.cartProduct = state.cartProduct.filter(({ id }) => id !== state.selectedProduct[i].id);
+          state.cartBoolean = state.cartBoolean.filter(({ id }) => id !== state.selectedProduct[i].id);
+        }
+
+        state.totalCart = state.totalCart -= state.selectedProduct.length;
+      }
+      state.selectedProduct = [];
+    },
   },
 });
 
-export const { addToCart, incrementCart, sumPrice, selectProduct, selectCancelCartProduct, resetTotalPrice, decrementCart, removeCart, booleanCart, booleanChecked, trueAllBooleanChecked, falseAllBooleanChecked } = cartSlice.actions;
+export const { addToCart, incrementCart, sumPrice, selectProduct, selectCancelCartProduct, resetTotalPrice, decrementCart, removeCart, booleanCart, booleanChecked, trueAllBooleanChecked, falseAllBooleanChecked, btnDeleteCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

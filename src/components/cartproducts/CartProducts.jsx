@@ -16,8 +16,10 @@ const CartProducts = ({ id, title, image, dataCartProduct, dataCart, priceProduc
   const { price, stock, quantity } = dataCartProduct;
 
   useEffect(() => {
-    const filterCartBoolean = cartBoolean.filter((data) => data.id === id);
-    setIsChecked(filterCartBoolean[0].boolean);
+    if (cartBoolean.length !== 0) {
+      const filterCartBoolean = cartBoolean.filter((data) => data.id === id);
+      setIsChecked(filterCartBoolean[0].boolean);
+    }
   }, [cartBoolean]);
 
   useEffect(() => {
@@ -62,7 +64,7 @@ const CartProducts = ({ id, title, image, dataCartProduct, dataCart, priceProduc
   };
 
   return (
-    <div className="flex px-5 py-1 pt-4 gap-x-3" key={id}>
+    <div className="flex mt-5 px-5 py-1 pt-4 gap-x-3" key={id}>
       <div className="w-5 h-5 mt-2">
         <input type="checkbox" checked={isChecked} onChange={handleChange} className="w-full h-full" />
       </div>
