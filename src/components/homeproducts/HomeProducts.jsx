@@ -21,8 +21,6 @@ function HomeProducts() {
 
   const { isActive } = useContext(MyContext);
 
-  const [modal, setModal] = useOutletContext();
-
   useEffect(() => {
     const getScrollY = () => {
       setWindowScrollY(window.scrollY);
@@ -41,14 +39,6 @@ function HomeProducts() {
 
   return (
     <>
-      {modal ? (
-        <div className="w-[90%] top-20  bottom-0 right-0 left-5 max-h-96 bg-green-600 absolute p-2 rounded-xl">
-          <div className="absolute top-0 right-0 bg-red-400 px-1 rounded-lg" onClick={() => setModal(!modal)}>
-            <FontAwesomeIcon icon={faXmark} size="2xl" className="text-white" />
-          </div>
-          <p className="text-white font-bold text-center mt-[50%]">Masih tahap development dan masih banyak bug</p>
-        </div>
-      ) : null}
       {screen.width < 500 ? (
         <div className={`w-[92%] m-auto`}>
           <div className="items-center flex gap-x-2">
