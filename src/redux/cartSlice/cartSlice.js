@@ -6,6 +6,7 @@ const initialState = {
   totalCart: 0,
   selectedProduct: [],
   cartBoolean: [],
+  firstCartProduct: [],
 };
 
 export const cartSlice = createSlice({
@@ -15,16 +16,19 @@ export const cartSlice = createSlice({
     addToCart: (state, action) => {
       const { id: idCartProduct, value, priceProduct, title, description } = action.payload;
       const findCartProduct = state.cartProduct.findIndex(({ id }) => id == parseInt(idCartProduct));
+      const findFirstCartProduct = state.firstCartProduct.findIndex(({ id }) => id === idCartProduct);
       if (findCartProduct >= 0) {
         state.cartProduct[findCartProduct].stock -= 1;
         if (state.cartProduct[findCartProduct].stock !== 0) {
           state.cartProduct[findCartProduct].quantity += 1;
           state.totalCart += 1;
           state.cartProduct[findCartProduct].price += priceProduct;
+          state.firstCartProduct[findFirstCartProduct].cart += 1;
         }
       } else {
         state.cartProduct.push({ ...value[0], title: title, description: description, price: priceProduct, quantity: 1, stock: value[0].stock - 1 });
         state.cartBoolean.push({ id: parseInt(idCartProduct), boolean: false });
+        state.firstCartProduct.push({ id: idCartProduct, cart: 1 });
         state.totalCart += 1;
       }
     },
@@ -122,8 +126,14 @@ export const cartSlice = createSlice({
     },
     removeCart: (state, action) => {
       const { id: idCartProduct } = action.payload;
+      const findFirstCartProduct = state.firstCartProduct.findIndex(({ id }) => id == idCartProduct);
       state.cartProduct = state.cartProduct.filter(({ id }) => id !== idCartProduct);
-      state.totalCart -= 1;
+      if (state.firstCartProduct[findFirstCartProduct].cart > 1) {
+        state.totalCart -= state.firstCartProduct[findFirstCartProduct].cart;
+      } else {
+        state.totalCart -= 1;
+      }
+      state.firstCartProduct = state.firstCartProduct.filter(({ id }) => id != idCartProduct);
       state.selectedProduct = state.selectedProduct.filter(({ id }) => id !== idCartProduct);
       if (state.totalPrice !== 0) {
         const totalPrice = state.selectedProduct.reduce((accumulator, { price }) => {
@@ -138,9 +148,13 @@ export const cartSlice = createSlice({
         for (let i = 0; i < state.selectedProduct.length; i++) {
           state.cartProduct = state.cartProduct.filter(({ id }) => id !== state.selectedProduct[i].id);
           state.cartBoolean = state.cartBoolean.filter(({ id }) => id !== state.selectedProduct[i].id);
+          state.firstCartProduct = state.firstCartProduct.filter(({ id }) => id != state.selectedProduct[i].id);
+          if (state.selectedProduct[i].quantity > 1) {
+            state.totalCart = state.totalCart -= state.selectedProduct[i].quantity;
+          } else {
+            state.totalCart = state.totalCart -= state.selectedProduct.length;
+          }
         }
-
-        state.totalCart = state.totalCart -= state.selectedProduct.length;
       }
       state.selectedProduct = [];
     },

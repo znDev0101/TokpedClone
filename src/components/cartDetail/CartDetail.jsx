@@ -18,8 +18,6 @@ const CartDetail = () => {
 
   const { cartProduct, selectedProduct, totalPrice, cartBoolean } = useSelector((state) => state.cart);
 
-  console.log(cartBoolean);
-
   const { data, loading } = useFetch('https://fakestoreapi.com/products/');
 
   useEffect(() => {

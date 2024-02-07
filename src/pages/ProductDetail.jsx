@@ -19,7 +19,7 @@ function ProductDetail() {
   const [dataLimit, setDataLimit] = useState([]);
   const [isOpenVarianProduct, setIsOpenVarianProduct] = useState(false);
   const [filterVarianProduct, setfilterVarianProduct] = useState([]);
-  const { cartProduct } = useSelector((state) => state.cart);
+  const { cartProduct, firstCartProduct } = useSelector((state) => state.cart);
 
   const [stockProduct, setStockProduct] = useState(products[productId - 1]?.stock);
   const dispatch = useDispatch();

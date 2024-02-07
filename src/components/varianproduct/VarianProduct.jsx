@@ -1,12 +1,19 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import NavbarOnProductDetail from '../navbaronproductdetail/NavbarOnProductDetail';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
 
 const VarianProduct = ({ filterVarianProduct, productId, isOpenVarianProduct, setIsOpenVarianProduct, imageProduct, price, handleClick }) => {
   const { cartProduct } = useSelector((state) => state.cart);
+  const [stock, setStock] = useState([]);
+
+  useEffect(() => {
+    const findIndexProductCart = cartProduct.findIndex((item) => item.id == productId);
+    setStock(cartProduct[findIndexProductCart]?.stock);
+  }, [cartProduct]);
+
   return (
     <div
       className={
@@ -25,10 +32,10 @@ const VarianProduct = ({ filterVarianProduct, productId, isOpenVarianProduct, se
         </div>
         <div className="flex flex-col">
           <h5 className="font-bold text-lg">{price}</h5>
-          {filterVarianProduct.map(({ id }) => {
+          {filterVarianProduct.map((data, index) => {
             return (
-              <div key={id}>
-                <p>{filterVarianProduct[0].stock}</p>
+              <div key={index}>
+                <p>{cartProduct.length !== 0 ? `${stock}` : `${data.stock}`}</p>
               </div>
             );
           })}
@@ -53,7 +60,7 @@ const VarianProduct = ({ filterVarianProduct, productId, isOpenVarianProduct, se
               <div className="flex px-5 gap-x-3">
                 {filterVarianProduct[0]?.size.map((data, index) => {
                   return (
-                    <div className="border border-gray-200" key={index}>
+                    <div className="border py-1 px-3 border-gray-200" key={index}>
                       <p>{data}</p>
                     </div>
                   );
