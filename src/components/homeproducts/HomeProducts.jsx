@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { useContext } from 'react';
 import { MyContext } from '../../context/MyContext';
 import { useNavigate, useOutletContext } from 'react-router';
+import SliderImages from '../sliderimages/SliderImages';
 
 function HomeProducts() {
   const { data, loading } = useFetch('https://fakestoreapi.com/products');
@@ -69,6 +70,7 @@ function HomeProducts() {
           </div>
         </div>
       ) : null}
+      <SliderImages />
       {/* Layout Products */}
       <Category />
       {loading ? <h1 className="text-4xl my-20 text-center">Loading...</h1> : <CardProducts dataProducts={data} urlPath={'/product_detail'} />}
