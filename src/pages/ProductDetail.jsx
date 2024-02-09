@@ -124,6 +124,7 @@ function ProductDetail() {
           imageProduct={image}
           price={price}
           productId={productId}
+          stock={filterVarianProduct[0]?.stock}
           isOpenVarianProduct={isOpenVarianProduct}
           setIsOpenVarianProduct={setIsOpenVarianProduct}
           handleClick={handleAddToCart}

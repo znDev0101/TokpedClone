@@ -5,14 +5,16 @@ import NavbarOnProductDetail from '../navbaronproductdetail/NavbarOnProductDetai
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
 
-const VarianProduct = ({ filterVarianProduct, productId, isOpenVarianProduct, setIsOpenVarianProduct, imageProduct, price, handleClick }) => {
+const VarianProduct = ({ filterVarianProduct, productId, isOpenVarianProduct, setIsOpenVarianProduct, imageProduct, price, handleClick, stock: stockProduct }) => {
   const { cartProduct } = useSelector((state) => state.cart);
-  const [stock, setStock] = useState([]);
+  const [indexCart, setIndexCart] = useState([]);
 
   useEffect(() => {
-    const findIndexProductCart = cartProduct.findIndex((item) => item.id == productId);
-    setStock(cartProduct[findIndexProductCart]?.stock);
-  }, [cartProduct]);
+    if (cartProduct.length !== 0) {
+      const findIndexCart = cartProduct.findIndex(({ id }) => id == productId);
+      setIndexCart(findIndexCart);
+    }
+  }, [cartProduct, productId]);
 
   return (
     <div
@@ -32,13 +34,7 @@ const VarianProduct = ({ filterVarianProduct, productId, isOpenVarianProduct, se
         </div>
         <div className="flex flex-col">
           <h5 className="font-bold text-lg">{price}</h5>
-          {filterVarianProduct.map((data, index) => {
-            return (
-              <div key={index}>
-                <p>{cartProduct.length !== 0 ? `${stock}` : `${data.stock}`}</p>
-              </div>
-            );
-          })}
+          {cartProduct.length === 0 ? <p>{stockProduct}</p> : <p>{cartProduct[indexCart]?.stock}</p>}
         </div>
       </div>
       <hr className="w-full border border-gray-200 mt-6" />
