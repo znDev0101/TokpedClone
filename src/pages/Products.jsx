@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useOutletContext } from 'react-router';
 import CardProducts from '../components/cardproducts/CardProducts';
 import { useFilterCategory } from '../hooks/useFilterCategory';
 
 function Products() {
   const [filterKeyword, setFilterKeyword] = useState('');
   const { pathname } = useLocation();
-  const [filterCategory, setFilterCategory] = useState('');
+  const { setUrlPath } = useOutletContext();
 
   useEffect(() => {
     const keywordManipulation = pathname.replace(/\/|products|category/g, '');
-    setFilterCategory(keywordManipulation);
     if (keywordManipulation.match('mens_clothing')) {
       let gender = [];
       let result;
@@ -24,11 +23,14 @@ function Products() {
     } else {
       setFilterKeyword(keywordManipulation);
     }
+
+    const urlPath = pathname.split('/').slice(3).join('');
+    setUrlPath(urlPath);
   }, []);
 
   const { data, isLoading } = useFilterCategory('https://fakestoreapi.com/products', filterKeyword);
   if (isLoading) return <h1 className="text-4xl my-20 text-center">Loading...</h1>;
-  return <CardProducts dataProducts={data} urlPath={`/product_${filterCategory}_detail`} />;
+  return <CardProducts dataProducts={data} urlPath={`/product_detail`} />;
 }
 
 export default Products;

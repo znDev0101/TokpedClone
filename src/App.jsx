@@ -5,6 +5,7 @@ import Root from './routes/Root';
 import Products from './pages/Products';
 import { Login } from './pages/Login';
 import CartDetail from './components/cartDetail/CartDetail';
+import WishList from './pages/WishList';
 
 function App() {
   const router = createBrowserRouter([
@@ -25,6 +26,10 @@ function App() {
           element: <CartDetail />,
         },
         {
+          path: '/wishlist',
+          element: <WishList />,
+        },
+        {
           path: '/products/category/mens_clothing',
           element: <Products />,
         },
@@ -40,23 +45,6 @@ function App() {
           path: '/products/category/electronics',
           element: <Products />,
         },
-        {
-          path: '/product_mens_clothing_detail/:productId',
-          element: <ProductDetail />,
-        },
-        {
-          path: '/product_womens_clothing_detail/:productId',
-          element: <ProductDetail />,
-        },
-        {
-          path: '/product_jewelery_detail/:productId',
-          element: <ProductDetail />,
-        },
-        {
-          path: '/product_electronics_detail/:productId',
-          element: <ProductDetail />,
-        },
-
         {
           path: '/product_detail/:productId',
           element: <ProductDetail />,

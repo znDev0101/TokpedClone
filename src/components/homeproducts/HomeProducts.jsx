@@ -3,7 +3,6 @@ import { useFetch } from '../../hooks/useFetch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faCaretDown, faXmark } from '@fortawesome/free-solid-svg-icons';
 import CardProducts from '../cardproducts/CardProducts';
-import NavbarOnMobile from '../navbaronmobile/NavbarOnMobile';
 import Button from '../button/Button';
 import Category from '../category/Category';
 import ScrollToTop from '../scrolltotop/ScrollToTop';
@@ -78,7 +77,6 @@ function HomeProducts() {
           ) : null}
         </>
       ) : null}
-      {screen.width < 500 ? <>{!isActive ? <NavbarOnMobile /> : null}</> : null}
     </>
   );
 }

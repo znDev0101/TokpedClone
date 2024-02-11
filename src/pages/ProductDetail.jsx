@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams, useLocation } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import NavbarOnProductDetail from '../components/navbaronproductdetail/NavbarOnProductDetail';
 import OthersProducts from '../components/othersproducts/OthersProducts';
 import UlasanPembeli from '../components/ulasanpembeli/UlasanPembeli';
@@ -13,15 +14,19 @@ import { products } from '../data/data';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../redux/cartSlice/cartSlice';
+import { addProductToWishList, addWishListHeartBoolean, setBooleanWishList, removeProductToWishList } from '../redux/wishlistSlice/wishListSlice';
 
 function ProductDetail() {
   const { productId } = useParams();
   const [dataLimit, setDataLimit] = useState([]);
   const [isOpenVarianProduct, setIsOpenVarianProduct] = useState(false);
   const [filterVarianProduct, setfilterVarianProduct] = useState([]);
-  const { cartProduct, firstCartProduct } = useSelector((state) => state.cart);
+  const { cartProduct } = useSelector((state) => state.cart);
+  const { wishListHeartBoolean, wishListProduct } = useSelector((state) => state.wishList);
+  const [indexHeartBoolean, setIndexHeartBoolean] = useState([]);
+  const { pathname } = useLocation();
+  console.log(pathname);
 
-  const [stockProduct, setStockProduct] = useState(products[productId - 1]?.stock);
   const dispatch = useDispatch();
 
   const { data: dataDetail, loading } = useFetch(`https://fakestoreapi.com/products/${productId}`);
@@ -33,7 +38,20 @@ function ProductDetail() {
     setDataLimit(limit);
     const filterResult = products.filter(({ id }) => id == productId);
     setfilterVarianProduct(filterResult);
+    dispatch(addWishListHeartBoolean({ productId }));
   }, [productId]);
+
+  useEffect(() => {
+    if (wishListHeartBoolean.length !== 0) {
+      const findIndexWishListBoolean = wishListHeartBoolean.findIndex(({ id }) => id == productId);
+      setIndexHeartBoolean(findIndexWishListBoolean);
+    }
+    if (wishListHeartBoolean[indexHeartBoolean]?.boolean) {
+      dispatch(addProductToWishList({ productId, category, title, description, image, price, rating }));
+    } else {
+      dispatch(removeProductToWishList({ productId }));
+    }
+  }, [wishListHeartBoolean, productId]);
 
   const handleAddToCart = () => {
     const conditionStock = cartProduct.filter(({ id }) => id == productId);
@@ -66,6 +84,12 @@ function ProductDetail() {
     }
   };
 
+  const handleClick = () => {
+    dispatch(setBooleanWishList({ productId }));
+  };
+
+  console.log(wishListProduct);
+
   return (
     <>
       <div className="w-[93%] mt-20 mx-auto">
@@ -78,9 +102,20 @@ function ProductDetail() {
             <h1 className="text-2xl">{title}</h1>
           </div>
           {/* PRICE */}
-          <div className="flex gap-x-2 items-center">
-            <h5 className="font-bold text-2xl">{price}</h5>
-            <img src="https://images.tokopedia.net/img/restriction-engine/bebas-ongkir/BO_reguler.png" alt="image-bebas-ongkir" className="h-7 w-12" />
+          <div className="flex justify-between gap-x-2 items-center">
+            <div className="flex">
+              <h5 className="font-bold text-2xl">{price}</h5>
+              <img src="https://images.tokopedia.net/img/restriction-engine/bebas-ongkir/BO_reguler.png" alt="image-bebas-ongkir" className="h-7 w-12" />
+            </div>
+            {wishListHeartBoolean[indexHeartBoolean]?.boolean ? (
+              <span onClick={handleClick}>
+                <FontAwesomeIcon size="xl" icon={faHeartSolid} className="text-pink-500 " />
+              </span>
+            ) : (
+              <span onClick={handleClick}>
+                <FontAwesomeIcon size="xl" icon={faHeartRegular} />
+              </span>
+            )}
           </div>
           <div className="flex gap-x-2 items-center">
             <h5>Terjual 999+</h5>
