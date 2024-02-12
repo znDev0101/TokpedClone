@@ -14,7 +14,7 @@ import { products } from '../data/data';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../redux/cartSlice/cartSlice';
-import { addProductToWishList, addWishListHeartBoolean, setBooleanWishList, removeProductToWishList } from '../redux/wishlistSlice/wishListSlice';
+import { addProductToWishList, addWishListHeartBoolean, setBooleanWishList, removeProductToWishList, removeDuplicateArr } from '../redux/wishlistSlice/wishListSlice';
 
 function ProductDetail() {
   const { productId } = useParams();
@@ -24,8 +24,6 @@ function ProductDetail() {
   const { cartProduct } = useSelector((state) => state.cart);
   const { wishListHeartBoolean, wishListProduct } = useSelector((state) => state.wishList);
   const [indexHeartBoolean, setIndexHeartBoolean] = useState([]);
-  const { pathname } = useLocation();
-  console.log(pathname);
 
   const dispatch = useDispatch();
 
@@ -42,15 +40,8 @@ function ProductDetail() {
   }, [productId]);
 
   useEffect(() => {
-    if (wishListHeartBoolean.length !== 0) {
-      const findIndexWishListBoolean = wishListHeartBoolean.findIndex(({ id }) => id == productId);
-      setIndexHeartBoolean(findIndexWishListBoolean);
-    }
-    if (wishListHeartBoolean[indexHeartBoolean]?.boolean) {
-      dispatch(addProductToWishList({ productId, category, title, description, image, price, rating }));
-    } else {
-      dispatch(removeProductToWishList({ productId }));
-    }
+    const findIndexWishListBoolean = wishListHeartBoolean.findIndex(({ id }) => id === productId);
+    setIndexHeartBoolean(findIndexWishListBoolean);
   }, [wishListHeartBoolean, productId]);
 
   const handleAddToCart = () => {
@@ -86,9 +77,13 @@ function ProductDetail() {
 
   const handleClick = () => {
     dispatch(setBooleanWishList({ productId }));
+    console.log(wishListHeartBoolean[indexHeartBoolean].boolean);
+    if (wishListHeartBoolean[indexHeartBoolean]?.boolean) {
+      dispatch(removeProductToWishList({ productId }));
+    } else {
+      dispatch(addProductToWishList({ productId, category, title, description, image, price, rating }));
+    }
   };
-
-  console.log(wishListProduct);
 
   return (
     <>

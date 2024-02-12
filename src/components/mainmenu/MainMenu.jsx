@@ -43,7 +43,7 @@ const MainMenu = ({ isOpenMainMenu, setIsOpenMainMenu, pathname, products }) => 
             </Link>
           </li>
           <li>
-            <Link className="flex gap-x-3 items-center">
+            <Link to="/wishlist" className="flex gap-x-3 items-center" onClick={() => setIsOpenMainMenu(!isOpenMainMenu)}>
               <FontAwesomeIcon icon={faHeart} size="lg" />
               <span className="text-md">Wishlist</span>
             </Link>

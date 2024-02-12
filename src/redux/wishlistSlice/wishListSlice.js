@@ -17,11 +17,14 @@ export const wishListSlice = createSlice({
     setBooleanWishList: (state, action) => {
       const { productId } = action.payload;
       const findIndexWishListHeart = state.wishListHeartBoolean.findIndex(({ id }) => id == productId);
-      if (state.wishListHeartBoolean[findIndexWishListHeart]) state.wishListHeartBoolean[findIndexWishListHeart].boolean = !state.wishListHeartBoolean[findIndexWishListHeart].boolean;
+      if (!state.wishListHeartBoolean[findIndexWishListHeart].boolean) {
+        state.wishListHeartBoolean[findIndexWishListHeart].boolean = true;
+      } else {
+        state.wishListHeartBoolean[findIndexWishListHeart].boolean = false;
+      }
     },
     addProductToWishList: (state, action) => {
       const { productId, category, title, description, image, price, rating } = action.payload;
-
       state.wishListProduct.push({
         id: productId,
         category: category,
@@ -37,9 +40,14 @@ export const wishListSlice = createSlice({
       const { productId } = action.payload;
       state.wishListProduct = state.wishListProduct.filter(({ id }) => id != productId);
     },
+    removeDuplicateArr: (state, action) => {
+      state.wishListProduct = state.wishListProduct.filter((value, index) => {
+        state.wishListProduct.indexOf(value) === index;
+      });
+    },
   },
 });
 
-export const { addWishListHeartBoolean, setBooleanWishList, addProductToWishList, removeProductToWishList } = wishListSlice.actions;
+export const { addWishListHeartBoolean, setBooleanWishList, addProductToWishList, removeProductToWishList, removeDuplicateArr } = wishListSlice.actions;
 
 export default wishListSlice.reducer;

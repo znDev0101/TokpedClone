@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import Button from '../components/button/Button';
+import CardProducts from '../components/cardproducts/CardProducts';
 
 const WishList = () => {
   const { wishListProduct } = useSelector((state) => state.wishList);
@@ -10,7 +11,7 @@ const WishList = () => {
   return (
     <>
       {wishListProduct.length === 0 ? (
-        <div className="flex flex-col mt-16 px-10 gap-y-3">
+        <div className="flex flex-col mt-24 px-10 gap-y-3">
           <div className="">
             <img src="https://images.tokopedia.net/img/wishlist/empty-collection-state/1-emptystate.png?ect=4g" alt="img" className="object-cover" />
           </div>
@@ -19,7 +20,9 @@ const WishList = () => {
           <Button styleButton={'bg-green-600 w-[60%] m-auto font-bold text-white py-2 rounded-lg'} textButton={'Cari Barang Impian'} handleClick={() => navigate('/')} />
         </div>
       ) : (
-        <p></p>
+        <div className="flex mt-10 px-2">
+          <CardProducts dataProducts={wishListProduct} urlPath="/product_detail" />
+        </div>
       )}
     </>
   );

@@ -64,6 +64,10 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
     if (seacrhKeyword.length > 0) getData();
   }, [valueDebounce]);
 
+  const handleClick = () => {
+    if (pathname !== '/wishlist') setIsActive(true);
+  };
+
   return (
     <>
       {pathname !== '/login' && (
@@ -76,6 +80,8 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
                   ? `w-[90%] m-auto grid grid-cols-[max-content_2fr] items-center  gap-x-5 duration-300`
                   : pathname === '/cart_detail'
                   ? 'w-full px-4 grid grid-cols-[repeat(2,1fr)] items-center justify-between'
+                  : pathname === '/wishlist'
+                  ? 'w-full px-4 grid grid-cols-[repeat(2,1fr)] grid-rows-[repeat(2,1fr)] gap-y-3 items-center justify-between'
                   : pathname !== '/'
                   ? `w-[95%] m-auto grid grid-cols-[max-content_2fr_1fr] items-center gap-x-4`
                   : `w-[92%] m-auto grid grid-cols-[2fr_1fr] align_items_center gap-x-5  justify-between`
@@ -84,31 +90,39 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
               {isActive || pathname !== '/' || pathname === '/cart_detail' ? (
                 <div className="flex gap-x-2 items-center">
                   <FontAwesomeIcon icon={faArrowLeft} size="xl" onClick={isActive ? () => setIsActive(false) : () => navigate(-1)} />
-                  {pathname === '/cart_detail' && <h5 className="col-[1/2] text-lg font-bold">Keranjang</h5>}
+                  {pathname === '/cart_detail' ? <h5 className="col-[1/2] text-lg font-bold">Keranjang</h5> : pathname === '/wishlist' && <h5 className="col-[1/2] text-lg font-bold">Semua Wishlist</h5>}
                 </div>
               ) : null}
               {pathname !== '/cart_detail' && (
-                <div className="w-full relative border border-gray-700 rounded-md">
+                <div className={pathname === '/wishlist' ? 'w-full row-[2] col-[1/3] relative border border-gray-700 rounded-md' : 'w-full relative border border-gray-700 rounded-md'}>
                   <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" className="p-2" />
                   <input
                     type="text"
                     className="border-none outline-none absolute top-0 bottom-0 right-1 left-8 placeholder:font-bold "
                     value={seacrhKeyword}
                     placeholder="Cari di Tokopedia"
-                    onClick={() => setIsActive(true)}
+                    onClick={handleClick}
                     onChange={(e) => setSeacrhKeyword(e.target.value)}
                   />
                 </div>
               )}
               {!isActive ? (
                 <nav className="w-full">
-                  <ul className={pathname === '/cart_detail' ? 'grid grid-cols-[repeat(2,max-content)] gap-x-4 justify-end' : 'grid grid-cols-[repeat(4,max-content)] gap-x-4 justify-end'}>
-                    {pathname === '/cart_detail' ? (
+                  <ul className={pathname === '/cart_detail' || pathname === '/wishlist' ? 'grid grid-cols-[repeat(2,max-content)] gap-x-4 justify-end' : 'grid grid-cols-[repeat(4,max-content)] gap-x-4 justify-end'}>
+                    {pathname === '/cart_detail' || pathname === '/wishlist' ? (
                       <>
                         <li>
-                          <Link>
-                            <FontAwesomeIcon icon={faHeart} size="xl" />
-                          </Link>
+                          {pathname === '/wishlist' ? (
+                            <Link to="/cart_detail">
+                              <FontAwesomeIcon icon={faCartShopping} size="xl" />
+                            </Link>
+                          ) : (
+                            pathname === '/cart_detail' && (
+                              <Link>
+                                <FontAwesomeIcon icon={faHeart} size="xl" />
+                              </Link>
+                            )
+                          )}
                         </li>
                         <li>
                           <FontAwesomeIcon icon={faBars} size="xl" onClick={() => setIsOpenMainMenu(!isOpenMainMenu)}></FontAwesomeIcon>
