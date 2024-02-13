@@ -6,6 +6,7 @@ import Products from './pages/Products';
 import { Login } from './pages/Login';
 import CartDetail from './components/cartDetail/CartDetail';
 import WishList from './pages/WishList';
+import UlasanPembeli from './pages/UlasanPembeli';
 
 function App() {
   const router = createBrowserRouter([
@@ -48,6 +49,10 @@ function App() {
         {
           path: '/product_detail/:productId',
           element: <ProductDetail />,
+        },
+        {
+          path: '/ulasan_pembeli',
+          element: <UlasanPembeli />,
         },
       ],
     },

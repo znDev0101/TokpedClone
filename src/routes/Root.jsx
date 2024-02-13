@@ -20,7 +20,9 @@ function Root() {
         <ToastContainer className="mb-14" />
         <Navbar setIsActive={setIsActive} isOpenMainMenu={isOpenMainMenu} setIsOpenMainMenu={setIsOpenMainMenu} />
         <Outlet context={{ setUrlPath }} />
-        {screen.width < 500 && pathname !== '/cart_detail' && pathname !== `/product_detail/${productId}` && pathname !== `/products/category/${urlPath}` ? <>{!isActive ? <NavbarOnMobile /> : null}</> : null}
+        {screen.width < 500 && pathname !== '/cart_detail' && pathname !== `/product_detail/${productId}` && pathname !== `/products/category/${urlPath}` && pathname !== '/ulasan_pembeli' ? (
+          <>{!isActive && !isOpenMainMenu ? <NavbarOnMobile /> : null}</>
+        ) : null}
         <Footer />
       </div>
     </MyContext.Provider>

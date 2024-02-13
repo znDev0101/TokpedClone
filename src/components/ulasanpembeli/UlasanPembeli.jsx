@@ -8,7 +8,7 @@ function UlasanPembeli({ dataLimit }) {
     <div className="w-[92%] m-[20px_auto] grid grid-rows-[repeat(2,max-content)] gap-y-2">
       <div className="flex justify-between items-center">
         <h2 className="font-bold text-xl">Ulasan Pembeli</h2>
-        <Link to="/" className="font-bold text-green-700">
+        <Link to="/ulasan_pembeli" className="font-bold text-green-700">
           Lihat Semua
         </Link>
       </div>

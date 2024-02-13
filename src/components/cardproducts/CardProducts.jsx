@@ -7,12 +7,12 @@ function CardProducts({ dataProducts, urlPath }) {
   const { pathname } = useLocation();
 
   return (
-    <div className={pathname !== '/' ? `w-[93%] m-[70px_auto]` : `w-[93%] mx-auto mt-4 mb-20`}>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3">
+    <div className={pathname === '/wishlist' ? 'w-[93%] m-[20px_auto]' : pathname !== '/' ? `w-[93%] m-[70px_auto]` : `w-[93%] mx-auto mt-4 mb-20`}>
+      <div className={pathname === '/wishlist' ? 'grid grid-cols-[repeat(2,1fr)] gap-3' : 'grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3'}>
         {dataProducts.map(({ id, category, title, image, price, rating }) => {
           return (
             <Link to={`${urlPath}/${id}`} key={id}>
-              <div className="w-full grid grid-rows-[17rem_1.2rem_1.2rem_1.2rem] border-2 border-gray-300 rounded-md shadow-md gap-y-2 pb-3">
+              <div className="w-full  grid grid-rows-[17rem_1.2rem_1.2rem_1.2rem] border-2 border-gray-300 rounded-md shadow-md gap-y-2 pb-3">
                 <div className="w-full h-full flex items-center overflow-hidden pt-8 px-3 m-auto">
                   <img src={image} alt="image-product" className="object-cover" />
                 </div>
