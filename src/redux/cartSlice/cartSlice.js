@@ -18,8 +18,8 @@ export const cartSlice = createSlice({
       const findCartProduct = state.cartProduct.findIndex(({ id }) => id == parseInt(idCartProduct));
       const findFirstCartProduct = state.firstCartProduct.findIndex(({ id }) => id === idCartProduct);
       if (findCartProduct >= 0) {
-        state.cartProduct[findCartProduct].stock -= 1;
         if (state.cartProduct[findCartProduct].stock !== 0) {
+          state.cartProduct[findCartProduct].stock -= 1;
           state.cartProduct[findCartProduct].quantity += 1;
           state.totalCart += 1;
           state.cartProduct[findCartProduct].price += priceProduct;

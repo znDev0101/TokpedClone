@@ -20,8 +20,8 @@ const VarianProduct = ({ filterVarianProduct, productId, isOpenVarianProduct, se
     <div
       className={
         isOpenVarianProduct
-          ? 'w-full h-[65vh] fixed bottom-0 bg-white border-2 border-green-600 rounded-t-xl z-40 mt-52 duration-300 translate-y-0'
-          : 'w-full h-[65vh] fixed  bottom-0 bg-white border-2 border-green-600 rounded-t-xl z-40 mt-52 duration-300 translate-y-full'
+          ? 'w-full h-[65vh] fixed bottom-0 bg-white border-2 border-green-600 rounded-t-xl z-50 mt-52 duration-300 translate-y-0'
+          : 'w-full h-[65vh] fixed  bottom-0 bg-white border-2 border-green-600 rounded-t-xl z-50 mt-52 duration-300 translate-y-full'
       }
     >
       <div className="flex px-5 gap-x-5 mt-4">
@@ -34,7 +34,7 @@ const VarianProduct = ({ filterVarianProduct, productId, isOpenVarianProduct, se
         </div>
         <div className="flex flex-col">
           <h5 className="font-bold text-lg">{price}</h5>
-          {cartProduct.length === 0 ? <p>{stockProduct}</p> : <p>{cartProduct[indexCart]?.stock}</p>}
+          {cartProduct[indexCart] === undefined ? <p>{stockProduct}</p> : <p>{cartProduct[indexCart]?.stock}</p>}
         </div>
       </div>
       <hr className="w-full border border-gray-200 mt-6" />

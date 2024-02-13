@@ -72,7 +72,6 @@ function ProductDetail() {
         transition: Bounce,
       });
       dispatch(addToCart({ id: productId, value: filterVarianProduct, description, title, priceProduct: price }));
-      setStockProduct((prev) => prev - 1);
     }
   };
 
@@ -168,7 +167,7 @@ function ProductDetail() {
       <OthersProducts idProduct={productId} categoryProducts={category} />
 
       <NavbarOnProductDetail
-        style={'w-full bg-white grid grid-cols-[max-content_1fr_1fr] fixed bottom-0 px-2 py-2 gap-x-2 items-center z-50'}
+        style={'w-full bg-white grid grid-cols-[max-content_1fr_1fr] fixed bottom-0 px-2 py-2 gap-x-2 items-center z-30'}
         handleClick={category !== 'jewelery' && !/^1[3-4]$/.test(productId) ? () => setIsOpenVarianProduct(true) : handleAddToCart}
       />
       {category !== 'jewelery' && !/^1[3-4]$/.test(productId) && (
@@ -184,8 +183,8 @@ function ProductDetail() {
         />
       )}
       <ScrollToTop
-        styleIfTrue={'fixed w-12 justify-center items-center flex h-12 bottom-20 right-6 rounded-full shadow-lg bg-white z-40 duration-300 translate-y-0 '}
-        styleIffalse={'fixed w-12 justify-center items-center flex h-12 bottom-0 right-6 rounded-full shadow-lg bg-white duration-300 translate-y-full'}
+        styleIfTrue={'fixed w-12 justify-center items-center flex h-12 bottom-20 right-6 rounded-full shadow-lg bg-white  duration-300 translate-y-0 '}
+        styleIffalse={'fixed w-12 justify-center items-center flex h-12 bottom-0 right-6 rounded-full shadow-lg bg-white  duration-300 translate-y-full'}
         onClick={() => window.scrollTo(0, 0)}
         numberScrollYWindow={50}
       />

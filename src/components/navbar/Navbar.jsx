@@ -120,14 +120,15 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
                       <ul className={pathname === '/cart_detail' || pathname === '/wishlist' ? 'grid grid-cols-[repeat(2,max-content)] gap-x-4 justify-end' : 'grid grid-cols-[repeat(4,max-content)] gap-x-4 justify-end'}>
                         {pathname === '/cart_detail' || pathname === '/wishlist' ? (
                           <>
-                            <li>
+                            <li className="relative">
                               {pathname === '/wishlist' ? (
                                 <Link to="/cart_detail">
                                   <FontAwesomeIcon icon={faCartShopping} size="xl" />
+                                  <span className="absolute w-max h-max bottom-4 -right-3 text-center rounded-full text-sm bg-green-600 text-white font-bold px-[.4rem]">{totalCart !== 0 && totalCart}</span>
                                 </Link>
                               ) : (
                                 pathname === '/cart_detail' && (
-                                  <Link>
+                                  <Link to="/wishlist">
                                     <FontAwesomeIcon icon={faHeart} size="xl" />
                                   </Link>
                                 )
