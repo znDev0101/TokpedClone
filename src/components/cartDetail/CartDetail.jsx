@@ -16,7 +16,7 @@ const CartDetail = () => {
 
   const navigate = useNavigate();
 
-  const { cartProduct, selectedProduct, totalPrice, cartBoolean } = useSelector((state) => state.cart);
+  const { cartProduct, selectedProduct, totalPrice, cartBoolean, totalCart } = useSelector((state) => state.cart);
 
   const { data, loading } = useFetch('https://fakestoreapi.com/products/');
 
@@ -33,6 +33,8 @@ const CartDetail = () => {
       setIsShowDeleteBtn(false);
     }
   }, [selectedProduct]);
+
+  console.log(selectedProduct);
 
   return (
     <div className={cartProduct.length < 4 ? 'w-full h-screen  pt-10 pb-16 z-40' : 'w-full   pt-10 pb-16 z-40'}>

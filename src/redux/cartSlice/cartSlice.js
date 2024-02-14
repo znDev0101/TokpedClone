@@ -43,6 +43,7 @@ export const cartSlice = createSlice({
           state.cartProduct[findCartProduct].stock -= 1;
           state.cartProduct[findCartProduct].quantity += 1;
           state.cartProduct[findCartProduct].price += priceProduct;
+          state.totalCart += 1;
         }
         if (state.cartBoolean[findBooleanCart].boolean) {
           state.cartProduct[findCartProduct].stock -= 1;
@@ -62,6 +63,7 @@ export const cartSlice = createSlice({
           state.cartProduct[findCartProduct].stock += 1;
           state.cartProduct[findCartProduct].quantity -= 1;
           state.cartProduct[findCartProduct].price -= priceProduct;
+          state.totalCart -= 1;
         }
         if (state.cartBoolean[findBooleanCart].boolean) {
           state.cartProduct[findCartProduct].stock += 1;
@@ -143,17 +145,16 @@ export const cartSlice = createSlice({
       }
       state.cartBoolean = state.cartBoolean.filter(({ id }) => id !== idCartProduct);
     },
-    btnDeleteCart: (state) => {
+    deleteCartProduct: (state) => {
       if (state.selectedProduct.length !== 0) {
         for (let i = 0; i < state.selectedProduct.length; i++) {
           state.cartProduct = state.cartProduct.filter(({ id }) => id !== state.selectedProduct[i].id);
           state.cartBoolean = state.cartBoolean.filter(({ id }) => id !== state.selectedProduct[i].id);
           state.firstCartProduct = state.firstCartProduct.filter(({ id }) => id != state.selectedProduct[i].id);
-          if (state.selectedProduct[i].quantity > 1) {
-            state.totalCart = state.totalCart -= state.selectedProduct[i].quantity;
-          } else {
-            state.totalCart = state.totalCart -= state.selectedProduct.length;
-          }
+          state.totalPrice -= state.selectedProduct[i].price;
+          if (state.selectedProduct[i].quantity > 1) state.totalCart = state.totalCart -= state.selectedProduct[i].quantity;
+
+          if (state.selectedProduct[i].quantity == 1) state.totalCart -= 1;
         }
       }
       state.selectedProduct = [];
@@ -161,7 +162,7 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, incrementCart, sumPrice, selectProduct, selectCancelCartProduct, resetTotalPrice, decrementCart, removeCart, booleanCart, booleanChecked, trueAllBooleanChecked, falseAllBooleanChecked, btnDeleteCart } =
+export const { addToCart, incrementCart, sumPrice, selectProduct, selectCancelCartProduct, resetTotalPrice, decrementCart, removeCart, booleanCart, booleanChecked, trueAllBooleanChecked, falseAllBooleanChecked, deleteCartProduct } =
   cartSlice.actions;
 
 export default cartSlice.reducer;

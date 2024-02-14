@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { btnDeleteCart } from '../../redux/cartSlice/cartSlice';
+import { deleteCartProduct } from '../../redux/cartSlice/cartSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast, Bounce } from 'react-toastify';
 
@@ -8,7 +8,7 @@ const Modal = ({ showModal, setShowModal }) => {
   const dispatch = useDispatch();
 
   const handleDelete = () => {
-    dispatch(btnDeleteCart());
+    dispatch(deleteCartProduct());
     setShowModal(!showModal);
     toast.success('Belanjaan kamu berhasil di hapus', {
       position: 'bottom-right',
