@@ -35,6 +35,7 @@ const CartDetail = () => {
   }, [selectedProduct]);
 
   console.log(selectedProduct);
+  console.log(cartProduct);
 
   return (
     <div className={cartProduct.length < 4 ? 'w-full h-screen  pt-10 pb-16 z-40' : 'w-full   pt-10 pb-16 z-40'}>

@@ -50,6 +50,9 @@ export const cartSlice = createSlice({
           state.cartProduct[findCartProduct].quantity += 1;
           state.cartProduct[findCartProduct].price += priceProduct;
           state.selectedProduct[findSelectedProduct].price += priceProduct;
+          state.selectedProduct[findSelectedProduct].quantity += 1;
+          state.selectedProduct[findSelectedProduct].stock -= 1;
+          state.totalCart += 1;
         }
       }
     },
@@ -70,6 +73,9 @@ export const cartSlice = createSlice({
           state.cartProduct[findCartProduct].quantity -= 1;
           state.cartProduct[findCartProduct].price -= priceProduct;
           state.selectedProduct[findSelectedProduct].price -= priceProduct;
+          state.selectedProduct[findSelectedProduct].quantity -= 1;
+          state.selectedProduct[findSelectedProduct].stock += 1;
+          state.totalCart -= 1;
         }
       }
     },
@@ -130,11 +136,9 @@ export const cartSlice = createSlice({
       const { id: idCartProduct } = action.payload;
       const findFirstCartProduct = state.firstCartProduct.findIndex(({ id }) => id == idCartProduct);
       state.cartProduct = state.cartProduct.filter(({ id }) => id !== idCartProduct);
-      if (state.firstCartProduct[findFirstCartProduct].cart > 1) {
-        state.totalCart -= state.firstCartProduct[findFirstCartProduct].cart;
-      } else {
-        state.totalCart -= 1;
-      }
+      // if (state.firstCartProduct[findFirstCartProduct].cart > 1) {
+      //   state.totalCart -= state.firstCartProduct[findFirstCartProduct].cart;
+      // }
       state.firstCartProduct = state.firstCartProduct.filter(({ id }) => id != idCartProduct);
       state.selectedProduct = state.selectedProduct.filter(({ id }) => id !== idCartProduct);
       if (state.totalPrice !== 0) {
