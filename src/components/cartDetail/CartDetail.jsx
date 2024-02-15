@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
 import { useFetch } from '../../hooks/useFetch';
 import { resetTotalPrice } from '../../redux/cartSlice/cartSlice';
-import { addWishListHeartBoolean } from '../../redux/wishlistSlice/wishListSlice';
 import CartProducts from '../cartproducts/CartProducts';
 import Modal from '../modal/Modal';
 import SumPrice from '../sumprice/SumPrice';

@@ -30,7 +30,7 @@ function ProductDetail() {
 
   const { data: dataDetail, loading } = useFetch(`https://fakestoreapi.com/products/${id}`);
 
-  const { title, description, image, price, rating, category } = dataDetail;
+  const { title, description, image, price: priceProduct, rating, category } = dataDetail;
 
   useEffect(() => {
     const limit = dataUlasan.slice(0, 2);
@@ -71,7 +71,7 @@ function ProductDetail() {
         theme: 'light',
         transition: Bounce,
       });
-      dispatch(addToCart({ id, value: filterVarianProduct, description, title, price: price }));
+      dispatch(addToCart({ id, value: filterVarianProduct, description, title, price: priceProduct }));
     }
   };
 
@@ -91,7 +91,7 @@ function ProductDetail() {
         transition: Bounce,
       });
     } else {
-      dispatch(addProductToWishList({ id, category, title, description, image, price, rating }));
+      dispatch(addProductToWishList({ id, category, title, description, image, priceProduct, rating }));
       toast.success('❤️, Barang berhasil menambahkan ke wishlist', {
         position: 'bottom-right',
         autoClose: 5000,
@@ -120,7 +120,7 @@ function ProductDetail() {
           {/* PRICE */}
           <div className="flex justify-between gap-x-2 items-center">
             <div className="flex">
-              <h5 className="font-bold text-2xl">{price}</h5>
+              <h5 className="font-bold text-2xl">{priceProduct}</h5>
               <img src="https://images.tokopedia.net/img/restriction-engine/bebas-ongkir/BO_reguler.png" alt="image-bebas-ongkir" className="h-7 w-12" />
             </div>
             {wishListHeartBoolean[indexHeartBoolean]?.boolean ? (
@@ -173,7 +173,7 @@ function ProductDetail() {
         <VarianProduct
           filterVarianProduct={filterVarianProduct}
           imageProduct={image}
-          price={price}
+          price={priceProduct}
           productId={id}
           stock={filterVarianProduct[0]?.stock}
           isOpenVarianProduct={isOpenVarianProduct}

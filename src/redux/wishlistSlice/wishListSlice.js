@@ -24,14 +24,14 @@ export const wishListSlice = createSlice({
       }
     },
     addProductToWishList: (state, action) => {
-      const { id, category, title, description, image, price, rating } = action.payload;
+      const { id, category, title, description, image, priceProduct, rating } = action.payload;
       state.wishListProduct.push({
         id: id,
         category: category,
         title: title,
         image: image,
         description: description,
-        price: price,
+        price: priceProduct,
         rating: rating,
         terjual: '999 terjual',
       });

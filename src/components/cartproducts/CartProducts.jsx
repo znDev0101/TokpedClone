@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { incrementCart, selectCancelCartProduct, sumPrice, selectProduct, decrementCart, removeCart, booleanChecked, booleanCart } from '../../redux/cartSlice/cartSlice';
 import { setBooleanWishList, addProductToWishList, removeProductToWishList } from '../../redux/wishlistSlice/wishListSlice';
 
-const CartProducts = ({ id, title, image, dataCartProduct, priceProduct, category, description, rating, wishListBoolean }) => {
+const CartProducts = ({ id, title, image, dataCartProduct, price: priceProduct, category, description, rating, wishListBoolean }) => {
   const { totalPrice, cartProduct, selectedProduct, cartBoolean } = useSelector((state) => state.cart);
   const { wishListHeartBoolean } = useSelector((state) => state.wishList);
   const dispatch = useDispatch();
@@ -78,7 +78,7 @@ const CartProducts = ({ id, title, image, dataCartProduct, priceProduct, categor
         transition: Bounce,
       });
     } else {
-      dispatch(addProductToWishList({ id: id, category, title, description, image, price, rating }));
+      dispatch(addProductToWishList({ id: id, category, title, description, image, priceProduct, rating }));
       toast.success('❤️, Barang berhasil menambahkan ke wishlist', {
         position: 'bottom-right',
         autoClose: 5000,
