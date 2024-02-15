@@ -2,9 +2,10 @@ import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { useFetch } from '../../hooks/useFetch';
 import { resetTotalPrice } from '../../redux/cartSlice/cartSlice';
+import { addWishListHeartBoolean } from '../../redux/wishlistSlice/wishListSlice';
 import CartProducts from '../cartproducts/CartProducts';
 import Modal from '../modal/Modal';
 import SumPrice from '../sumprice/SumPrice';
@@ -16,8 +17,7 @@ const CartDetail = () => {
 
   const navigate = useNavigate();
 
-  const { cartProduct, selectedProduct, totalPrice, cartBoolean, totalCart } = useSelector((state) => state.cart);
-
+  const { cartProduct, selectedProduct } = useSelector((state) => state.cart);
   const { data, loading } = useFetch('https://fakestoreapi.com/products/');
 
   useEffect(() => {
@@ -33,9 +33,6 @@ const CartDetail = () => {
       setIsShowDeleteBtn(false);
     }
   }, [selectedProduct]);
-
-  console.log(selectedProduct);
-  console.log(cartProduct);
 
   return (
     <div className={cartProduct.length < 4 ? 'w-full h-screen  pt-10 pb-16 z-40' : 'w-full   pt-10 pb-16 z-40'}>
@@ -63,8 +60,8 @@ const CartDetail = () => {
           {cartProduct.map((dataCartProduct) => {
             return data
               .filter(({ id }) => id == dataCartProduct.id)
-              .map(({ id: idProduct, title, image, price }) => {
-                return <CartProducts id={idProduct} priceProduct={price} dataCart={cartProduct} dataCartProduct={dataCartProduct} title={title} image={image} />;
+              .map(({ id, title, image, price, category, description, rating }) => {
+                return <CartProducts id={id} price={price} category={category} dataCart={cartProduct} dataCartProduct={dataCartProduct} title={title} image={image} description={description} rating={rating} />;
               });
           })}
           <Modal showModal={showModal} setShowModal={setShowModal} />

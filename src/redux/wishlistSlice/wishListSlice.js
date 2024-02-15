@@ -10,13 +10,13 @@ export const wishListSlice = createSlice({
   initialState,
   reducers: {
     addWishListHeartBoolean: (state, action) => {
-      const { productId } = action.payload;
-      const findIndexWishListHeart = state.wishListHeartBoolean.findIndex(({ id }) => id == productId);
-      if (state.wishListHeartBoolean[findIndexWishListHeart] === undefined) state.wishListHeartBoolean.push({ id: productId, boolean: false });
+      const { id } = action.payload;
+      const findIndexWishListHeart = state.wishListHeartBoolean.findIndex((data) => data.id == id);
+      if (state.wishListHeartBoolean[findIndexWishListHeart] === undefined) state.wishListHeartBoolean.push({ id: id, boolean: false });
     },
     setBooleanWishList: (state, action) => {
-      const { productId } = action.payload;
-      const findIndexWishListHeart = state.wishListHeartBoolean.findIndex(({ id }) => id == productId);
+      const { id } = action.payload;
+      const findIndexWishListHeart = state.wishListHeartBoolean.findIndex((data) => data.id == id);
       if (!state.wishListHeartBoolean[findIndexWishListHeart].boolean) {
         state.wishListHeartBoolean[findIndexWishListHeart].boolean = true;
       } else {
@@ -24,9 +24,9 @@ export const wishListSlice = createSlice({
       }
     },
     addProductToWishList: (state, action) => {
-      const { productId, category, title, description, image, price, rating } = action.payload;
+      const { id, category, title, description, image, price, rating } = action.payload;
       state.wishListProduct.push({
-        id: productId,
+        id: id,
         category: category,
         title: title,
         image: image,
@@ -37,14 +37,14 @@ export const wishListSlice = createSlice({
       });
     },
     removeProductToWishList: (state, action) => {
-      const { productId } = action.payload;
-      state.wishListProduct = state.wishListProduct.filter(({ id }) => id != productId);
+      const { id } = action.payload;
+      state.wishListProduct = state.wishListProduct.filter((data) => data.id != id);
     },
-    removeDuplicateArr: (state, action) => {
-      state.wishListProduct = state.wishListProduct.filter((value, index) => {
-        state.wishListProduct.indexOf(value) === index;
-      });
-    },
+    // removeDuplicateArr: (state, action) => {
+    //   state.wishListProduct = state.wishListProduct.filter((value, index) => {
+    //     state.wishListProduct.indexOf(value) === index;
+    //   });
+    // },
   },
 });
 

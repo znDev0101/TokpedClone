@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router';
+import { useParams } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
@@ -18,7 +18,7 @@ import { addProductToWishList, addWishListHeartBoolean, setBooleanWishList, remo
 import ScrollToTop from '../components/scrolltotop/ScrollToTop';
 
 function ProductDetail() {
-  const { productId } = useParams();
+  const { productId: id } = useParams();
   const [dataLimit, setDataLimit] = useState([]);
   const [isOpenVarianProduct, setIsOpenVarianProduct] = useState(false);
   const [filterVarianProduct, setfilterVarianProduct] = useState([]);
@@ -28,25 +28,25 @@ function ProductDetail() {
 
   const dispatch = useDispatch();
 
-  const { data: dataDetail, loading } = useFetch(`https://fakestoreapi.com/products/${productId}`);
+  const { data: dataDetail, loading } = useFetch(`https://fakestoreapi.com/products/${id}`);
 
   const { title, description, image, price, rating, category } = dataDetail;
 
   useEffect(() => {
     const limit = dataUlasan.slice(0, 2);
     setDataLimit(limit);
-    const filterResult = products.filter(({ id }) => id == productId);
+    const filterResult = products.filter((data) => data.id == id);
     setfilterVarianProduct(filterResult);
-    dispatch(addWishListHeartBoolean({ productId }));
-  }, [productId]);
+    dispatch(addWishListHeartBoolean({ id }));
+  }, [id]);
 
   useEffect(() => {
-    const findIndexWishListBoolean = wishListHeartBoolean.findIndex(({ id }) => id === productId);
+    const findIndexWishListBoolean = wishListHeartBoolean.findIndex((data) => data.id === id);
     setIndexHeartBoolean(findIndexWishListBoolean);
-  }, [wishListHeartBoolean, productId]);
+  }, [wishListHeartBoolean, id]);
 
   const handleAddToCart = () => {
-    const conditionStock = cartProduct.filter(({ id }) => id == productId);
+    const conditionStock = cartProduct.filter((data) => data.id == id);
     if (conditionStock[0]?.stock === 0) {
       toast.warn('Maaf stock barang sudah habis', {
         position: 'bottom-right',
@@ -71,15 +71,14 @@ function ProductDetail() {
         theme: 'light',
         transition: Bounce,
       });
-      dispatch(addToCart({ id: productId, value: filterVarianProduct, description, title, priceProduct: price }));
+      dispatch(addToCart({ id, value: filterVarianProduct, description, title, price: price }));
     }
   };
 
   const handleClick = () => {
-    dispatch(setBooleanWishList({ productId }));
-    console.log(wishListHeartBoolean[indexHeartBoolean].boolean);
+    dispatch(setBooleanWishList({ id }));
     if (wishListHeartBoolean[indexHeartBoolean]?.boolean) {
-      dispatch(removeProductToWishList({ productId }));
+      dispatch(removeProductToWishList({ id }));
       toast.info('🗑️, Barang berhasil di hapus dari wishlist', {
         position: 'bottom-right',
         autoClose: 5000,
@@ -92,7 +91,7 @@ function ProductDetail() {
         transition: Bounce,
       });
     } else {
-      dispatch(addProductToWishList({ productId, category, title, description, image, price, rating }));
+      dispatch(addProductToWishList({ id, category, title, description, image, price, rating }));
       toast.success('❤️, Barang berhasil menambahkan ke wishlist', {
         position: 'bottom-right',
         autoClose: 5000,
@@ -164,18 +163,18 @@ function ProductDetail() {
         </div>
       </div>
       <UlasanPembeli dataLimit={dataLimit} />
-      <OthersProducts idProduct={productId} categoryProducts={category} />
+      <OthersProducts idProduct={id} categoryProducts={category} />
 
       <NavbarOnProductDetail
         style={'w-full bg-white grid grid-cols-[max-content_1fr_1fr] fixed bottom-0 px-2 py-2 gap-x-2 items-center z-30'}
-        handleClick={category !== 'jewelery' && !/^1[3-4]$/.test(productId) ? () => setIsOpenVarianProduct(true) : handleAddToCart}
+        handleClick={category !== 'jewelery' && !/^1[3-4]$/.test(id) ? () => setIsOpenVarianProduct(true) : handleAddToCart}
       />
-      {category !== 'jewelery' && !/^1[3-4]$/.test(productId) && (
+      {category !== 'jewelery' && !/^1[3-4]$/.test(id) && (
         <VarianProduct
           filterVarianProduct={filterVarianProduct}
           imageProduct={image}
           price={price}
-          productId={productId}
+          productId={id}
           stock={filterVarianProduct[0]?.stock}
           isOpenVarianProduct={isOpenVarianProduct}
           setIsOpenVarianProduct={setIsOpenVarianProduct}
