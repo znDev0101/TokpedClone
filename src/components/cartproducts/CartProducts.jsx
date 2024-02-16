@@ -95,13 +95,13 @@ const CartProducts = ({ id, title, image, dataCartProduct, price: priceProduct, 
 
   const handleIncrement = () => {
     if (stock !== 0) {
-      dispatch(incrementCart({ id, price }));
+      dispatch(incrementCart({ id, priceProduct }));
       dispatch(sumPrice());
     }
   };
 
   const handleDecrement = () => {
-    dispatch(decrementCart({ id, price }));
+    dispatch(decrementCart({ id, priceProduct }));
     dispatch(sumPrice());
   };
 

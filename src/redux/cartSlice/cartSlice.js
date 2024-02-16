@@ -33,7 +33,7 @@ export const cartSlice = createSlice({
       }
     },
     incrementCart: (state, action) => {
-      const { id, price } = action.payload;
+      const { id, priceProduct } = action.payload;
       const findCartProduct = state.cartProduct.findIndex((data) => data.id == id);
       const findSelectedProduct = state.selectedProduct.findIndex((data) => data.id == id);
       const findBooleanCart = state.cartBoolean.findIndex((data) => data.id == id);
@@ -42,14 +42,14 @@ export const cartSlice = createSlice({
         if (state.cartProduct[findCartProduct].stock !== 0 && !state.cartBoolean[findBooleanCart].boolean) {
           state.cartProduct[findCartProduct].stock -= 1;
           state.cartProduct[findCartProduct].quantity += 1;
-          state.cartProduct[findCartProduct].price += price;
+          state.cartProduct[findCartProduct].price += priceProduct;
           state.totalCart += 1;
         }
         if (state.cartBoolean[findBooleanCart].boolean) {
           state.cartProduct[findCartProduct].stock -= 1;
           state.cartProduct[findCartProduct].quantity += 1;
-          state.cartProduct[findCartProduct].price += price;
-          state.selectedProduct[findSelectedProduct].price += price;
+          state.cartProduct[findCartProduct].price += priceProduct;
+          state.selectedProduct[findSelectedProduct].price += priceProduct;
           state.selectedProduct[findSelectedProduct].quantity += 1;
           state.selectedProduct[findSelectedProduct].stock -= 1;
           state.totalCart += 1;
@@ -57,7 +57,7 @@ export const cartSlice = createSlice({
       }
     },
     decrementCart: (state, action) => {
-      const { id, price } = action.payload;
+      const { id, priceProduct } = action.payload;
       const findCartProduct = state.cartProduct.findIndex((data) => data.id == id);
       const findSelectedProduct = state.selectedProduct.findIndex((data) => data.id == id);
       const findBooleanCart = state.cartBoolean.findIndex((data) => data.id == id);
@@ -65,14 +65,14 @@ export const cartSlice = createSlice({
         if (parseInt(state.cartProduct[findCartProduct].quantity) !== 0 && !state.cartBoolean[findBooleanCart].boolean) {
           state.cartProduct[findCartProduct].stock += 1;
           state.cartProduct[findCartProduct].quantity -= 1;
-          state.cartProduct[findCartProduct].price -= price;
+          state.cartProduct[findCartProduct].price -= priceProduct;
           state.totalCart -= 1;
         }
         if (state.cartBoolean[findBooleanCart].boolean) {
           state.cartProduct[findCartProduct].stock += 1;
           state.cartProduct[findCartProduct].quantity -= 1;
-          state.cartProduct[findCartProduct].price -= price;
-          state.selectedProduct[findSelectedProduct].price -= price;
+          state.cartProduct[findCartProduct].price -= priceProduct;
+          state.selectedProduct[findSelectedProduct].price -= priceProduct;
           state.selectedProduct[findSelectedProduct].quantity -= 1;
           state.selectedProduct[findSelectedProduct].stock += 1;
           state.totalCart -= 1;
@@ -150,15 +150,15 @@ export const cartSlice = createSlice({
       if (state.selectedProduct.length !== 0) {
         for (let i = 0; i < state.selectedProduct.length; i++) {
           state.cartProduct = state.cartProduct.filter((data) => data.id !== state.selectedProduct[i].id);
-          state.cartBoolean = state.cartBoolean.filter((data) => data.id !== state.selectedProduct[i].id);
+          state.cartBoolean = state.cartBoolean.filter((data) => data.id != state.selectedProduct[i].id);
           state.firstCartProduct = state.firstCartProduct.filter((data) => data.id != state.selectedProduct[i].id);
           state.totalPrice -= state.selectedProduct[i].price;
           if (state.selectedProduct[i].quantity > 1) state.totalCart = state.totalCart -= state.selectedProduct[i].quantity;
 
           if (state.selectedProduct[i].quantity == 1) state.totalCart -= 1;
         }
+        state.selectedProduct = [];
       }
-      state.selectedProduct = [];
     },
   },
 });
