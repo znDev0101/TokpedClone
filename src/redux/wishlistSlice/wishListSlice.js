@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   wishListHeartBoolean: [],
   wishListProduct: [],
+  checkBoxWishListBoolean: [],
 };
 
 export const wishListSlice = createSlice({
@@ -35,19 +36,37 @@ export const wishListSlice = createSlice({
         rating: rating,
         terjual: '999 terjual',
       });
+      state.checkBoxWishListBoolean.push({
+        id: id,
+        boolean: false,
+      });
     },
-    removeProductToWishList: (state, action) => {
+    setCheckBoxBooleanWishList: (state, action) => {
+      const { id } = action.payload;
+      const findIndexCheckBoxBoolean = state.checkBoxWishListBoolean.findIndex((data) => data.id == id);
+      state.checkBoxWishListBoolean[findIndexCheckBoxBoolean].boolean = !state.checkBoxWishListBoolean[findIndexCheckBoxBoolean].boolean;
+    },
+    resetCheckBooleanFalse: (state) => {
+      return state.checkBoxWishListBoolean.map(({ boolean }) => {
+        boolean = false;
+      });
+    },
+    removeProductFromWishList: (state, action) => {
       const { id } = action.payload;
       state.wishListProduct = state.wishListProduct.filter((data) => data.id != id);
     },
-    // removeDuplicateArr: (state, action) => {
-    //   state.wishListProduct = state.wishListProduct.filter((value, index) => {
-    //     state.wishListProduct.indexOf(value) === index;
-    //   });
-    // },
+    removeItemsFromWishList: (state) => {
+      const idBooleanTrue = state.checkBoxWishListBoolean.filter(({ boolean }) => boolean === true);
+      state.checkBoxWishListBoolean = state.checkBoxWishListBoolean.filter(({ boolean }) => boolean !== true);
+      for (let i = 0; i < idBooleanTrue.length; i++) {
+        state.wishListProduct = state.wishListProduct.filter(({ id }) => id != idBooleanTrue[i].id);
+        const findIndexWishListHeartBoolean = state.wishListHeartBoolean.findIndex(({ id }) => id == idBooleanTrue[i].id);
+        state.wishListHeartBoolean[findIndexWishListHeartBoolean].boolean = !state.wishListHeartBoolean[findIndexWishListHeartBoolean].boolean;
+      }
+    },
   },
 });
 
-export const { addWishListHeartBoolean, setBooleanWishList, addProductToWishList, removeProductToWishList, removeDuplicateArr } = wishListSlice.actions;
+export const { addWishListHeartBoolean, setBooleanWishList, addProductToWishList, removeProductFromWishList, removeItemsFromWishList, setCheckBoxBooleanWishList } = wishListSlice.actions;
 
 export default wishListSlice.reducer;

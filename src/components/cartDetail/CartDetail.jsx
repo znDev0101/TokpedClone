@@ -2,9 +2,12 @@ import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useFetch } from '../../hooks/useFetch';
-import { resetTotalPrice, selectProduct } from '../../redux/cartSlice/cartSlice';
+import { deleteCartProduct } from '../../redux/cartSlice/cartSlice';
+import { resetTotalPrice } from '../../redux/cartSlice/cartSlice';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast, Bounce } from 'react-toastify';
 import CartProducts from '../cartproducts/CartProducts';
 import Modal from '../modal/Modal';
 import SumPrice from '../sumprice/SumPrice';
@@ -33,7 +36,21 @@ const CartDetail = () => {
     }
   }, [selectedProduct]);
 
-  console.log(cartProduct);
+  const handleDelete = () => {
+    dispatch(deleteCartProduct());
+    setShowModal(!showModal);
+    toast.success('Belanjaan kamu berhasil di hapus', {
+      position: 'bottom-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+      transition: Bounce,
+    });
+  };
 
   return (
     <div className={cartProduct.length < 4 ? 'w-full h-screen  pt-10 pb-16 z-40' : 'w-full   pt-10 pb-16 z-40'}>
@@ -69,7 +86,7 @@ const CartDetail = () => {
                 );
               });
           })}
-          <Modal showModal={showModal} setShowModal={setShowModal} />
+          <Modal showModal={showModal} modalTitle={'Hapus Barang'} modalParagraph={'Product yang kamu pilih akan di hapus dari Keranjang '} setShowModal={setShowModal} handleDelete={handleDelete} />
           <SumPrice />
         </>
       )}

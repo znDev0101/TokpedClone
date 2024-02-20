@@ -19,8 +19,7 @@ function NavbarOnMobile() {
             };
           }}
         >
-          <FontAwesomeIcon icon={faHouse} size="xl" />
-          <p className="text-xs text-black">Home</p>
+          <FontAwesomeIcon icon={faHouse} size="xl" /> <p className="text-xs text-black">Home</p>
         </NavLink>
       </div>
       <div className="flex flex-col">

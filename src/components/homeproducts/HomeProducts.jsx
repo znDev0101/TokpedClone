@@ -8,12 +8,12 @@ import Category from '../category/Category';
 import ScrollToTop from '../scrolltotop/ScrollToTop';
 import { useContext } from 'react';
 import { MyContext } from '../../context/MyContext';
-import { useNavigate, useOutletContext } from 'react-router';
+import { useLocation, useNavigate, useOutletContext } from 'react-router';
 import SliderImages from '../sliderimages/SliderImages';
 
 function HomeProducts() {
   const { data, loading } = useFetch('https://fakestoreapi.com/products');
-
+  const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const { isActive } = useContext(MyContext);
@@ -44,7 +44,23 @@ function HomeProducts() {
       {/* <SliderImages /> */}
       {/* Layout Products */}
       <Category />
-      {loading ? <h1 className="text-4xl my-20 text-center">Loading...</h1> : <CardProducts dataProducts={data} urlPath={'/product_detail'} />}
+      {loading ? (
+        <h1 className="text-4xl my-20 text-center">Loading...</h1>
+      ) : (
+        <div
+          className={
+            pathname === '/wishlist'
+              ? 'w-full mx-auto px-4 m-[20px_auto] grid grid-cols-[repeat(2,1fr)] gap-3 '
+              : pathname !== '/'
+              ? 'w-full m-[70px_auto] px-4 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3'
+              : 'w-full mx-auto mt-4 mb-20 px-4 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3'
+          }
+        >
+          {data.map(({ id, category, title, image, price, rating }) => {
+            return <CardProducts key={id} id={id} category={category} title={title} image={image} price={price} rating={rating} urlPath={'product_detail'} />;
+          })}
+        </div>
+      )}
 
       <ScrollToTop
         styleIfTrue={'fixed w-12 justify-center items-center flex h-12 bottom-20 right-6 rounded-full shadow-lg bg-white z-50 duration-300 translate-y-0 '}

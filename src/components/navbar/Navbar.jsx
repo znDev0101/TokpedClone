@@ -19,7 +19,7 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
   const valueDebounce = useDebounce(seacrhKeyword);
   const totalCart = useSelector((state) => state.cart.totalCart);
 
-  const { isActive } = useContext(MyContext);
+  const { isActive, aturWishList, setAturWishList } = useContext(MyContext);
 
   useEffect(() => {
     if (seacrhKeyword.length > 0 && data.length == 0) {
@@ -81,7 +81,7 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
                   : pathname === '/cart_detail'
                   ? 'w-full px-4 grid grid-cols-[repeat(2,1fr)] items-center justify-between'
                   : pathname === '/wishlist'
-                  ? 'w-full px-4 grid grid-cols-[repeat(2,1fr)] grid-rows-[repeat(2,1fr)] gap-y-3 items-center justify-between'
+                  ? 'w-full px-4 grid grid-cols-[repeat(2,max-content_1fr)] grid-rows-[repeat(2,1fr)] gap-y-3 items-center justify-between'
                   : pathname === '/ulansan_pembeli'
                   ? 'flex gap-x-3'
                   : pathname !== '/'
@@ -97,12 +97,12 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
                   ) : pathname === '/ulasan_pembeli' ? (
                     <h5 className="text-lg font-bold">Ulasan Pembeli</h5>
                   ) : (
-                    pathname === '/wishlist' && <h5 className="col-[1/2] text-lg font-bold">Semua Wishlist</h5>
+                    pathname === '/wishlist' && (aturWishList ? <h5 className="col-[1/2] text-lg font-bold">Atur Semua Wishlist</h5> : <h5 className="col-[1/2] text-lg font-bold">Semua Wishlist</h5>)
                   )}
                 </div>
               ) : null}
               {pathname !== '/cart_detail' && pathname !== '/ulasan_pembeli' && (
-                <div className={pathname === '/wishlist' ? 'w-full row-[2] col-[1/3] relative border border-gray-700 rounded-md' : 'w-full relative border border-gray-700 rounded-md'}>
+                <div className={pathname === '/wishlist' ? 'w-full row-[2] col-[1/5] relative border border-gray-700 rounded-md' : 'w-full relative border border-gray-700 rounded-md'}>
                   <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" className="p-2" />
                   <input
                     type="text"
@@ -116,27 +116,34 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
               )}
               {!isActive
                 ? pathname !== '/ulasan_pembeli' && (
-                    <nav className="w-full">
+                    <nav className={pathname === '/wishlist' ? 'w-full col-[2/5]' : 'w-full'}>
                       <ul className={pathname === '/cart_detail' || pathname === '/wishlist' ? 'grid grid-cols-[repeat(2,max-content)] gap-x-4 justify-end' : 'grid grid-cols-[repeat(4,max-content)] gap-x-4 justify-end'}>
                         {pathname === '/cart_detail' || pathname === '/wishlist' ? (
                           <>
                             <li className="relative">
-                              {pathname === '/wishlist' ? (
+                              {pathname === '/wishlist' && !aturWishList ? (
                                 <Link to="/cart_detail">
                                   <FontAwesomeIcon icon={faCartShopping} size="xl" />
                                   <span className="absolute w-max h-max bottom-4 -right-3 text-center rounded-full text-sm bg-green-600 text-white font-bold px-[.4rem]">{totalCart !== 0 && totalCart}</span>
                                 </Link>
                               ) : (
-                                pathname === '/cart_detail' && (
+                                pathname === '/cart_detail' &&
+                                !aturWishList && (
                                   <Link to="/wishlist">
                                     <FontAwesomeIcon icon={faHeart} size="xl" />
                                   </Link>
                                 )
                               )}
                             </li>
-                            <li>
-                              <FontAwesomeIcon icon={faBars} size="xl" onClick={() => setIsOpenMainMenu(!isOpenMainMenu)}></FontAwesomeIcon>
-                            </li>
+                            {!aturWishList ? (
+                              <li>
+                                <FontAwesomeIcon icon={faBars} size="xl" onClick={() => setIsOpenMainMenu(!isOpenMainMenu)}></FontAwesomeIcon>
+                              </li>
+                            ) : (
+                              <span className="text-green-600 font-bold" onClick={() => setAturWishList(false)}>
+                                Batal
+                              </span>
+                            )}
                           </>
                         ) : (
                           <>

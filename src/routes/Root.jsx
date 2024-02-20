@@ -10,18 +10,19 @@ import { ToastContainer } from 'react-toastify';
 function Root() {
   const [isActive, setIsActive] = useState(false);
   const [isOpenMainMenu, setIsOpenMainMenu] = useState(false);
+  const [aturWishList, setAturWishList] = useState(false);
   const [urlPath, setUrlPath] = useState([]);
   const { pathname } = useLocation();
   const { productId } = useParams();
 
   return (
-    <MyContext.Provider value={{ isActive, isOpenMainMenu }}>
+    <MyContext.Provider value={{ isActive, isOpenMainMenu, setAturWishList, aturWishList }}>
       <div className="w-full relative overflow-hidden">
         <ToastContainer className="mb-14" />
         <Navbar setIsActive={setIsActive} isOpenMainMenu={isOpenMainMenu} setIsOpenMainMenu={setIsOpenMainMenu} />
         <Outlet context={{ setUrlPath }} />
         {screen.width < 500 && pathname !== '/cart_detail' && pathname !== `/product_detail/${productId}` && pathname !== `/products/category/${urlPath}` && pathname !== '/ulasan_pembeli' ? (
-          <>{!isActive && !isOpenMainMenu ? <NavbarOnMobile /> : null}</>
+          <>{!isActive && !isOpenMainMenu && !aturWishList ? <NavbarOnMobile /> : null}</>
         ) : null}
         <Footer />
       </div>

@@ -1,27 +1,21 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { deleteCartProduct } from '../../redux/cartSlice/cartSlice';
-import 'react-toastify/dist/ReactToastify.css';
-import { toast, Bounce } from 'react-toastify';
 
-const Modal = ({ showModal, setShowModal }) => {
-  const dispatch = useDispatch();
-
-  const handleDelete = () => {
-    dispatch(deleteCartProduct());
-    setShowModal(!showModal);
-    toast.success('Belanjaan kamu berhasil di hapus', {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-      transition: Bounce,
-    });
-  };
+const Modal = ({ showModal, setShowModal, modalTitle, modalParagraph, handleDelete }) => {
+  // const handleDelete = () => {
+  //   dispatch(deleteCartProduct());
+  //   setShowModal(!showModal);
+  //   toast.success('Belanjaan kamu berhasil di hapus', {
+  //     position: 'bottom-right',
+  //     autoClose: 5000,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true,
+  //     progress: undefined,
+  //     theme: 'light',
+  //     transition: Bounce,
+  //   });
+  // };
 
   return (
     <>
@@ -33,13 +27,13 @@ const Modal = ({ showModal, setShowModal }) => {
               : 'w-[90%] absolute top-[40%] left-[50%] translate-x-[-50%] scale-0 -translate-y-[50%]   bg-white shadow-lg shadow-gray-500 rounded-md p-3 border border-green-600 z-50 duration-500'
           }
         >
-          <h2 className="text-center font-bold">Hapus Barang</h2>
-          <p className="text-center">Product yang kamu pilih akan di hapus dari Keranjang</p>
+          <h2 className="text-center font-bold">{modalTitle}</h2>
+          <p className="text-center">{modalParagraph}</p>
           <div className="flex justify-center gap-x-5 mt-5">
             <button className="w-full bg-white text-gray-700 font-bold py-1 rounded-md" onClick={() => setShowModal(!showModal)}>
               Batal
             </button>
-            <button className="bg-green-600 w-full text-white font-bold py-1 rounded-md" onClick={handleDelete}>
+            <button className="bg-green-600 w-full text-white font-bold py-1 rounded-md" onClick={() => handleDelete()}>
               Hapus
             </button>
           </div>

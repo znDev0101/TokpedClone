@@ -14,7 +14,7 @@ import { products } from '../data/data';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../redux/cartSlice/cartSlice';
-import { addProductToWishList, addWishListHeartBoolean, setBooleanWishList, removeProductToWishList, removeDuplicateArr } from '../redux/wishlistSlice/wishListSlice';
+import { addProductToWishList, addWishListHeartBoolean, setBooleanWishList, removeProductFromWishList } from '../redux/wishlistSlice/wishListSlice';
 import ScrollToTop from '../components/scrolltotop/ScrollToTop';
 
 function ProductDetail() {
@@ -23,7 +23,7 @@ function ProductDetail() {
   const [isOpenVarianProduct, setIsOpenVarianProduct] = useState(false);
   const [filterVarianProduct, setfilterVarianProduct] = useState([]);
   const { cartProduct } = useSelector((state) => state.cart);
-  const { wishListHeartBoolean, wishListProduct } = useSelector((state) => state.wishList);
+  const { wishListHeartBoolean, checkBoxWishListBoolean } = useSelector((state) => state.wishList);
   const [indexHeartBoolean, setIndexHeartBoolean] = useState([]);
 
   const dispatch = useDispatch();
@@ -78,7 +78,7 @@ function ProductDetail() {
   const handleClick = () => {
     dispatch(setBooleanWishList({ id }));
     if (wishListHeartBoolean[indexHeartBoolean]?.boolean) {
-      dispatch(removeProductToWishList({ id }));
+      dispatch(removeProductFromWishList({ id }));
       toast.info('🗑️, Barang berhasil di hapus dari wishlist', {
         position: 'bottom-right',
         autoClose: 5000,
