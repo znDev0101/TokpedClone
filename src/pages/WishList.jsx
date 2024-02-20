@@ -7,7 +7,7 @@ import Button from '../components/button/Button';
 import CardProducts from '../components/cardproducts/CardProducts';
 import ConfirmDeleteProductsOnWishList from '../components/confirmdeleteproductsonwishlist/ConfirmDeleteProductsOnWishList';
 import Modal from '../components/modal/Modal';
-import { removeItemsFromWishList } from '../redux/wishlistSlice/wishListSlice';
+import { removeItemsFromWishList, resetCheckBooleanFalse } from '../redux/wishlistSlice/wishListSlice';
 import { MyContext } from '../context/MyContext';
 import { toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -39,13 +39,15 @@ const WishList = () => {
   };
 
   useEffect(() => {
+    return () => {
+      setAturWishList(false);
+      dispatch(resetCheckBooleanFalse());
+    };
+  }, []);
+
+  useEffect(() => {
     const checkBoxWishListBooleanTrue = checkBoxWishListBoolean.filter(({ boolean }) => boolean === true);
     setItemSelected(checkBoxWishListBooleanTrue.length);
-    return () => {
-      if (pathname === '/') {
-        setAturWishList(false);
-      }
-    };
   }, [checkBoxWishListBoolean]);
 
   return (

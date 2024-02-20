@@ -47,9 +47,9 @@ export const wishListSlice = createSlice({
       state.checkBoxWishListBoolean[findIndexCheckBoxBoolean].boolean = !state.checkBoxWishListBoolean[findIndexCheckBoxBoolean].boolean;
     },
     resetCheckBooleanFalse: (state) => {
-      return state.checkBoxWishListBoolean.map(({ boolean }) => {
-        boolean = false;
-      });
+      for (let i = 0; i < state.checkBoxWishListBoolean.length; i++) {
+        state.checkBoxWishListBoolean[i].boolean = false;
+      }
     },
     removeProductFromWishList: (state, action) => {
       const { id } = action.payload;
@@ -67,6 +67,6 @@ export const wishListSlice = createSlice({
   },
 });
 
-export const { addWishListHeartBoolean, setBooleanWishList, addProductToWishList, removeProductFromWishList, removeItemsFromWishList, setCheckBoxBooleanWishList } = wishListSlice.actions;
+export const { addWishListHeartBoolean, setBooleanWishList, addProductToWishList, resetCheckBooleanFalse, removeProductFromWishList, removeItemsFromWishList, setCheckBoxBooleanWishList } = wishListSlice.actions;
 
 export default wishListSlice.reducer;

@@ -6,6 +6,7 @@ import NavbarOnMobile from '../components/navbaronmobile/NavbarOnMobile';
 import { useState } from 'react';
 import { MyContext } from '../context/MyContext';
 import { ToastContainer } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 function Root() {
   const [isActive, setIsActive] = useState(false);
@@ -14,6 +15,9 @@ function Root() {
   const [urlPath, setUrlPath] = useState([]);
   const { pathname } = useLocation();
   const { productId } = useParams();
+  const { checkBoxWishListBoolean } = useSelector((state) => state.wishList);
+
+  console.log(checkBoxWishListBoolean);
 
   return (
     <MyContext.Provider value={{ isActive, isOpenMainMenu, setAturWishList, aturWishList }}>
