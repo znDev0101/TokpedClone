@@ -1,37 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
-function CardOthersProducts({ data, idProduct, categoryProducts }) {
+function CardOthersProducts({ data, categoryProducts }) {
   return (
-    <div className="px-4 w-full mb-20 overflow-x-scroll whitespace-nowrap">
-      {data
-        .filter(({ id, category }) => id != idProduct && category === categoryProducts)
-        .map(({ image, title, price, rating, id }) => {
-          return (
-            <Link to={`/product_detail/${id}`} key={id}>
-              <div className="w-48 h-[23rem] me-3 inline-block shadow-xl border-solid border-2 border-gray-300 px-2 rounded-xl">
-                <div className="w-40 h-40 m-[40px_auto] flex items-center">
-                  <img src={image} alt="product-image" className="object-cover" />
-                </div>
-                <div className="w-full h-12 overflow-y-hidden whitespace-normal">
-                  <p>{title}</p>
-                </div>
-                <div className="w-full mt-2">
-                  <p>{price}</p>
-                </div>
-                <div className="flex mt-2 items-center gap-x-1">
-                  <FontAwesomeIcon icon={faStar} className="text-yellow-300" />
-                  <p className="text-gray-500">{rating?.rate}</p>
-                  <span>|</span>
-                  <p className="text-gray-500">Terjual 999+</p>
-                </div>
-              </div>
-            </Link>
-          );
-        })}
-    </div>
+    <Link to={`/product_detail/${data.id}`}>
+      <div className="w-44 flex-[0_0_auto] relative grid grid-rows-[repeat(3,max-content)] gap-y-2 border border-gray-700 rounded-md py-3">
+        <div className="w-full h-40  mt-2 px-1">
+          <img src={data.image} alt="image" className="w-full h-full object-contain" />
+        </div>
+        <div className="ms-2 h-20">
+          <span>{data.title.slice(0, 20)}</span>
+          <br />
+          <span className="font-bold">${data.price}</span>
+        </div>
+        <div className="flex items-center ms-2  gap-x-2 ">
+          <span>{data.rating.rate}</span>
+          <span className="text-gray-500">|</span>
+          <FontAwesomeIcon icon={faStar} className="text-yellow-400" />
+          <span className="text-gray-500">Terjual 100+</span>
+        </div>
+      </div>
+    </Link>
   );
 }
 
