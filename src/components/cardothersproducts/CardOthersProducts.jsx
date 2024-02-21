@@ -6,7 +6,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 function CardOthersProducts({ data, categoryProducts }) {
   return (
     <Link to={`/product_detail/${data.id}`}>
-      <div className="w-44 flex-[0_0_auto] relative grid grid-rows-[repeat(3,max-content)] gap-y-2 border border-gray-700 rounded-md py-3">
+      <div className="w-44 relative grid grid-rows-[repeat(3,max-content)] gap-y-2 border border-gray-700 rounded-md py-3">
         <div className="w-full h-40  mt-2 px-1">
           <img src={data.image} alt="image" className="w-full h-full object-contain" />
         </div>

@@ -17,8 +17,6 @@ function Root() {
   const { productId } = useParams();
   const { checkBoxWishListBoolean } = useSelector((state) => state.wishList);
 
-  console.log(checkBoxWishListBoolean);
-
   return (
     <MyContext.Provider value={{ isActive, isOpenMainMenu, setAturWishList, aturWishList }}>
       <div className="w-full relative overflow-hidden">

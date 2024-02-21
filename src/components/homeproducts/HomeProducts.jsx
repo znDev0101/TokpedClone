@@ -9,10 +9,11 @@ import ScrollToTop from '../scrolltotop/ScrollToTop';
 import { useContext } from 'react';
 import { MyContext } from '../../context/MyContext';
 import { useLocation, useNavigate, useOutletContext } from 'react-router';
-import SliderImages from '../sliderimages/SliderImages';
+import { useGetAllProductsQuery } from '../../redux/services/ecommerceApi';
 
 function HomeProducts() {
-  const { data, loading } = useFetch('https://fakestoreapi.com/products');
+  // const { data, loading } = useFetch('https://fakestoreapi.com/products');
+  const { data, error, isLoading } = useGetAllProductsQuery();
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -44,7 +45,7 @@ function HomeProducts() {
       {/* <SliderImages /> */}
       {/* Layout Products */}
       <Category />
-      {loading ? (
+      {isLoading ? (
         <h1 className="text-4xl my-20 text-center">Loading...</h1>
       ) : (
         <div
@@ -56,7 +57,7 @@ function HomeProducts() {
               : 'w-full mx-auto mt-4 mb-20 px-4 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3'
           }
         >
-          {data.map(({ id, category, title, image, price, rating }) => {
+          {data?.map(({ id, category, title, image, price, rating }) => {
             return <CardProducts key={id} id={id} category={category} title={title} image={image} price={price} rating={rating} urlPath={'product_detail'} />;
           })}
         </div>
