@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import NavbarOnProductDetail from '../navbaronproductdetail/NavbarOnProductDetail';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
+import { data } from 'autoprefixer';
 
 const VarianProduct = ({ filterVarianProduct, productId, isOpenVarianProduct, setIsOpenVarianProduct, imageProduct, price, handleClick, stock: stockProduct }) => {
   const { cartProduct } = useSelector((state) => state.cart);
@@ -20,59 +21,51 @@ const VarianProduct = ({ filterVarianProduct, productId, isOpenVarianProduct, se
     <div
       className={
         isOpenVarianProduct
-          ? 'w-full h-[65vh] fixed bottom-0 bg-white border-2 border-green-600 rounded-t-xl z-50 mt-52 duration-300 translate-y-0'
-          : 'w-full h-[65vh] fixed  bottom-0 bg-white border-2 border-green-600 rounded-t-xl z-50 mt-52 duration-300 translate-y-full'
+          ? 'w-full h-[60dvh] fixed bottom-0  flex flex-col gap-y-3   bg-white duration-300  translate-y-0 overflow-y-scroll z-50'
+          : 'w-full h-[60dvh] fixed bottom-0  flex flex-col gap-y-3   bg-white duration-300  translate-y-full overflow-y-scroll z-50'
       }
     >
-      <div className="flex px-5 gap-x-5 mt-4">
-        <FontAwesomeIcon icon={faXmark} size="2xl" onClick={() => setIsOpenVarianProduct(false)} />
-        <h5 className="font-bold text-xl">Varian Prouduct</h5>
+      <div className="sticky top-0 flex gap-x-4 pt-3 px-3 py-2 bg-white z-50">
+        <FontAwesomeIcon icon={faXmark} size="2xl" onClick={() => setIsOpenVarianProduct(!isOpenVarianProduct)} />
+        <h5 className="font-bold text-2xl">Varian Product</h5>
       </div>
-      <div className="flex ms-5 mt-5 gap-x-2 items-center">
-        <div className="w-40 h-40  border border-gray-400 rounded-md">
-          <img src={imageProduct} alt="imageProduct" className=" w-full h-full object-contain" />
+      <div className="w-full px-3 mt-4">
+        <div className="flex items-center gap-x-4 ">
+          <div className="w-[40%] h-40 border border-gray-600 rounded-md">
+            <img src={imageProduct} alt="img-product" className="w-full h-full object-contain" />
+          </div>
+          <div className="py-1">
+            <span className="font-bold text-xl">${price}</span>
+            <br />
+            <span>Stok :{stockProduct}</span>
+          </div>
         </div>
-        <div className="flex flex-col">
-          <h5 className="font-bold text-lg">{price}</h5>
-          {cartProduct[indexCart] === undefined ? <p>{stockProduct}</p> : <p>{cartProduct[indexCart]?.stock}</p>}
-        </div>
-      </div>
-      <hr className="w-full border border-gray-200 mt-6" />
-      {filterVarianProduct[0]?.category == "men's clothing" || filterVarianProduct[0]?.category == "women's clothing" ? <h3 className="font-bold text-xl py-5 px-5">Warna:</h3> : <h3 className="font-bold text-xl py-5 px-5">Storage</h3>}
-      {filterVarianProduct[0]?.category == "men's clothing" || filterVarianProduct[0]?.category == "women's clothing" ? (
-        <>
-          <div className="flex px-5 gap-x-5">
+        <div className="flex flex-col gap-y-5 mt-10">
+          <h5 className="font-bold text-xl">Warna:</h5>
+          <div className="flex gap-x-2 ">
             {filterVarianProduct[0]?.warna.map((data, index) => {
               return (
-                <div className="border border-gray-200 p-1" key={index}>
-                  <p>{data}</p>
-                </div>
+                <span key={index} className="border border-gray-500 px-2 rounded-md text-gray-700 text-xl ">
+                  {data}
+                </span>
               );
             })}
           </div>
-          {filterVarianProduct[0].hasOwnProperty('size') ? (
-            <>
-              <h3 className="font-bold text-xl py-5 px-5">Ukuran:</h3>
-              <div className="flex px-5 gap-x-3">
-                {filterVarianProduct[0]?.size.map((data, index) => {
-                  return (
-                    <div className="border py-1 px-3 border-gray-200" key={index}>
-                      <p>{data}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </>
-          ) : null}
-        </>
-      ) : (
-        <div className="flex px-5">
-          {filterVarianProduct[0]?.storage.map((data) => {
-            return <p className="p-1 border border-gray-200 rounded-md">{data}</p>;
-          })}
         </div>
-      )}
-      <NavbarOnProductDetail style={'w-full bg-white grid grid-cols-[max-content_1fr_1fr] fixed bottom-0 px-2 py-2 gap-x-2 items-center'} handleClick={handleClick} />
+        <div className="flex flex-col gap-y-5 mt-10 mb-6">
+          <h5 className="font-bold text-xl">Warna:</h5>
+          <div className="flex gap-x-2 ">
+            {filterVarianProduct[0]?.size.map((data, index) => {
+              return (
+                <span key={index} className="border border-gray-500 px-2 rounded-md text-gray-700 text-xl ">
+                  {data}
+                </span>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+      <NavbarOnProductDetail style={'w-full flex items-center px-2 bg-white gap-x-2 sticky bottom-0'} />
     </div>
   );
 };

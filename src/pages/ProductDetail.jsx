@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
@@ -23,7 +23,8 @@ function ProductDetail() {
   const [isOpenVarianProduct, setIsOpenVarianProduct] = useState(false);
   const [filterVarianProduct, setfilterVarianProduct] = useState([]);
   const { cartProduct } = useSelector((state) => state.cart);
-  const { wishListHeartBoolean, checkBoxWishListBoolean } = useSelector((state) => state.wishList);
+  const { wishListHeartBoolean } = useSelector((state) => state.wishList);
+
   const [indexHeartBoolean, setIndexHeartBoolean] = useState([]);
 
   const dispatch = useDispatch();
@@ -108,7 +109,7 @@ function ProductDetail() {
 
   return (
     <>
-      <div className="w-[93%] mt-20 mx-auto">
+      <div className={isOpenVarianProduct ? 'w-[93%] mt-20 mx-auto  z-40  ' : 'w-[93%]  mt-20 mx-auto z-40'}>
         <div className="grid grid-rows-[repeat(5,max_content)] gap-y-3">
           <div className="w-full h-96 flex items-center overflow-hidden m-auto">
             {loading ? <p className="text-2xl font-bold text-center">Image Loading...</p> : <img src={image} alt="image-product" className="w-80 m-auto object-cover " />}
