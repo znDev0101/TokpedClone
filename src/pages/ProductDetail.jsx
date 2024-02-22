@@ -122,8 +122,8 @@ function ProductDetail() {
           </div>
           {/* PRICE */}
           <div className="flex justify-between gap-x-2 items-center">
-            <div className="flex">
-              <h5 className="font-bold text-2xl">{priceProduct}</h5>
+            <div className="flex gap-x-2 items-center">
+              <h5 className="font-bold text-2xl">${priceProduct}</h5>
               <img src="https://images.tokopedia.net/img/restriction-engine/bebas-ongkir/BO_reguler.png" alt="image-bebas-ongkir" className="h-7 w-12" />
             </div>
             {wishListHeartBoolean[indexHeartBoolean]?.boolean ? (
@@ -137,31 +137,31 @@ function ProductDetail() {
             )}
           </div>
           <div className="flex gap-x-2 items-center">
-            <h5>Terjual 999+</h5>
+            <h5 className="text-sm">Terjual 999+</h5>
             <div className="flex items-center gap-x-1 border border-gray-400 p-[2px_10px] rounded-lg">
-              <FontAwesomeIcon icon={faStar} className="text-yellow-400" />
-              <h5>{rating?.rate}</h5>
+              <FontAwesomeIcon icon={faStar} className="text-yellow-400" size="sm" />
+              <h5 className="text-sm">{rating?.rate}</h5>
             </div>
           </div>
           {/* DETAIL PRODUCTS */}
           <div className="grid grid-rows-[repeat(5,max-content)] gap-y-3">
-            <h5 className="font-bold text-2xl">Detail Product</h5>
+            <h5 className="font-bold text-lg">Detail Product</h5>
             <div className="grid grid-cols-[repeat(2,1fr)]">
-              <span>Kondisi</span>
-              <span>Baru</span>
+              <span className="text-sm">Kondisi</span>
+              <span className="text-sm">Baru</span>
             </div>
             <div className="grid grid-cols-[repeat(2,1fr)]">
-              <span>Min. Pemesanan</span>
-              <span>1 Buah</span>
+              <span className="text-sm">Min. Pemesanan</span>
+              <span className="text-sm">1 Buah</span>
             </div>
             <div className="grid grid-cols-[repeat(2,1fr)]">
-              <span>Etalase</span>
-              <span>{category}</span>
+              <span className="text-sm">Etalase</span>
+              <span className="text-sm">{category}</span>
             </div>
           </div>
           <div className="grid grid-row-[repeat(2,1fr)] gap-y-1">
-            <h5 className="font-bold text-2xl">Deskripsi Product</h5>
-            <p>{description}</p>
+            <h5 className="font-bold text-lg">Deskripsi Product</h5>
+            <p className="text-sm">{description}</p>
           </div>
         </div>
       </div>
