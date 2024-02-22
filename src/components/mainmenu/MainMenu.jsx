@@ -7,16 +7,22 @@ import Button from '../button/Button';
 
 const MainMenu = ({ isOpenMainMenu, setIsOpenMainMenu, pathname, products }) => {
   return (
-    <div className={isOpenMainMenu ? `w-full absolute top-0 bottom-0 left-0 right-0 h-screen bg-white z-50 duration-300 translate-y-0` : `w-full absolute top-0 bottom-0 left-0 right-0 h-screen  bg-white z-50 duration-300 translate-y-full`}>
+    <div
+      className={
+        isOpenMainMenu
+          ? `w-full absolute top-0 bottom-0 left-0 right-0 h-screen bg-white overflow-y-scroll pb-10 z-50 duration-300 translate-y-0`
+          : `w-full absolute top-0 bottom-0 left-0 right-0 h-screen  bg-white z-50 duration-300 translate-y-full`
+      }
+    >
       <div className="w-full pt-3 flex gap-x-5 items-center px-5">
         <FontAwesomeIcon icon={faXmark} size="2xl" onClick={() => setIsOpenMainMenu(!isOpenMainMenu)} />
         <h1 className="text-lg font-bold">Menu Utama</h1>
       </div>
       <div className="m-auto grid grid-rows-2 grid-cols-[repeat(2,1fr)] gap-x-2 px-5">
         <Link className="row-[2] col-[1/2]" to="/login" onClick={() => setIsOpenMainMenu(false)}>
-          <Button styleButton={' w-full bg-green-600 font-bold text-white py-1 rounded-lg'} textButton={'Masuk'} />
+          <Button styleButton={' w-full h-full bg-green-600 font-bold text-white py-1 rounded-lg'} textButton={'Masuk'} />
         </Link>
-        <Button styleButton={'row-[2] col-[2] w-full bg-white border border-2 border-green-600 font-bold text-green-600 py-1 rounded-lg'} textButton={'Daftar'} />
+        <Button styleButton={'row-[2] col-[2] w-full h-full bg-white border border-2 border-green-600 font-bold text-green-600 py-1 rounded-lg'} textButton={'Daftar'} />
       </div>
       {pathname !== '/' ? (
         <div className="mt-5 px-5">

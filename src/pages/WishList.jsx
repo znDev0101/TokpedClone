@@ -78,15 +78,7 @@ const WishList = () => {
               </div>
             )}
           </div>
-          <div
-            className={
-              pathname === '/wishlist'
-                ? 'w-full mx-auto px-4 m-[20px_auto] grid grid-cols-[repeat(2,1fr)] gap-3 '
-                : pathname !== '/'
-                ? 'w-full m-[70px_auto] px-4 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3'
-                : 'w-full mx-auto mt-4 mb-20 px-4 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3'
-            }
-          >
+          <div className={pathname === '/wishlist' && 'w-full m-[30px_auto] px-4 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3 '}>
             {wishListProduct.map(({ id, category, title, image, price, rating }) => {
               return <CardProducts key={id} id={id} category={category} title={title} image={image} price={price} rating={rating} urlPath={'/product_detail'} />;
             })}

@@ -33,6 +33,8 @@ function ProductDetail() {
 
   const { title, description, image, price: priceProduct, rating, category } = dataDetail;
 
+  console.log(category);
+
   useEffect(() => {
     const limit = dataUlasan.slice(0, 2);
     setDataLimit(limit);
@@ -165,12 +167,11 @@ function ProductDetail() {
       </div>
       <UlasanPembeli dataLimit={dataLimit} />
       <OthersProducts idProduct={id} categoryProducts={category} />
-
       <NavbarOnProductDetail
         style={'w-full bg-white grid grid-cols-[max-content_1fr_1fr] fixed bottom-0 px-2 py-2 gap-x-2 items-center z-30'}
-        handleClick={category !== 'jewelery' && !/^1[3-4]$/.test(id) ? () => setIsOpenVarianProduct(true) : handleAddToCart}
+        handleClick={category !== 'jewelery' && category !== 'electronics' ? () => setIsOpenVarianProduct(true) : handleAddToCart}
       />
-      {category !== 'jewelery' && !/^1[3-4]$/.test(id) && (
+      {category !== 'jewelery' && category !== 'electronics' && (
         <VarianProduct
           filterVarianProduct={filterVarianProduct}
           imageProduct={image}

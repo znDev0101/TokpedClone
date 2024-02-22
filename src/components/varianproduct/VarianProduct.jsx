@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import NavbarOnProductDetail from '../navbaronproductdetail/NavbarOnProductDetail';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
-import { data } from 'autoprefixer';
 
 const VarianProduct = ({ filterVarianProduct, productId, isOpenVarianProduct, setIsOpenVarianProduct, imageProduct, price, handleClick, stock: stockProduct }) => {
   const { cartProduct } = useSelector((state) => state.cart);
@@ -16,6 +15,8 @@ const VarianProduct = ({ filterVarianProduct, productId, isOpenVarianProduct, se
       setIndexCart(findIndexCart);
     }
   }, [cartProduct, productId]);
+
+  console.log(filterVarianProduct[0]?.size != undefined);
 
   return (
     <div
@@ -37,35 +38,39 @@ const VarianProduct = ({ filterVarianProduct, productId, isOpenVarianProduct, se
           <div className="py-1">
             <span className="font-bold text-xl">${price}</span>
             <br />
-            <span>Stok :{stockProduct}</span>
+            <span>Stok :{cartProduct[indexCart]?.quantity != undefined ? cartProduct[indexCart]?.stock : stockProduct}</span>
           </div>
         </div>
-        <div className="flex flex-col gap-y-5 mt-10">
-          <h5 className="font-bold text-xl">Warna:</h5>
-          <div className="flex gap-x-2 ">
-            {filterVarianProduct[0]?.warna.map((data, index) => {
-              return (
-                <span key={index} className="border border-gray-500 px-2 rounded-md text-gray-700 text-xl ">
-                  {data}
-                </span>
-              );
-            })}
+        {filterVarianProduct[0]?.warna != undefined && (
+          <div className="flex flex-col gap-y-5 mt-10">
+            <h5 className="font-bold text-xl">Warna:</h5>
+            <div className={`grid grid-cols-[repeat(auto-fit,minmax(100px,max-content))] gap-x-2 `}>
+              {filterVarianProduct[0]?.warna.map((data, index) => {
+                return (
+                  <span key={index} className="border border-gray-500 px-2 rounded-md text-gray-700 text-xl text-center ">
+                    {data}
+                  </span>
+                );
+              })}
+            </div>
           </div>
-        </div>
-        <div className="flex flex-col gap-y-5 mt-10 mb-6">
-          <h5 className="font-bold text-xl">Warna:</h5>
-          <div className="flex gap-x-2 ">
-            {filterVarianProduct[0]?.size.map((data, index) => {
-              return (
-                <span key={index} className="border border-gray-500 px-2 rounded-md text-gray-700 text-xl ">
-                  {data}
-                </span>
-              );
-            })}
+        )}
+        {filterVarianProduct[0]?.size != undefined && (
+          <div className="flex flex-col gap-y-5 mt-10 mb-6">
+            <h5 className="font-bold text-xl">Warna:</h5>
+            <div className="flex gap-x-2 ">
+              {filterVarianProduct[0]?.size.map((data, index) => {
+                return (
+                  <span key={index} className="border border-gray-500 px-2 rounded-md text-gray-700 text-xl ">
+                    {data}
+                  </span>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        )}
       </div>
-      <NavbarOnProductDetail style={'w-full flex items-center px-2 bg-white gap-x-2 sticky bottom-0'} />
+      <NavbarOnProductDetail style={'w-full flex items-center px-2 bg-white gap-x-2 sticky bottom-2 z-50'} handleClick={handleClick} />
     </div>
   );
 };
