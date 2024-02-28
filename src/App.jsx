@@ -1,12 +1,14 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
-import ProductDetail from './pages/ProductDetail';
+import ProductDetails from './pages/ProductDetails';
 import Root from './routes/Root';
 import Products from './pages/Products';
 import { Login } from './pages/Login';
 import CartDetail from './components/cartDetail/CartDetail';
 import WishList from './pages/WishList';
 import UlasanPembeli from './pages/UlasanPembeli';
+import DetailProduct from './components/detailproduct/DetailProduct';
+import SpesifikasiDetailProduct from './components/spesifikasidetailproduct/SpesifikasiDetailProduct';
 
 function App() {
   const router = createBrowserRouter([
@@ -15,7 +17,7 @@ function App() {
       element: <Root />,
       children: [
         {
-          path: '/',
+          index: true,
           element: <Home />,
         },
         {
@@ -48,7 +50,17 @@ function App() {
         },
         {
           path: '/product_detail/:productId',
-          element: <ProductDetail />,
+          element: <ProductDetails />,
+          children: [
+            {
+              index: true,
+              element: <DetailProduct />,
+            },
+            {
+              path: 'spesifikasi',
+              element: <SpesifikasiDetailProduct />,
+            },
+          ],
         },
         {
           path: '/ulasan_pembeli',

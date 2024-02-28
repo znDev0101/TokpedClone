@@ -46,7 +46,13 @@ function HomeProducts() {
       {isLoading ? (
         <h1 className="text-4xl my-20 text-center">Loading...</h1>
       ) : (
-        <div className={pathname !== '/' ? 'w-full m-[70px_auto] px-4 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3' : 'w-full mx-auto mt-4 mb-20 px-4 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3'}>
+        <div
+          className={
+            pathname !== '/'
+              ? 'w-full m-[70px_auto] px-4 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3'
+              : 'w-full mx-auto mt-4 mb-20 px-4 lg:px-16 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-3'
+          }
+        >
           {data?.map(({ id, title, image, price, rating }) => {
             return <CardProducts key={id} id={id} title={title} image={image} price={price} rating={rating} urlPath={'product_detail'} />;
           })}

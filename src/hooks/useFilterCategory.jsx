@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export function useFilterCategory(urlApi, keyWordCategory) {
+export function useFilterCategory(urlApi, keyWordCategory, pathname) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,7 +22,7 @@ export function useFilterCategory(urlApi, keyWordCategory) {
     return () => {
       controller.abort();
     };
-  }, [keyWordCategory]);
+  }, [keyWordCategory, pathname]);
 
   return { data, isLoading };
 }

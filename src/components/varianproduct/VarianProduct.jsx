@@ -16,8 +16,6 @@ const VarianProduct = ({ filterVarianProduct, productId, isOpenVarianProduct, se
     }
   }, [cartProduct, productId]);
 
-  console.log(filterVarianProduct[0]?.size != undefined);
-
   return (
     <div
       className={
@@ -57,7 +55,7 @@ const VarianProduct = ({ filterVarianProduct, productId, isOpenVarianProduct, se
         )}
         {filterVarianProduct[0]?.size != undefined && (
           <div className="flex flex-col gap-y-5 mt-10 mb-6">
-            <h5 className="font-bold text-xl">Warna:</h5>
+            <h5 className="font-bold text-xl">Ukuran:</h5>
             <div className="flex gap-x-2 ">
               {filterVarianProduct[0]?.size.map((data, index) => {
                 return (
