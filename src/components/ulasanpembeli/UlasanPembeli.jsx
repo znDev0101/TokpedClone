@@ -5,7 +5,7 @@ import { faUser } from '@fortawesome/free-regular-svg-icons';
 
 function UlasanPembeli({ dataLimit }) {
   return (
-    <div className="mx-auto grid lg:col-[1/2] grid-rows-[repeat(2,max-content)] gap-y-2">
+    <div className="lg:w-full mx-auto grid lg:col-[1/2] grid-rows-[repeat(2,max-content)] gap-y-2 lg:ms-0">
       <div className="flex justify-between items-center">
         <h2 className="font-bold text-lg">Ulasan Pembeli</h2>
         <Link to="/ulasan_pembeli" className="font-bold text-green-700">
@@ -22,10 +22,7 @@ function UlasanPembeli({ dataLimit }) {
             </div>
             {/* Isi comment */}
             <p className="row-[2] col-[1/3] text-sm">
-              {comment} Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio quo suscipit, cumque harum inventore nobis nostrum aut nihil? Sit, nesciunt suscipit? Distinctio dolorum exercitationem vel accusamus. Illum, eius
-              necessitatibus officia provident consequuntur exercitationem ut voluptatum eveniet maiores? Reiciendis porro suscipit corrupti corporis consequatur iure dignissimos quisquam excepturi ea voluptatibus vero eaque debitis
-              consequuntur officia assumenda veritatis, facere magni non quae aliquam laudantium dolore eum enim quam. Fugit ratione a nisi ipsa vitae soluta nihil dicta, quos, quia quisquam sed quam et minus modi neque harum magnam maxime
-              exercitationem ex quo consectetur deserunt? Numquam asperiores totam harum ad fuga alias voluptatem.{' '}
+              {comment}
             </p>
           </div>
         );

@@ -1,19 +1,19 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './pages/Home';
-import ProductDetails from './pages/ProductDetails';
-import Root from './routes/Root';
-import Products from './pages/Products';
-import { Login } from './pages/Login';
-import CartDetail from './components/cartDetail/CartDetail';
-import WishList from './pages/WishList';
-import UlasanPembeli from './pages/UlasanPembeli';
-import DetailProduct from './components/detailproduct/DetailProduct';
-import SpesifikasiDetailProduct from './components/spesifikasidetailproduct/SpesifikasiDetailProduct';
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import Home from "./pages/Home"
+import ProductDetails from "./pages/ProductDetails"
+import Root from "./routes/Root"
+import Products from "./pages/Products"
+import { Login } from "./pages/Login"
+import CartDetail from "./pages/CartDetail"
+import WishList from "./pages/WishList"
+import UlasanPembeli from "./pages/UlasanPembeli"
+import DetailProduct from "./components/detailproduct/DetailProduct"
+import SpesifikasiDetailProduct from "./components/spesifikasidetailproduct/SpesifikasiDetailProduct"
 
 function App() {
   const router = createBrowserRouter([
     {
-      path: '/',
+      path: "/",
       element: <Root />,
       children: [
         {
@@ -21,35 +21,35 @@ function App() {
           element: <Home />,
         },
         {
-          path: '/login',
+          path: "/login",
           element: <Login />,
         },
         {
-          path: '/cart_detail',
+          path: "/cart_detail",
           element: <CartDetail />,
         },
         {
-          path: '/wishlist',
+          path: "/wishlist",
           element: <WishList />,
         },
         {
-          path: '/products/category/mens_clothing',
+          path: "/products/category/mens_clothing",
           element: <Products />,
         },
         {
-          path: '/products/category/womens_clothing',
+          path: "/products/category/womens_clothing",
           element: <Products />,
         },
         {
-          path: '/products/category/jewelery',
+          path: "/products/category/jewelery",
           element: <Products />,
         },
         {
-          path: '/products/category/electronics',
+          path: "/products/category/electronics",
           element: <Products />,
         },
         {
-          path: '/product_detail/:productId',
+          path: "/product_detail/:productId",
           element: <ProductDetails />,
           children: [
             {
@@ -57,20 +57,20 @@ function App() {
               element: <DetailProduct />,
             },
             {
-              path: 'spesifikasi',
+              path: "spesifikasi",
               element: <SpesifikasiDetailProduct />,
             },
           ],
         },
         {
-          path: '/ulasan_pembeli',
+          path: "/ulasan_pembeli",
           element: <UlasanPembeli />,
         },
       ],
     },
-  ]);
+  ])
 
-  return <RouterProvider router={router} />;
+  return <RouterProvider router={router} />
 }
 
-export default App;
+export default App
