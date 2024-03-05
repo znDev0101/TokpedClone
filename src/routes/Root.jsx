@@ -35,7 +35,7 @@ function Root() {
         {/* navbar on dekstop */}
         {screen.width >= 1280 && <NavbarOnDekstop />}
 
-        <Outlet context={{ setUrlPath }} />
+        <Outlet context={{ setUrlPath, isOpenMainMenu }} />
         {screen.width < 500 &&
         pathname !== "/cart_detail" &&
         pathname !== `/product_detail/${productId}` &&

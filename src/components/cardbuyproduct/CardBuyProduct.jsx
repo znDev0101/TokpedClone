@@ -22,19 +22,19 @@ const CardBuyProduct = ({
   handleClickAddToWishList,
   ...otherData
 }) => {
-  const { quantity, stock, price, title, image } = otherData
+  const { quantity: quantityProduct, stock, price, title, image } = otherData
 
   const dispatch = useDispatch()
 
-  const [quantityProduct, setQuantityProduct] = useState(0)
+  const [quantity, setQuantity] = useState(0)
   const [stockProduct, setStockProduct] = useState(0)
   const [priceProduct, setPriceProduct] = useState([])
 
   useEffect(() => {
-    setQuantityProduct(quantity + 1)
+    setQuantity(quantityProduct + 1)
     setStockProduct(stock - 1)
     setPriceProduct(price)
-  }, [price, stock, quantity])
+  }, [price, stock, quantityProduct])
 
   const handleAddToCartOnDekstop = () => {
     dispatch(
@@ -44,7 +44,7 @@ const CardBuyProduct = ({
         priceProduct: price,
         price: priceProduct,
         title,
-        quantityProduct,
+        quantity,
       })
     )
     toast.success("Berhasil menambahkan ke keranjang", {
@@ -62,7 +62,7 @@ const CardBuyProduct = ({
 
   const handleIncrement = () => {
     if (stockProduct !== 0) {
-      setQuantityProduct((prev) => prev + 1)
+      setQuantity((prev) => prev + 1)
       setStockProduct((prev) => prev - 1)
       setPriceProduct((prev) => prev + price)
     } else {
@@ -81,8 +81,8 @@ const CardBuyProduct = ({
   }
 
   const handleDecrement = () => {
-    if (quantityProduct !== 1) {
-      setQuantityProduct((prev) => prev - 1)
+    if (quantity !== 1) {
+      setQuantity((prev) => prev - 1)
       setStockProduct((prev) => prev + 1)
       setPriceProduct((prev) => prev - price)
     }
@@ -99,7 +99,7 @@ const CardBuyProduct = ({
             onClick={handleDecrement}>
             <FontAwesomeIcon icon={faMinus} size="xs" />
           </button>
-          <span>{quantityProduct}</span>
+          <span>{quantity}</span>
           <button
             className="text-green-600 text-lg hover:bg-gray-100 px-2"
             onClick={handleIncrement}>

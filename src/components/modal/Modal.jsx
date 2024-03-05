@@ -7,36 +7,18 @@ const Modal = ({
   modalParagraph,
   handleDelete,
 }) => {
-  // const handleDelete = () => {
-  //   dispatch(deleteCartProduct());
-  //   setShowModal(!showModal);
-  //   toast.success('Belanjaan kamu berhasil di hapus', {
-  //     position: 'bottom-right',
-  //     autoClose: 5000,
-  //     hideProgressBar: false,
-  //     closeOnClick: true,
-  //     pauseOnHover: true,
-  //     draggable: true,
-  //     progress: undefined,
-  //     theme: 'light',
-  //     transition: Bounce,
-  //   });
-  // };
-
   return (
     <>
       {showModal && (
         <div
-          className={
-            showModal
-              ? "w-[90%]  absolute top-[40%] left-[50%] translate-x-[-50%] scale-100 translate-y-[50%]   bg-white shadow-lg shadow-gray-500 rounded-md p-3 border border-green-600 z-50 duration-500 lg:hidden"
-              : "w-[90%] absolute top-[40%] left-[50%] translate-x-[-50%] scale-0 -translate-y-[50%]   bg-white shadow-lg shadow-gray-500 rounded-md p-3 border border-green-600 z-50 duration-500 lg:hidden"
-          }>
+          className={`max-w-sm h-max m-[40dvh_auto]  lg:max-w-sm p-4 absolute top-0 bottom-0 left-0 right-0 bg-white   rounded-md shadow-md duration-300 z-50 ${
+            showModal ? `scale-100` : `scale-0`
+          }`}>
           <h2 className="text-center font-bold">{modalTitle}</h2>
           <p className="text-center">{modalParagraph}</p>
           <div className="flex justify-center gap-x-5 mt-5">
             <button
-              className="w-full bg-white text-gray-700 font-bold py-1 rounded-md"
+              className="w-full  bg-white text-green-500 border border-green-500 font-bold py-1 rounded-md"
               onClick={() => setShowModal(!showModal)}>
               Batal
             </button>

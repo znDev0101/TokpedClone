@@ -1,10 +1,12 @@
 import {
   faHeart as faHeartRegular,
   faNoteSticky,
+  faTrashCan,
 } from "@fortawesome/free-regular-svg-icons"
 import {
   faHeart as faHeartSolid,
   faSoap,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React, { useState, useEffect, useRef } from "react"
@@ -22,6 +24,7 @@ import {
   removeCart,
   booleanChecked,
   booleanCart,
+  deleteCartProduct,
 } from "../../redux/cartSlice/cartSlice"
 import {
   setBooleanWishList,
@@ -38,7 +41,6 @@ const CartProducts = ({
   category,
   description,
   rating,
-  wishListBoolean,
 }) => {
   const { totalPrice, cartProduct, selectedProduct, cartBoolean } = useSelector(
     (state) => state.cart
@@ -93,7 +95,7 @@ const CartProducts = ({
     dispatch(booleanCart({ id }))
   }
 
-  const handleClick = () => {
+  const handleWishlist = () => {
     const findIndexWishListBoolean = wishListHeartBoolean.findIndex(
       (data) => data.id == id
     )
@@ -151,16 +153,16 @@ const CartProducts = ({
   }
 
   return (
-    <div className="flex mt-10 px-5 py-1 gap-x-3 lg:mt-0">
-      <div className="w-5 h-5 mt-2">
+    <div className="mt-5 flex px-5 py-1  lg:mt-0">
+      <div className="w-5 h-5 flex-[0_0_auto]">
         <input
           type="checkbox"
           checked={isChecked}
           onChange={handleChange}
-          className="w-full h-full"
+          className="w-full h-full hover:cursor-pointer"
         />
       </div>
-      <div className="relative grid grid-cols-[max-content_1fr] h-full gap-x-5 w-full">
+      <div className="w-full h-full relative grid grid-cols-[max-content_1fr] lg:grid-cols-[max-content_1fr] gap-x-1">
         <div className="w-32 h-32">
           <Link to={`/product_detail/${id}`}>
             <img
@@ -170,31 +172,50 @@ const CartProducts = ({
             />
           </Link>
         </div>
-        <div className="flex flex-col  gap-y-1 w-full">
+        <div className="w-full flex flex-col  gap-y-1 lg:place-content-between lg:py-2">
           <Link
             to={`/product_detail/${id}`}
-            className="flex flex-col lg:flex-row lg:justify-between">
-            <h5
-              className={stock === 0 ? `text-red-700 font-bold` : `text-black`}>
-              {stock < 5 && `sisa ${stock}`}
-            </h5>
-            <h5>{title.length > 20 ? `${title.slice(0, 20)}` : `${title}`}</h5>
-            <span>{price}</span>
+            className="flex flex-col  justify-between lg:items-start">
+            <div className="w-full flex flex-col">
+              <h5
+                className={
+                  stock === 0 ? `text-red-700 font-bold` : `text-black`
+                }>
+                {stock < 5 && `sisa ${stock}`}
+              </h5>
+              <div className="flex flex-col lg:flex-row lg:justify-between">
+                <h5>
+                  {title.length > 20 ? `${title.slice(0, 20)}` : `${title}`}
+                </h5>
+                <span className="font-bold lg:text-lg">${price}</span>
+              </div>
+            </div>
           </Link>
-          <div className="flex justify-between">
-            <div className="flex gap-x-5 absolute bottom-5">
-              <FontAwesomeIcon icon={faNoteSticky} />
+          <div className=" flex lg:flex items-center mt-7  justify-between lg:justify-end lg:gap-x-4 lg:bottom-2">
+            <div className="flex gap-x-5 ">
               {wishListHeartBoolean[indexWishListBoolean]?.boolean == true ? (
                 <FontAwesomeIcon
                   icon={faHeartSolid}
-                  onClick={handleClick}
-                  className="text-pink-600"
+                  onClick={handleWishlist}
+                  className="text-pink-600 hover:cursor-pointer"
+                  size="lg"
                 />
               ) : (
-                <FontAwesomeIcon icon={faHeartRegular} onClick={handleClick} />
+                <FontAwesomeIcon
+                  icon={faHeartRegular}
+                  onClick={handleWishlist}
+                  size="lg"
+                  className="hover:cursor-pointer text-gray-400"
+                />
               )}
+              <FontAwesomeIcon
+                icon={faTrashCan}
+                onClick={() => dispatch(deleteCartProduct({ id }))}
+                size="lg"
+                className="text-gray-400 hover:cursor-pointer"
+              />
             </div>
-            <div className="flex justify-between items-center w-20 h-6 rounded-md border border-gray-500 absolute right-0 bottom-4 p-1 ">
+            <div className="flex justify-between items-center w-20 h-6 rounded-md border border-gray-500  p-1 ">
               <button
                 className="text-xl text-green-600"
                 onClick={handleDecrement}>

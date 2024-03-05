@@ -8,12 +8,25 @@ import Button from "../button/Button"
 import { useCheckedProduct } from "../../hooks/useCheckedProduct"
 
 const SumPrice = () => {
-  const { totalPrice, cartProduct, cartBoolean } = useSelector(
-    (state) => state.cart
-  )
+  const { totalPrice, selectedProduct } = useSelector((state) => state.cart)
+  const [totalBeliProductBarang, setTotalBeliProductBarang] = useState(0)
 
   const { isChecked, setIsChecked } = useCheckedProduct()
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (selectedProduct.length !== 0) {
+      const resultTotalPembelianBarang = selectedProduct.reduce(
+        (accumulator, { quantity }) => {
+          return accumulator + quantity
+        },
+        0
+      )
+      setTotalBeliProductBarang(resultTotalPembelianBarang)
+    } else {
+      setTotalBeliProductBarang(0)
+    }
+  }, [selectedProduct])
 
   const handleChange = () => {
     setIsChecked(!isChecked)
@@ -42,10 +55,17 @@ const SumPrice = () => {
           <h5>Total</h5>
           <span>{totalPrice === 0 ? `-` : `${totalPrice}`}</span>
         </div>
-        <Button
-          textButton={"Beli"}
-          styleButton={`font-bold text-white px-8 py-2 rounded-md bg-green-700`}
-        />
+        {totalBeliProductBarang !== 0 ? (
+          <Button
+            textButton={`Beli (${totalBeliProductBarang})`}
+            styleButton={`w-20 font-bold text-white px-2 py-2 rounded-md bg-green-600`}
+          />
+        ) : (
+          <Button
+            textButton={`Beli `}
+            styleButton={`w-20 font-bold text-white px-2 py-2 rounded-md bg-green-600`}
+          />
+        )}
       </div>
     </div>
   )

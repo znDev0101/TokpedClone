@@ -1,5 +1,5 @@
 import React from "react"
-import bebasOngkir from "../../assets/bebas_ongkir.png"
+import bebasOngkir from "../../assets/images/bebas_ongkir.png"
 
 // third party library
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"

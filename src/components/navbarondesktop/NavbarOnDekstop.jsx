@@ -5,8 +5,10 @@ import {
   faMagnifyingGlass,
   faPhone,
 } from "@fortawesome/free-solid-svg-icons"
+import Keranjang from "../../assets/images/Keranjang.svg"
+import LogoTokped from "../../assets/images/LogoTokped.svg"
+import wishlist from "../../assets/images/wishlist.png"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import LogoTokped from "../../assets/LogoTokped.svg"
 import { useSelector } from "react-redux"
 import { faBell, faHeart } from "@fortawesome/free-regular-svg-icons"
 
@@ -52,7 +54,7 @@ const NavbarOnDekstop = () => {
           </li>
         </ul>
       </nav>
-      <nav className="grid grid-cols-[1fr_5fr_2.5fr] grid-rows-[repeat(2,max-content)] gap-x-10 items-center px-8 py-3  bg-white">
+      <nav className="grid grid-cols-[1fr_5fr_2.5fr] grid-rows-[repeat(2,max-content)] gap-x-10 items-center px-8 py-3  bg-white border-b border-gray-200">
         <Link to="/">
           <img
             src={LogoTokped}
@@ -80,7 +82,7 @@ const NavbarOnDekstop = () => {
         <div className="grid grid-cols-[repeat(3,1fr)] gap-x-10 items-center ">
           <div className="flex items-center justify-center gap-x-2">
             <div
-              className="relative flex justify-center m-[unset] p-2 duration-300 hover:bg-gray-100 rounded-md "
+              className="relative flex justify-center m-[unset] p-2 duration-300 hover:bg-gray-100 rounded-md hover:cursor-pointer"
               onMouseEnter={() => setIsOpenCartMenu(!isOpenCartMenu)}
               onMouseLeave={() => setIsOpenCartMenu(!isOpenCartMenu)}
               ref={cartRef}>
@@ -112,8 +114,14 @@ const NavbarOnDekstop = () => {
                   </div>
 
                   {cartProduct.length === 0 ? (
-                    <div className="max-w-xs mx-auto flex flex-col gap-y-5 ">
-                      <div className=""></div>
+                    <div className="max-w-xs mx-auto flex flex-col gap-y-2 ">
+                      <div className="w-32 h-32  mx-auto">
+                        <img
+                          src={Keranjang}
+                          alt="img-keranjang"
+                          className="w-full h-full"
+                        />
+                      </div>
                       <h1 className="font-bold text-lg">
                         Wah, Keranjang Belanjaanmu Kosong
                       </h1>
@@ -152,7 +160,7 @@ const NavbarOnDekstop = () => {
                                   />
                                 </div>
                                 <h5>
-                                  {title.length >= 20
+                                  {title?.length >= 20
                                     ? `${title.slice(0, 20)}...`
                                     : `${title}`}
                                 </h5>
@@ -173,7 +181,7 @@ const NavbarOnDekstop = () => {
               <FontAwesomeIcon size="lg" icon={faBell} />
             </div>
             <div
-              className="relative flex justify-center m-[unset] p-2 duration-300 hover:bg-gray-100 rounded-md "
+              className="relative flex justify-center m-[unset] p-2 duration-300 hover:bg-gray-100 rounded-md hover:cursor-pointer hover:cursor-pointer"
               onMouseEnter={() =>
                 setIsOpenHeartMenuDropdown(!isOpenHeartMenuDropdown)
               }
@@ -206,16 +214,21 @@ const NavbarOnDekstop = () => {
                   </div>
 
                   {wishListProduct.length === 0 ? (
-                    <div className="max-w-xs mx-auto flex flex-col gap-y-5 ">
-                      <div className=""></div>
-                      <h1 className="font-bold text-lg">
-                        Wah, Keranjang Belanjaanmu Kosong
-                      </h1>
+                    <div className="max-w-xs mx-auto flex flex-col gap-y-3 ">
+                      <div className="w-40 h-40 mx-auto">
+                        <img
+                          src={wishlist}
+                          alt="img-wishlist"
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+
                       <p className="text-gray-700 text-base">
-                        Yuk, isi dengan barang barang impian mu
+                        Simpan barang-barang yang kamu suka buat dibeli nanti.
+                        Yuk, mulai isi Wishlist kamu!
                       </p>
                       <Link className="py-2 bg-white border border-green-600 text-sm text-center text-green-600 font-bold rounded-md mx-5">
-                        Mulai Belanja
+                        Cari Barang
                       </Link>
                     </div>
                   ) : (
@@ -257,7 +270,7 @@ const NavbarOnDekstop = () => {
             </div>
           </div>
           <span>|</span>
-          <div className="flex items-center gap-x-3">
+          <div className="flex items-center gap-x-7">
             <button className="text-green-600 font-bold bg-white border border-green-600 py-1 px-3 rounded-md">
               Masuk
             </button>

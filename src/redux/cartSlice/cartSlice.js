@@ -44,8 +44,7 @@ export const cartSlice = createSlice({
       }
     },
     addToCartOnDekstop: (state, action) => {
-      const { id, image, price, title, quantityProduct, priceProduct } =
-        action.payload
+      const { id, image, price, title, quantity, priceProduct } = action.payload
       const indexCartProduct = state.cartProduct.findIndex(
         (data) => data.id == id
       )
@@ -53,10 +52,10 @@ export const cartSlice = createSlice({
         state.cartProduct[indexCartProduct].price = state.cartProduct[
           indexCartProduct
         ].price += price
-        state.cartProduct[indexCartProduct].quantityProduct = state.cartProduct[
+        state.cartProduct[indexCartProduct].quantity = state.cartProduct[
           indexCartProduct
-        ].quantityProduct += quantityProduct
-        state.totalCart += quantityProduct
+        ].quantity += quantity
+        state.totalCart += quantity
       } else {
         state.cartProduct.push({
           id: id,
@@ -64,9 +63,9 @@ export const cartSlice = createSlice({
           imageProduct: image,
           priceProduct: priceProduct,
           title: title,
-          quantityProduct: quantityProduct,
+          quantity: quantity,
         })
-        state.totalCart += quantityProduct
+        state.totalCart += quantity
         state.cartBoolean.push({ id: id, boolean: false })
       }
     },
@@ -206,6 +205,7 @@ export const cartSlice = createSlice({
     },
     removeCart: (state, action) => {
       const { id } = action.payload
+
       state.cartProduct = state.cartProduct.filter((data) => data.id != id)
 
       state.firstCartProduct = state.firstCartProduct.filter(
@@ -214,6 +214,7 @@ export const cartSlice = createSlice({
       state.selectedProduct = state.selectedProduct.filter(
         (data) => data.id != id
       )
+
       if (state.totalPrice !== 0) {
         const totalPrice = state.selectedProduct.reduce(
           (accumulator, { price }) => {
@@ -225,7 +226,30 @@ export const cartSlice = createSlice({
       }
       state.cartBoolean = state.cartBoolean.filter((data) => data.id != id)
     },
-    deleteCartProduct: (state) => {
+    deleteCartProduct: (state, action) => {
+      const indexCartProduct = state.cartProduct.findIndex(
+        (data) => data.id == action?.payload?.id
+      )
+
+      if (
+        state.cartProduct[indexCartProduct]?.quantity > 1 &&
+        state.selectedProduct.length === 0
+      ) {
+        state.totalCart -= state.cartProduct[indexCartProduct].quantity
+        state.cartProduct = state.cartProduct.filter(
+          (data) => data.id != action.payload?.id
+        )
+      }
+      if (
+        state.cartProduct[indexCartProduct]?.quantity === 1 &&
+        state.selectedProduct.length === 0
+      ) {
+        state.totalCart -= 1
+        state.cartProduct = state.cartProduct.filter(
+          (data) => data.id != action.payload?.id
+        )
+      }
+
       if (state.selectedProduct.length !== 0) {
         for (let i = 0; i < state.selectedProduct.length; i++) {
           state.cartProduct = state.cartProduct.filter(

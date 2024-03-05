@@ -95,9 +95,11 @@ const VarianProduct = ({
         )}
       </div>
       <NavbarOnProductDetail
-        style={
-          "w-full flex items-center px-2 bg-white gap-x-2 sticky bottom-2 z-50"
-        }
+        style={`w-full flex items-center px-2 bg-white gap-x-2 z-50 ${
+          filterVarianProduct[0]?.size === undefined
+            ? `fixed bottom-2`
+            : `sticky bottom-2`
+        }`}
         handleClick={handleClick}
       />
     </div>
