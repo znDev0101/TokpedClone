@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react"
 import NavbarOnProductDetail from "../navbaronproductdetail/NavbarOnProductDetail"
 import "react-toastify/dist/ReactToastify.css"
 import { useSelector } from "react-redux"
+import { useOutletContext } from "react-router"
 
 const VarianProduct = ({
   filterVarianProduct,
@@ -17,6 +18,7 @@ const VarianProduct = ({
 }) => {
   const { cartProduct } = useSelector((state) => state.cart)
   const [indexCart, setIndexCart] = useState([])
+  const { isOpenMainMenu } = useOutletContext()
 
   useEffect(() => {
     if (cartProduct.length !== 0) {
@@ -25,10 +27,16 @@ const VarianProduct = ({
     }
   }, [cartProduct, productId])
 
+  useEffect(() => {
+    if (isOpenMainMenu) {
+      setIsOpenVarianProduct(false)
+    }
+  }, [isOpenMainMenu])
+
   return (
     <div
       className={
-        isOpenVarianProduct
+        isOpenVarianProduct && !isOpenMainMenu
           ? "w-full h-[60dvh] fixed bottom-0 lg:hidden flex flex-col gap-y-3   bg-white duration-300  translate-y-0 overflow-y-scroll z-50"
           : "w-full h-[60dvh] fixed bottom-0 lg:hidden flex flex-col gap-y-3   bg-white duration-300  translate-y-full overflow-y-scroll z-50"
       }>

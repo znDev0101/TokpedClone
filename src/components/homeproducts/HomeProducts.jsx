@@ -1,42 +1,57 @@
-import React, { useEffect } from 'react';
-import { useFetch } from '../../hooks/useFetch';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot, faCaretDown, faXmark } from '@fortawesome/free-solid-svg-icons';
-import CardProducts from '../cardproducts/CardProducts';
-import Button from '../button/Button';
-import Category from '../category/Category';
-import ScrollToTop from '../scrolltotop/ScrollToTop';
-import { useContext } from 'react';
-import { MyContext } from '../../context/MyContext';
-import { useLocation, useNavigate } from 'react-router';
-import { useGetAllProductsQuery } from '../../redux/services/ecommerceApi';
+import React from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {
+  faLocationDot,
+  faCaretDown,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons"
+import CardProducts from "../cardproducts/CardProducts"
+import Button from "../button/Button"
+import Category from "../category/Category"
+import ScrollToTop from "../scrolltotop/ScrollToTop"
+import { useLocation, useNavigate } from "react-router"
+import { useGetAllProductsQuery } from "../../redux/services/ecommerceApi"
 
 function HomeProducts() {
-  // const { data, loading } = useFetch('https://fakestoreapi.com/products');
-  const { data, error, isLoading } = useGetAllProductsQuery();
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
+  const { data, error, isLoading } = useGetAllProductsQuery()
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
 
   return (
     <>
       {screen.width < 500 ? (
         <div className={`w-[92%] m-auto`}>
           <div className="items-center flex gap-x-2">
-            <FontAwesomeIcon icon={faLocationDot} size="lg" className="text-green-600" />
+            <FontAwesomeIcon
+              icon={faLocationDot}
+              size="lg"
+              className="text-green-600"
+            />
             <div className="text-sm">
-              Dikirim ke <span className="font-bold">Pancoran, Jakarta Selatan</span>
+              Dikirim ke{" "}
+              <span className="font-bold">Pancoran, Jakarta Selatan</span>
             </div>
             <FontAwesomeIcon icon={faCaretDown} size="lg" />
           </div>
           <div className=" grid grid-cols-[2fr_1fr] mt-3 items-center">
             <div className="flex gap-x-2 items-center">
-              <img src="https://images.tokopedia.net/img/home/login_widget/toped_login.png?ect=3g" alt="profile-img" className="w-9 h-10" />
+              <img
+                src="https://images.tokopedia.net/img/home/login_widget/toped_login.png?ect=3g"
+                alt="profile-img"
+                className="w-9 h-10"
+              />
               <div>
                 <p className="font-bold">Hai,Tropper!</p>
                 <p>Akses semua fitur yuk!</p>
               </div>
             </div>
-            <Button styleButton={' text-white ms-5 font-bold py-2 rounded-lg bg-green-600 '} textButton={'Masuk'} handleClick={() => navigate('/login')} />
+            <Button
+              styleButton={
+                " text-white ms-5 font-bold py-2 rounded-lg bg-green-600 "
+              }
+              textButton={"Masuk"}
+              handleClick={() => navigate("/login")}
+            />
           </div>
         </div>
       ) : null}
@@ -48,25 +63,38 @@ function HomeProducts() {
       ) : (
         <div
           className={
-            pathname !== '/'
-              ? 'w-full m-[70px_auto] px-4 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3'
-              : 'w-full mx-auto mt-4 mb-20 px-4 lg:px-16 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-3'
-          }
-        >
+            pathname !== "/"
+              ? "w-full m-[70px_auto] px-4 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3"
+              : "w-full mx-auto mt-4 mb-20 px-4 lg:px-16 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-3"
+          }>
           {data?.map(({ id, title, image, price, rating }) => {
-            return <CardProducts key={id} id={id} title={title} image={image} price={price} rating={rating} urlPath={'product_detail'} />;
+            return (
+              <CardProducts
+                key={id}
+                id={id}
+                title={title}
+                image={image}
+                price={price}
+                rating={rating}
+                urlPath={"product_detail"}
+              />
+            )
           })}
         </div>
       )}
 
       <ScrollToTop
-        styleIfTrue={'fixed w-12 justify-center items-center flex h-12 bottom-20 right-6 rounded-full shadow-lg bg-white z-50 duration-300 translate-y-0 '}
-        styleIffalse={'fixed w-12 justify-center items-center flex h-12 bottom-0 right-6 rounded-full shadow-lg bg-white duration-300 translate-y-full'}
+        styleIfTrue={
+          "fixed w-12 justify-center items-center flex h-12 bottom-20 right-6 rounded-full shadow-lg bg-white z-50 duration-300 translate-y-0 "
+        }
+        styleIffalse={
+          "fixed w-12 justify-center items-center flex h-12 bottom-0 right-6 rounded-full shadow-lg bg-white duration-300 translate-y-full"
+        }
         onClick={() => window.scrollTo(0, 0)}
         numberScrollYWindow={400}
       />
     </>
-  );
+  )
 }
 
-export default HomeProducts;
+export default HomeProducts

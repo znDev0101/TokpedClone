@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react"
+import React, { useEffect, useState, useRef, useContext } from "react"
 import { useLocation, useParams } from "react-router"
 import NavbarOnProductDetail from "../components/navbaronproductdetail/NavbarOnProductDetail"
 import OthersProducts from "../components/othersproducts/OthersProducts"
@@ -22,6 +22,7 @@ import InfoProduct from "../components/infoproduct/InfoProduct"
 import CardBuyProduct from "../components/cardbuyproduct/CardBuyProduct"
 import BreadCrumbs from "../components/breadcrumbs/BreadCrumbs"
 import VarianProduct from "../components/varianproduct/VarianProduct"
+import { MyContext } from "../context/MyContext"
 
 const ProductDetails = () => {
   const { productId: id } = useParams()
@@ -62,6 +63,8 @@ const ProductDetails = () => {
     )
     setIndexHeartBoolean(findIndexWishListBoolean)
   }, [wishListHeartBoolean, id])
+
+  useEffect(() => {}, [])
 
   const handleAddToCart = () => {
     const conditionStock = cartProduct.filter((data) => data.id == id)

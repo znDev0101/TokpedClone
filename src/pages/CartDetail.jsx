@@ -92,7 +92,7 @@ const CartDetail = () => {
     <div
       className={`w-full lg:bg-[#f0f3f7]  pt-10 pb-16 z-40 ${
         cartProduct.length > 2 ? `h-full` : `h-screen`
-      }`}>
+      } ${showModal && `overflow-auto`} `}>
       <div className="lg:max-w-[75rem] lg:mx-auto">
         <h1 className="hidden lg:block font-bold lg:mt-28 lg:mb-8 lg:text-2xl">
           Keranjang

@@ -23,8 +23,6 @@ const NavbarOnDekstop = () => {
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
-  console.log(wishListProduct)
-
   return (
     <header
       className={`w-full fixed top-0 z-50 ${
@@ -144,7 +142,7 @@ const NavbarOnDekstop = () => {
                           id,
                           imageProduct,
                           title,
-                          quantityProduct,
+                          quantity,
                           priceProduct,
                         }) => {
                           return (
@@ -166,7 +164,7 @@ const NavbarOnDekstop = () => {
                                 </h5>
                               </div>
                               <span className="font-bold">
-                                {quantityProduct} X ${priceProduct}
+                                {quantity} X ${priceProduct}
                               </span>
                             </div>
                           )
@@ -181,7 +179,7 @@ const NavbarOnDekstop = () => {
               <FontAwesomeIcon size="lg" icon={faBell} />
             </div>
             <div
-              className="relative flex justify-center m-[unset] p-2 duration-300 hover:bg-gray-100 rounded-md hover:cursor-pointer hover:cursor-pointer"
+              className="relative flex justify-center m-[unset] p-2 duration-300 hover:bg-gray-100 rounded-md hover:cursor-pointer "
               onMouseEnter={() =>
                 setIsOpenHeartMenuDropdown(!isOpenHeartMenuDropdown)
               }
@@ -239,7 +237,7 @@ const NavbarOnDekstop = () => {
                           : "h-max py-2"
                       } `}>
                       {wishListProduct.map(
-                        ({ id, image, title, quantityProduct, price }) => {
+                        ({ id, image, title, quantity, price }) => {
                           return (
                             <div
                               className="flex justify-between items-start px-2"

@@ -1,28 +1,34 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { MyContext } from '../../context/MyContext';
-import { useDispatch, useSelector } from 'react-redux';
-import { setCheckBoxBooleanWishList } from '../../redux/wishlistSlice/wishListSlice';
+import React, { useContext, useState, useEffect } from "react"
+import { Link, useOutletContext } from "react-router-dom"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faStar } from "@fortawesome/free-solid-svg-icons"
+import { useDispatch, useSelector } from "react-redux"
+import { setCheckBoxBooleanWishList } from "../../redux/wishlistSlice/wishListSlice"
 
 function CardProducts({ title, image, price, rating, urlPath, id }) {
-  const { aturWishList } = useContext(MyContext);
-  const { checkBoxWishListBoolean } = useSelector((state) => state.wishList);
-  const [indexCheckBoxBoolean, setIndexCheckBoxBoolean] = useState([]);
-  const dispatch = useDispatch();
+  const { checkBoxWishListBoolean } = useSelector((state) => state.wishList)
+  const [indexCheckBoxBoolean, setIndexCheckBoxBoolean] = useState([])
+  const { aturWishList } = useOutletContext()
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    const findIndexCheckBoxBoolean = checkBoxWishListBoolean.findIndex((data) => data.id == id);
-    setIndexCheckBoxBoolean(findIndexCheckBoxBoolean);
-  }, [checkBoxWishListBoolean]);
+    const findIndexCheckBoxBoolean = checkBoxWishListBoolean.findIndex(
+      (data) => data.id == id
+    )
+    setIndexCheckBoxBoolean(findIndexCheckBoxBoolean)
+  }, [checkBoxWishListBoolean])
 
   return (
     <>
       {aturWishList ? (
         <div className="w-full relative  grid grid-rows-[17rem_1.2rem_1.2rem_1.2rem] border-2 border-gray-300 rounded-md shadow-md gap-y-2 pb-3">
           <div className="w-8 h-8 border border-gray-500 absolute right-3 top-2">
-            <input type="checkbox" checked={checkBoxWishListBoolean[indexCheckBoxBoolean]?.boolean} onChange={() => dispatch(setCheckBoxBooleanWishList({ id }))} className="w-full h-full" />
+            <input
+              type="checkbox"
+              checked={checkBoxWishListBoolean[indexCheckBoxBoolean]?.boolean}
+              onChange={() => dispatch(setCheckBoxBooleanWishList({ id }))}
+              className="w-full h-full"
+            />
           </div>
           <div className="w-[85%] h-full flex items-center overflow-hidden  mt-3 mx-auto">
             <img src={image} alt="image-product" className="object-cover" />
@@ -40,7 +46,11 @@ function CardProducts({ title, image, price, rating, urlPath, id }) {
         <Link to={`${urlPath}/${id}`}>
           <div className="w-full  grid grid-rows-[16rem_1rem_1.2rem_1.2rem] border-2 border-gray-300 rounded-md shadow-md gap-y-5 pb-3">
             <div className="w-full h-full flex items-center overflow-hidden px-2  mt-3 mx-auto">
-              <img src={image} alt="image-product" className="object-contain w-full h-full" />
+              <img
+                src={image}
+                alt="image-product"
+                className="object-contain w-full h-full"
+              />
             </div>
             <h5 className="px-2 h-5 overflow-hidden">{title.slice(0, 17)}</h5>
             <h5 className="px-2 font-bold">${price}</h5>
@@ -54,7 +64,7 @@ function CardProducts({ title, image, price, rating, urlPath, id }) {
         </Link>
       )}
     </>
-  );
+  )
 }
 
-export default CardProducts;
+export default CardProducts
