@@ -60,7 +60,7 @@ const WishList = () => {
   return (
     <>
       {wishListProduct.length === 0 ? (
-        <div className="w-full h-[100vh] lg:max-w-6xl flex flex-col items-center justify-center  lg:grid lg:grid-cols-[repeat(2,1fr)] lg:mx-auto lg:items-center  gap-y-3 px-4">
+        <div className="w-full h-[100dvh] lg:max-w-6xl flex flex-col items-center justify-center  lg:grid lg:grid-cols-[repeat(2,1fr)] lg:mx-auto lg:items-center  gap-y-3 px-4">
           <div className="w-72 h-56 lg:w-96 lg:h-64 lg:col-[2] lg:justify-self-end ">
             <img
               src={wishlist}
