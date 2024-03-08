@@ -89,7 +89,7 @@ const CardBuyProduct = ({
   }
 
   return (
-    <div className="w-full h-max sticky top-32 right-0 row-[1] max-w-[260px] bg-white border border-gray-300 rounded-md pb-4 ">
+    <div className="w-full h-max sticky top-36 right-0 row-[1] max-w-[260px] bg-white border border-gray-300 rounded-md pb-4 ">
       <h1 className="font-bold ps-4 pt-3">Atur Jumlah dan Catatan</h1>
       {/* counter cart */}
       <div className="flex items-center mt-4 ps-4 gap-x-4">
@@ -124,7 +124,7 @@ const CardBuyProduct = ({
           Beli
         </button>
       </div>
-      <div className="flex px-4 items-center gap-x-3 mt-5">
+      <div className="flex justify-center items-center gap-x-3 mt-5">
         <div className="flex items-center gap-x-2">
           <FontAwesomeIcon icon={faMessage} />
           <span className="font-bold text-xs">Chat</span>
@@ -132,21 +132,21 @@ const CardBuyProduct = ({
         <span>|</span>
         {wishListHeartBoolean[indexHeartBoolean]?.boolean ? (
           <div
-            className="flex items-center gap-x-2"
+            className="flex items-center gap-x-2 hover:cursor-pointer"
             onClick={handleClickAddToWishList}>
             <FontAwesomeIcon icon={faHeartSolid} className="text-pink-600" />
             <span className="font-bold text-xs">Wishlist</span>
           </div>
         ) : (
           <div
-            className="flex items-center gap-x-2"
+            className="flex items-center gap-x-2 hover:cursor-pointer"
             onClick={handleClickAddToWishList}>
             <FontAwesomeIcon icon={faHeartRegular} />
             <span className="font-bold text-xs">Wishlist</span>
           </div>
         )}
         <span>|</span>
-        <div className="flex items-center gap-x-2">
+        <div className="flex items-center gap-x-2 hover:cursor-pointer">
           <FontAwesomeIcon icon={faShareNodes} />
           <span className="font-bold text-xs">Share</span>
         </div>

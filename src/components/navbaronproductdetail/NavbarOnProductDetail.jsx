@@ -3,9 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMessage } from "@fortawesome/free-regular-svg-icons"
 import Button from "../button/Button"
 
-const NavbarOnProductDetail = ({ style, handleClick }) => {
+const NavbarOnProductDetail = ({
+  style,
+  handleClick,
+  navOnProductDetailRef,
+}) => {
   return (
-    <div className={style}>
+    <div className={style} ref={navOnProductDetailRef}>
       <FontAwesomeIcon icon={faMessage} size="2xl" />
 
       <Button

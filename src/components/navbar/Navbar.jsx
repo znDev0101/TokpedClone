@@ -22,7 +22,8 @@ import { useState } from "react"
 import { useDebounce } from "../../hooks/useDebounce"
 import MainMenu from "../mainmenu/MainMenu"
 import { MyContext } from "../../context/MyContext"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { resetCheckBooleanFalse } from "../../redux/wishlistSlice/wishListSlice"
 
 function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
   const [seacrhKeyword, setSeacrhKeyword] = useState("")
@@ -33,6 +34,7 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
   const { pathname } = useLocation()
   const valueDebounce = useDebounce(seacrhKeyword)
   const totalCart = useSelector((state) => state.cart.totalCart)
+  const dispatch = useDispatch()
 
   const { isActive, aturWishList, setAturWishList } = useContext(MyContext)
 
@@ -204,7 +206,10 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
                           ) : (
                             <span
                               className="text-green-600 font-bold"
-                              onClick={() => setAturWishList(false)}>
+                              onClick={() => {
+                                setAturWishList(false)
+                                dispatch(resetCheckBooleanFalse())
+                              }}>
                               Batal
                             </span>
                           )}

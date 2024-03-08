@@ -91,7 +91,7 @@ const InfoProduct = ({
         {/* ONLY ON MOBILE */}
         <div className="flex flex-col mt-4 gap-y-2 lg:hidden">
           <h1 className="font-bold">Deskripsi produk</h1>
-          <p>{description}</p>
+          <p className="text-sm">{description}</p>
         </div>
       </div>
     </div>

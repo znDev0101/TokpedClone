@@ -1,6 +1,6 @@
 import { faChartBar } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import React, { useContext, useState, useEffect } from "react"
+import React, { useContext, useState, useEffect, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useLocation, useNavigate } from "react-router"
 import Button from "../components/button/Button"
@@ -15,16 +15,22 @@ import {
 import { MyContext } from "../context/MyContext"
 import { toast, Bounce } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons"
+import useClickOutside from "../hooks/useClickOutside"
 
 const WishList = () => {
-  const { wishListProduct, wishListHeartBoolean, checkBoxWishListBoolean } =
-    useSelector((state) => state.wishList)
+  const { wishListProduct, checkBoxWishListBoolean } = useSelector(
+    (state) => state.wishList
+  )
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { pathname } = useLocation()
   const [itemSelected, setItemSelected] = useState(0)
+  const [selectOptionUrutkan, setSelectOptionUrutkan] = useState(false)
   const { aturWishList, setAturWishList } = useContext(MyContext)
   const [showModal, setShowModal] = useState(false)
+  const btnHapusRef = useRef(null)
+  const modalRef = useRef(null)
 
   const handleDelete = () => {
     dispatch(removeItemsFromWishList())
@@ -43,7 +49,30 @@ const WishList = () => {
     setAturWishList(!aturWishList)
   }
 
+  const handleClickSelectOption = (event) => {
+    window.addEventListener("click", (e) => {
+      if (e.target == event.target) {
+        setSelectOptionUrutkan(!selectOptionUrutkan)
+      } else {
+        setSelectOptionUrutkan(false)
+      }
+    })
+  }
+
+  const handleBatalWishlist = () => {
+    setAturWishList(!aturWishList)
+    dispatch(resetCheckBooleanFalse())
+  }
+
+  const handleClickOutsideModal = () => {
+    setShowModal(false)
+  }
+
+  useClickOutside(modalRef, handleClickOutsideModal, btnHapusRef)
+
   useEffect(() => {
+    window.scrollTo(0, 0)
+
     return () => {
       setAturWishList(false)
       dispatch(resetCheckBooleanFalse())
@@ -85,47 +114,105 @@ const WishList = () => {
         </div>
       ) : (
         <>
-          <div className="w-full lg:max-w-6xl lg:mx-auto px-5 flex justify-between  mt-28 lg:mt-36">
-            <div className="block lg:flex gap-x-2">
-              <p>
-                <span className="font-bold">{wishListProduct.length} </span>
-                Barang
-              </p>
+          <div className="w-full lg:max-w-6xl lg:mx-auto px-5 flex justify-between   mt-28 lg:mt-40">
+            {aturWishList && screen.width > 1200 ? (
+              <div className="flex items-center gap-x-4">
+                <Button
+                  textButton={
+                    itemSelected !== 0 ? `Hapus (${itemSelected})` : `Hapus`
+                  }
+                  styleButton={`w-44 border border-gray-300  py-1 text-sm text-gray-500 font-bold rounded-md  ${
+                    itemSelected !== 0 &&
+                    `text-green-600 border border-green-600`
+                  } ${
+                    itemSelected === 0
+                      ? `hover:cursor-not-allowed`
+                      : `hover:cursor-pointer`
+                  } `}
+                  handleClick={() => setShowModal(!showModal)}
+                  ref={btnHapusRef}
+                  disableBtn={itemSelected === 0}
+                />
+                <span
+                  className="text-green-600 font-bold hover:cursor-pointer"
+                  onClick={handleBatalWishlist}>
+                  Batal
+                </span>
+              </div>
+            ) : (
+              <div className="block lg:flex gap-x-2">
+                <p>
+                  <span className="font-bold">{wishListProduct.length} </span>
+                  Barang
+                </p>
+                <p
+                  className="font-bold text-green-600 hover:cursor-pointer hidden lg:block"
+                  onClick={() => {
+                    setAturWishList(!aturWishList)
+                  }}>
+                  Atur
+                </p>
+              </div>
+            )}
+
+            <div className="flex gap-x-2 items-center">
+              {/* ONLY ON MOBILE */}
               <p
-                className="font-bold text-green-600 hover:cursor-pointer"
+                className={`font-bold text-green-600 lg:hidden ${
+                  aturWishList ? `hidden` : `block`
+                }`}
                 onClick={() => setAturWishList(!aturWishList)}>
                 Atur
               </p>
-            </div>
+              <span
+                className={`lg:hidden ${aturWishList ? `hidden` : `block`}`}>
+                |
+              </span>
+              <FontAwesomeIcon
+                icon={faChartBar}
+                className={`lg:hidden ${aturWishList ? `hidden` : `block`}`}
+              />
+              {/* ONLY ON DESKTOP */}
+              <span className="hidden lg:block font-bold">Urutkan</span>
 
-            {!aturWishList && (
-              <div className="flex gap-x-2 items-center">
-                {/* ONLY ON MOBILE */}
-                <p
-                  className="font-bold text-green-600 lg:hidden"
-                  onClick={() => setAturWishList(!aturWishList)}>
-                  Atur
-                </p>
-                <span className="lg:hidden">|</span>
-                <FontAwesomeIcon icon={faChartBar} className="lg:hidden" />
-                {/* ONLY ON DESKTOP */}
-                <span className="hidden lg:block font-bold">Urutkan</span>
-                <select
-                  name="urutkanWishlist"
-                  defaultValue="terbaru-tersimpan"
-                  className="hidden lg:block border border-gray-400 rounded-md py-2 px-5 gap-y-6">
-                  <option value="terbaru-tersimpan">Terbaru Tersimpan</option>
-                  <option value="terlama-tersimpan">Terlama Tersimpan</option>
-                  <option value="harga-tertinggi">Harga Tertinggi</option>
-                  <option value="harga-terendah">Harga Terendah</option>
-                </select>
+              <div
+                className="hidden lg:inline-block relative hover:cursor-pointer"
+                onClick={handleClickSelectOption}>
+                <div className="hidden lg:flex items-center  border px-3 py-1 gap-x-5 border-gray-400 rounded-md">
+                  <span>Terbaru Disimpan</span>
+                  <FontAwesomeIcon
+                    icon={faChevronDown}
+                    className={`duration-300 ${
+                      selectOptionUrutkan ? `rotate-180` : `rotate-0`
+                    }`}
+                  />
+                </div>
+                <div
+                  className={`absolute duration-300  h-36 left-0 right-0 top-9 overflow-y-scroll border border-gray-300 rounded-md ${
+                    selectOptionUrutkan ? `opacity-100` : `opacity-0 hidden`
+                  } `}>
+                  <div className="flex flex-col gap-y-1    mt-2">
+                    <span className="duration-300 px-3 py-1 hover:bg-gray-300">
+                      Terbaru Disimpan
+                    </span>
+                    <span className="duration-300 px-3 py-1 hover:bg-gray-300">
+                      Terlama Disimpan
+                    </span>
+                    <span className="duration-300 px-3 py-1 hover:bg-gray-300">
+                      Harga Tertinggi
+                    </span>
+                    <span className="duration-300 px-3 py-1 hover:bg-gray-300">
+                      Harga Terendah
+                    </span>
+                  </div>
+                </div>
               </div>
-            )}
+            </div>
           </div>
           <div
             className={
               pathname === "/wishlist" &&
-              "w-full lg:max-w-6xl mb-24 m-[30px_auto] px-4 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] lg:flex gap-3 "
+              "w-full lg:max-w-6xl mb-24 m-[30px_auto] px-4 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] lg:grid-cols-6 gap-3 "
             }>
             {wishListProduct.map(
               ({ id, category, title, image, price, rating }) => {
@@ -148,6 +235,8 @@ const WishList = () => {
             <ConfirmDeleteProductsOnWishList
               showModal={showModal}
               setShowModal={setShowModal}
+              btnHapusRef={btnHapusRef}
+              itemSelected={itemSelected}
             />
           )}
           <Modal
@@ -158,6 +247,7 @@ const WishList = () => {
             }
             showModal={showModal}
             setShowModal={setShowModal}
+            modalRef={modalRef}
           />
         </>
       )}

@@ -1,28 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React from "react"
+import Button from "../button/Button"
 
-const ConfirmDeleteProductsOnWishList = ({ showModal, setShowModal }) => {
-  const { checkBoxWishListBoolean } = useSelector((state) => state.wishList);
-  const [itemSelected, setItemSelected] = useState(0);
-
-  useEffect(() => {
-    const checkBoxWishListBooleanTrue = checkBoxWishListBoolean.filter(({ boolean }) => boolean === true);
-    setItemSelected(checkBoxWishListBooleanTrue.length);
-  }, [checkBoxWishListBoolean]);
-
+const ConfirmDeleteProductsOnWishList = ({
+  showModal,
+  setShowModal,
+  itemSelected,
+  btnHapusRef,
+}) => {
   return (
-    <div className="w-full fixed bottom-0">
+    <div className="w-full fixed bottom-0 lg:hidden">
       <div className="px-5 py-1">
-        <button
-          className={itemSelected === 0 ? 'w-full bg-gray-300 text-gray-500 font-bold rounded-xl py-2' : 'w-full bg-green-600 text-white font-bold rounded-xl py-2'}
-          onClick={() => setShowModal(!showModal)}
-          disabled={itemSelected === 0}
-        >
-          {itemSelected !== 0 ? `Hapus ${itemSelected}` : `Hapus`}
-        </button>
+        <Button
+          textButton={itemSelected === 0 ? `Hapus` : `Hapus (${itemSelected})`}
+          styleButton={`w-full  font-bold rounded-xl py-2 ${
+            itemSelected === 0
+              ? `bg-gray-300 text-gray-500`
+              : `bg-green-600 text-white`
+          }`}
+          disableBtn={itemSelected === 0}
+          handleClick={() => setShowModal(!showModal)}
+          ref={btnHapusRef}
+        />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ConfirmDeleteProductsOnWishList;
+export default ConfirmDeleteProductsOnWishList

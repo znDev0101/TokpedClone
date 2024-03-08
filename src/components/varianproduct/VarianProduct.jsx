@@ -1,23 +1,24 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
-import React, { useEffect, useState } from "react"
+import React, { forwardRef, useEffect, useRef, useState } from "react"
 import NavbarOnProductDetail from "../navbaronproductdetail/NavbarOnProductDetail"
 import "react-toastify/dist/ReactToastify.css"
 import { useSelector } from "react-redux"
 import { useOutletContext } from "react-router"
 
 const VarianProduct = ({
-  filterVarianProduct,
-  productId,
   isOpenVarianProduct,
+  filterVarianProduct,
   setIsOpenVarianProduct,
-  imageProduct,
-  price,
   handleClick,
-  stock: stockProduct,
+  navOnProductDetailRef,
+  ...data
 }) => {
+  const { productId, imageProduct, price, stock: stockProduct } = data
   const { cartProduct } = useSelector((state) => state.cart)
   const [indexCart, setIndexCart] = useState([])
+  const varianProductRef = useRef(null)
+
   const { isOpenMainMenu } = useOutletContext()
 
   useEffect(() => {
@@ -27,19 +28,33 @@ const VarianProduct = ({
     }
   }, [cartProduct, productId])
 
-  useEffect(() => {
-    if (isOpenMainMenu) {
-      setIsOpenVarianProduct(false)
+  const outsideClick = (e) => {
+    if (!navOnProductDetailRef?.current.contains(e.target)) {
+      if (
+        varianProductRef.current &&
+        !varianProductRef?.current.contains(e.target)
+      ) {
+        setIsOpenVarianProduct(false)
+      }
     }
-  }, [isOpenMainMenu])
+  }
+
+  useEffect(() => {
+    document.addEventListener("click", outsideClick)
+
+    return () => {
+      document.removeEventListener("click", outsideClick)
+    }
+  }, [])
 
   return (
     <div
-      className={
+      className={`w-full h-[60dvh] fixed bottom-0 lg:hidden flex flex-col gap-y-3   bg-white duration-300   overflow-y-scroll z-50 ${
         isOpenVarianProduct && !isOpenMainMenu
-          ? "w-full h-[60dvh] fixed bottom-0 lg:hidden flex flex-col gap-y-3   bg-white duration-300  translate-y-0 overflow-y-scroll z-50"
-          : "w-full h-[60dvh] fixed bottom-0 lg:hidden flex flex-col gap-y-3   bg-white duration-300  translate-y-full overflow-y-scroll z-50"
-      }>
+          ? `translate-y-0`
+          : `translate-y-full`
+      }`}
+      ref={varianProductRef}>
       <div className="sticky top-0 flex gap-x-4 pt-3 px-3 py-2 bg-white z-50">
         <FontAwesomeIcon
           icon={faXmark}

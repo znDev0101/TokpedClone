@@ -42,9 +42,7 @@ const CartProducts = ({
   description,
   rating,
 }) => {
-  const { totalPrice, cartProduct, selectedProduct, cartBoolean } = useSelector(
-    (state) => state.cart
-  )
+  const { cartBoolean } = useSelector((state) => state.cart)
   const { wishListHeartBoolean } = useSelector((state) => state.wishList)
   const dispatch = useDispatch()
   const [isChecked, setIsChecked] = useState([])
@@ -193,6 +191,20 @@ const CartProducts = ({
           </Link>
           <div className=" flex lg:flex items-center mt-7  justify-between lg:justify-end lg:gap-x-4 lg:bottom-2">
             <div className="flex gap-x-5 ">
+              {screen.width <= 428 ? (
+                <FontAwesomeIcon
+                  icon={faNoteSticky}
+                  size="lg"
+                  className="text-gray-400"
+                />
+              ) : (
+                <FontAwesomeIcon
+                  icon={faTrashCan}
+                  onClick={() => dispatch(deleteCartProduct({ id }))}
+                  size="lg"
+                  className="text-gray-400 hover:cursor-pointer"
+                />
+              )}
               {wishListHeartBoolean[indexWishListBoolean]?.boolean == true ? (
                 <FontAwesomeIcon
                   icon={faHeartSolid}
@@ -208,12 +220,6 @@ const CartProducts = ({
                   className="hover:cursor-pointer text-gray-400"
                 />
               )}
-              <FontAwesomeIcon
-                icon={faTrashCan}
-                onClick={() => dispatch(deleteCartProduct({ id }))}
-                size="lg"
-                className="text-gray-400 hover:cursor-pointer"
-              />
             </div>
             <div className="flex justify-between items-center w-20 h-6 rounded-md border border-gray-500  p-1 ">
               <button

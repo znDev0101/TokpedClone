@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { forwardRef } from "react"
 
-function Button({ styleButton, textButton, handleClick }) {
-  return (
-    <button className={`${styleButton}`} onClick={handleClick}>
-      {textButton}
-    </button>
-  );
-}
+const Button = forwardRef(
+  ({ styleButton, textButton, handleClick, disableBtn }, btnHapusRef) => {
+    return (
+      <button
+        className={`${styleButton}`}
+        onClick={handleClick}
+        disabled={disableBtn}
+        ref={btnHapusRef}>
+        {textButton}
+      </button>
+    )
+  }
+)
 
-export default Button;
+export default Button

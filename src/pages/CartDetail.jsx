@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import Keranjang from "../assets/images/Keranjang.svg"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useOutletContext } from "react-router"
@@ -16,12 +16,15 @@ import Modal from "../components/modal/Modal"
 import SumPrice from "../components/sumprice/SumPrice"
 import RingkasanBelanja from "../components/ringkasanbelanja/RingkasanBelanja"
 import { useCheckedProduct } from "../hooks/useCheckedProduct"
+import useClickOutside from "../hooks/useClickOutside"
 
 const CartDetail = () => {
   const [showModal, setShowModal] = useState(false)
   const [isShowDeleteBtn, setIsShowDeleteBtn] = useState(false)
   const [windowScrollY, setWindowScrollY] = useState(0)
   const dispatch = useDispatch()
+  const modalRef = useRef(null)
+  const btnHapusRef = useRef(null)
 
   const { isChecked, setIsChecked } = useCheckedProduct()
 
@@ -29,9 +32,17 @@ const CartDetail = () => {
 
   const navigate = useNavigate()
 
-  const { cartProduct, selectedProduct, cartBoolean, totalCart, totalPrice } =
-    useSelector((state) => state.cart)
-  const { data, loading } = useFetch("https://fakestoreapi.com/products/")
+  const { cartProduct, selectedProduct, cartBoolean, totalCart } = useSelector(
+    (state) => state.cart
+  )
+  const { data } = useFetch("https://fakestoreapi.com/products/")
+
+  // call custom hook outside click
+  const clickCloseOutsideModal = () => {
+    setShowModal(false)
+  }
+
+  useClickOutside(modalRef, clickCloseOutsideModal, btnHapusRef)
 
   useEffect(() => {
     return () => {
@@ -139,7 +150,8 @@ const CartDetail = () => {
                 <span>{selectedProduct.length} product terpilih</span>
                 <button
                   className="text-end font-bold text-green-600"
-                  onClick={() => setShowModal(!showModal)}>
+                  onClick={() => setShowModal(!showModal)}
+                  ref={btnHapusRef}>
                   Hapus
                 </button>
               </div>
@@ -216,6 +228,7 @@ const CartDetail = () => {
                 }
                 setShowModal={setShowModal}
                 handleDelete={handleDelete}
+                modalRef={modalRef}
               />
               <SumPrice />
             </div>

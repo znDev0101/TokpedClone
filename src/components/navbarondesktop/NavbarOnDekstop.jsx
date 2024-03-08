@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import {
   faCartShopping,
@@ -18,6 +18,7 @@ const NavbarOnDekstop = () => {
   const { cartProduct, totalCart } = useSelector((state) => state.cart)
   const { wishListProduct } = useSelector((state) => state.wishList)
   const cartRef = useRef()
+  const menuCartRef = useRef()
   const wishlistRef = useRef()
 
   const { pathname } = useLocation()
@@ -80,9 +81,9 @@ const NavbarOnDekstop = () => {
         <div className="grid grid-cols-[repeat(3,1fr)] gap-x-10 items-center ">
           <div className="flex items-center justify-center gap-x-2">
             <div
-              className="relative flex justify-center m-[unset] p-2 duration-300 hover:bg-gray-100 rounded-md hover:cursor-pointer"
-              onMouseEnter={() => setIsOpenCartMenu(!isOpenCartMenu)}
-              onMouseLeave={() => setIsOpenCartMenu(!isOpenCartMenu)}
+              className="relative flex flex-col justify-center items-center  p-2 duration-300 hover:bg-gray-100 rounded-md hover:cursor-pointer "
+              onMouseEnter={() => setIsOpenCartMenu(true)}
+              onMouseLeave={() => setIsOpenCartMenu(false)}
               ref={cartRef}>
               <FontAwesomeIcon
                 size="lg"
@@ -93,7 +94,9 @@ const NavbarOnDekstop = () => {
                 {totalCart !== 0 && totalCart}
               </span>
               {isOpenCartMenu && (
-                <div className="w-96 h-max mx-auto pt-2 pb-5 absolute top-[2.4rem] border border-gray-300   bg-white rounded-md shadow-md">
+                <div
+                  className="w-96 h-max mx-auto pt-2 pb-5 absolute top-[2.4rem] border border-gray-300   bg-white rounded-md shadow-md"
+                  ref={menuCartRef}>
                   <div className="flex justify-between px-2">
                     {cartProduct.length === 0 ? (
                       <h5 className="font-bold">Keranjang</h5>
