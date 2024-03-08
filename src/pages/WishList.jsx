@@ -231,11 +231,11 @@ const WishList = () => {
               }
             )}
           </div>
-          {aturWishList && (
+          {aturWishList && window.screen.width <= 428 && (
             <ConfirmDeleteProductsOnWishList
               showModal={showModal}
               setShowModal={setShowModal}
-              btnHapusRef={btnHapusRef}
+              ref={btnHapusRef}
               itemSelected={itemSelected}
             />
           )}

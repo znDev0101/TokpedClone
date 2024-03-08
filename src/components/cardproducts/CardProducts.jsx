@@ -57,7 +57,7 @@ function CardProducts({ title, image, price, rating, urlPath, id }) {
                 className="object-contain w-full h-full"
               />
             </div>
-            <h5 className="px-2 h-5 overflow-hidden">{title.slice(0, 17)}</h5>
+            <h5 className="px-2 h-5 overflow-hidden">{title?.slice(0, 17)}</h5>
             <h5 className="px-2 font-bold">${price}</h5>
             <div className="flex items-center gap-x-2 ms-2">
               <span className="text-gray-600">{rating?.rate}</span>
