@@ -15,7 +15,6 @@ import {
 import { MyContext } from "../context/MyContext"
 import { toast, Bounce } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons"
 import useClickOutside from "../hooks/useClickOutside"
 
 const WishList = () => {
@@ -24,17 +23,15 @@ const WishList = () => {
   )
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { pathname } = useLocation()
   const [itemSelected, setItemSelected] = useState(0)
   const [selectOptionUrutkan, setSelectOptionUrutkan] = useState(false)
-  const { aturWishList, setAturWishList } = useContext(MyContext)
-  const [showModal, setShowModal] = useState(false)
-  const btnHapusRef = useRef(null)
+  const { isShowModal, setIsShowModal, aturWishList, setAturWishList } =
+    useContext(MyContext)
   const modalRef = useRef(null)
 
   const handleDelete = () => {
     dispatch(removeItemsFromWishList())
-    setShowModal(!showModal)
+    setIsShowModal(!isShowModal)
     toast.success("Belanjaan kamu berhasil di hapus", {
       position: "bottom-right",
       autoClose: 5000,
@@ -65,10 +62,10 @@ const WishList = () => {
   }
 
   const handleClickOutsideModal = () => {
-    setShowModal(false)
+    setIsShowModal(false)
   }
 
-  useClickOutside(modalRef, handleClickOutsideModal, btnHapusRef)
+  useClickOutside(modalRef, handleClickOutsideModal)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -86,10 +83,13 @@ const WishList = () => {
     setItemSelected(checkBoxWishListBooleanTrue.length)
   }, [checkBoxWishListBoolean])
 
+  console.log(modalRef.current)
+
   return (
     <>
       {wishListProduct.length === 0 ? (
-        <div className="w-full h-[100dvh] lg:max-w-6xl flex flex-col items-center justify-center  lg:grid lg:grid-cols-[repeat(2,1fr)] lg:mx-auto lg:items-center  gap-y-3 px-4">
+        <div
+          className={`w-full h-[100dvh] lg:min-h-screen lg:max-w-6xl flex flex-col items-center justify-center  lg:grid lg:grid-cols-[repeat(2,1fr)] lg:mx-auto lg:items-center  gap-y-3 px-4`}>
           <div className="w-72 h-56 lg:w-96 lg:h-64 lg:col-[2] lg:justify-self-end ">
             <img
               src={wishlist}
@@ -113,8 +113,8 @@ const WishList = () => {
           </div>
         </div>
       ) : (
-        <>
-          <div className="w-full lg:max-w-6xl lg:mx-auto px-5 flex justify-between   mt-28 lg:mt-40">
+        <div className={`w-full min-h-screen relative `}>
+          <div className=" px-4 lg:max-w-6xl lg:mx-auto items-center flex justify-between pt-28 lg:pt-40">
             {aturWishList && screen.width > 1200 ? (
               <div className="flex items-center gap-x-4">
                 <Button
@@ -129,9 +129,9 @@ const WishList = () => {
                       ? `hover:cursor-not-allowed`
                       : `hover:cursor-pointer`
                   } `}
-                  handleClick={() => setShowModal(!showModal)}
-                  ref={btnHapusRef}
+                  handleClick={() => setIsShowModal(true)}
                   disableBtn={itemSelected === 0}
+                  ref={modalRef}
                 />
                 <span
                   className="text-green-600 font-bold hover:cursor-pointer"
@@ -140,7 +140,7 @@ const WishList = () => {
                 </span>
               </div>
             ) : (
-              <div className="block lg:flex gap-x-2">
+              <div className="flex lg:flex gap-x-2 ">
                 <p>
                   <span className="font-bold">{wishListProduct.length} </span>
                   Barang
@@ -172,48 +172,22 @@ const WishList = () => {
                 icon={faChartBar}
                 className={`lg:hidden ${aturWishList ? `hidden` : `block`}`}
               />
-              {/* ONLY ON DESKTOP */}
+
+              {/*SELECT OPTION ONLY ON DESKTOP */}
               <span className="hidden lg:block font-bold">Urutkan</span>
 
-              <div
-                className="hidden lg:inline-block relative hover:cursor-pointer"
-                onClick={handleClickSelectOption}>
-                <div className="hidden lg:flex items-center  border px-3 py-1 gap-x-5 border-gray-400 rounded-md">
-                  <span>Terbaru Disimpan</span>
-                  <FontAwesomeIcon
-                    icon={faChevronDown}
-                    className={`duration-300 ${
-                      selectOptionUrutkan ? `rotate-180` : `rotate-0`
-                    }`}
-                  />
-                </div>
-                <div
-                  className={`absolute duration-300  h-36 left-0 right-0 top-9 overflow-y-scroll border border-gray-300 rounded-md ${
-                    selectOptionUrutkan ? `opacity-100` : `opacity-0 hidden`
-                  } `}>
-                  <div className="flex flex-col gap-y-1    mt-2">
-                    <span className="duration-300 px-3 py-1 hover:bg-gray-300">
-                      Terbaru Disimpan
-                    </span>
-                    <span className="duration-300 px-3 py-1 hover:bg-gray-300">
-                      Terlama Disimpan
-                    </span>
-                    <span className="duration-300 px-3 py-1 hover:bg-gray-300">
-                      Harga Tertinggi
-                    </span>
-                    <span className="duration-300 px-3 py-1 hover:bg-gray-300">
-                      Harga Terendah
-                    </span>
-                  </div>
-                </div>
-              </div>
+              <select
+                name="urutkan-product"
+                className="hidden w-44 p-2 border border-gray-300 rounded-md lg:flex focus:border focus:border-green-500 focus:outline-none">
+                <option value="Terbaru Disimpan">Terbaru Disimpan</option>
+                <option value="Terlama Disimpan">Terlama Disimpan</option>
+                <option value="Harga Tertinggi">Harga Tertinggi</option>
+                <option value="Harga Terendah">Harga Terendah</option>
+              </select>
+              {/*END SELECT OPTION ONLY ON DESKTOP */}
             </div>
           </div>
-          <div
-            className={
-              pathname === "/wishlist" &&
-              "w-full lg:max-w-6xl mb-24 m-[30px_auto] px-4 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] lg:grid-cols-6 gap-3 "
-            }>
+          <div className="px-4 mt-7 lg:mt-5 pb-20 lg:pb-10  grid lg:max-w-6xl lg:mx-auto grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3 lg:grid-cols-[repeat(6,1fr)] ">
             {wishListProduct.map(
               ({ id, category, title, image, price, rating }) => {
                 return (
@@ -231,25 +205,22 @@ const WishList = () => {
               }
             )}
           </div>
-          {aturWishList && window.screen.width <= 428 && (
-            <ConfirmDeleteProductsOnWishList
-              showModal={showModal}
-              setShowModal={setShowModal}
-              ref={btnHapusRef}
-              itemSelected={itemSelected}
-            />
-          )}
           <Modal
             handleDelete={handleDelete}
             modalTitle={`Hapus ${itemSelected} Barang`}
             modalParagraph={
               "Product yang kamu pilih akan di hapus dari Keranjang "
             }
-            showModal={showModal}
-            setShowModal={setShowModal}
-            modalRef={modalRef}
+            isShowModal={isShowModal}
+            setIsShowModal={setIsShowModal}
           />
-        </>
+          <ConfirmDeleteProductsOnWishList
+            isShowModal={isShowModal}
+            setIsShowModal={setIsShowModal}
+            itemSelected={itemSelected}
+            ref={modalRef}
+          />
+        </div>
       )}
     </>
   )

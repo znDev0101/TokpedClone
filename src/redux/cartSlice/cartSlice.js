@@ -231,43 +231,35 @@ export const cartSlice = createSlice({
         (data) => data.id == action?.payload?.id
       )
 
-      if (
-        state.cartProduct[indexCartProduct]?.quantity > 1 &&
-        state.selectedProduct.length === 0
-      ) {
-        state.totalCart -= state.cartProduct[indexCartProduct].quantity
-        state.cartProduct = state.cartProduct.filter(
-          (data) => data.id != action.payload?.id
-        )
-      }
-      if (
-        state.cartProduct[indexCartProduct]?.quantity === 1 &&
-        state.selectedProduct.length === 0
-      ) {
-        state.totalCart -= 1
-        state.cartProduct = state.cartProduct.filter(
-          (data) => data.id != action.payload?.id
-        )
+      if (indexCartProduct !== -1) {
+        if (
+          state.cartProduct[indexCartProduct]?.quantity > 1 &&
+          state.selectedProduct.length === 0
+        ) {
+          state.totalCart = state.totalCart -=
+            state.cartProduct[indexCartProduct].quantity
+          state.cartProduct = state.cartProduct.filter(
+            (data) => data.id != action.payload?.id
+          )
+        } else {
+          state.totalCart = state.totalCart -= 1
+          state.cartProduct = state.cartProduct.filter(
+            (data) => data.id != action.payload?.id
+          )
+        }
       }
 
       if (state.selectedProduct.length !== 0) {
-        for (let i = 0; i < state.selectedProduct.length; i++) {
+        state.selectedProduct.map((data) => {
           state.cartProduct = state.cartProduct.filter(
-            (data) => data.id !== state.selectedProduct[i].id
+            ({ id }) => id != data.id
           )
           state.cartBoolean = state.cartBoolean.filter(
-            (data) => data.id != state.selectedProduct[i].id
+            ({ id }) => id != data.id
           )
-          state.firstCartProduct = state.firstCartProduct.filter(
-            (data) => data.id != state.selectedProduct[i].id
-          )
-          state.totalPrice -= state.selectedProduct[i].price
-          if (state.selectedProduct[i].quantity > 1)
-            state.totalCart = state.totalCart -=
-              state.selectedProduct[i].quantity
+          state.totalCart = state.totalCart -= data.quantity
+        })
 
-          if (state.selectedProduct[i].quantity == 1) state.totalCart -= 1
-        }
         state.selectedProduct = []
       }
     },

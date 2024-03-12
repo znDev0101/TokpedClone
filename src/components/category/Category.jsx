@@ -1,12 +1,12 @@
-import React from 'react';
-import { faList, faSuitcase, faLaptop } from '@fortawesome/free-solid-svg-icons';
-import { faGem } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
+import React from "react"
+import { faList, faSuitcase, faLaptop } from "@fortawesome/free-solid-svg-icons"
+import { faGem } from "@fortawesome/free-regular-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Link } from "react-router-dom"
 
 function Category() {
   return (
-    <div className="w-full h-20 grid grid-cols-[repeat(5,1fr)] gap-x-3 m-[30px_0_0_0]   px-4 text-center overflow-x-scroll overflow-y-hidden lg:mt-36 lg:overflow-x-hidden">
+    <div className="w-full h-20 grid grid-cols-5 text-center overflow-x-scroll overflow-y-hidden lg:overflow-x-hidden">
       <div className="">
         <FontAwesomeIcon icon={faList} size="2xl" />
         <p>Liat Semua</p>
@@ -17,7 +17,7 @@ function Category() {
           <p>Baju Pria</p>
         </div>
       </Link>
-      <Link to={'/products/category/jewelery'}>
+      <Link to={"/products/category/jewelery"}>
         <div className="">
           <FontAwesomeIcon icon={faGem} size="2xl" />
           <p>Perhiasan</p>
@@ -36,7 +36,7 @@ function Category() {
         </div>
       </Link>
     </div>
-  );
+  )
 }
 
-export default Category;
+export default Category

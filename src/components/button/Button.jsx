@@ -1,13 +1,13 @@
 import React, { forwardRef } from "react"
 
 const Button = forwardRef(
-  ({ styleButton, textButton, handleClick, disableBtn }, btnHapusRef) => {
+  ({ styleButton, textButton, handleClick, disableBtn }, modalRef) => {
     return (
       <button
         className={`${styleButton}`}
         onClick={handleClick}
         disabled={disableBtn}
-        ref={btnHapusRef}>
+        ref={modalRef}>
         {textButton}
       </button>
     )

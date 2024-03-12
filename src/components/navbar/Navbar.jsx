@@ -24,8 +24,13 @@ import MainMenu from "../mainmenu/MainMenu"
 import { MyContext } from "../../context/MyContext"
 import { useDispatch, useSelector } from "react-redux"
 import { resetCheckBooleanFalse } from "../../redux/wishlistSlice/wishListSlice"
+import SearchKeyword from "../searchkeyword/SearchKeyword"
 
-function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
+function Navbar({
+  setIsActiveSearchKeyword,
+  setIsOpenMainMenu,
+  isOpenMainMenu,
+}) {
   const [seacrhKeyword, setSeacrhKeyword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState([])
@@ -36,7 +41,8 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
   const totalCart = useSelector((state) => state.cart.totalCart)
   const dispatch = useDispatch()
 
-  const { isActive, aturWishList, setAturWishList } = useContext(MyContext)
+  const { isActiveSearchKeyword, aturWishList, setAturWishList } =
+    useContext(MyContext)
 
   useEffect(() => {
     if (seacrhKeyword.length > 0 && data.length == 0) {
@@ -84,17 +90,17 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
   }, [valueDebounce])
 
   const handleClick = () => {
-    if (pathname !== "/wishlist") setIsActive(true)
+    if (pathname !== "/wishlist") setIsActiveSearchKeyword(true)
   }
 
   return (
     <>
       {pathname !== "/login" && (
-        <header className="w-full bg-white fixed top-0 grid grid-rows-[2rem] py-3  z-50">
+        <header className="w-full bg-white fixed top-0 grid grid-rows-[2rem] py-3  z-50 lg:hidden">
           {/* Navbar One */}
           <div
             className={
-              isActive
+              isActiveSearchKeyword
                 ? `w-[90%] m-auto grid grid-cols-[max-content_2fr] items-center  gap-x-5  duration-300`
                 : pathname === "/cart_detail"
                 ? "w-full px-4 grid grid-cols-[repeat(2,1fr)] items-center justify-between "
@@ -106,13 +112,17 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
                 ? `w-[95%] m-auto grid grid-cols-[max-content_2fr_1fr] items-center  gap-x-4`
                 : `w-[92%] m-auto grid grid-cols-[2fr_1fr] align_items_center gap-x-5   justify-between`
             }>
-            {isActive || pathname !== "/" || pathname === "/cart_detail" ? (
+            {isActiveSearchKeyword ||
+            pathname !== "/" ||
+            pathname === "/cart_detail" ? (
               <div className="flex gap-x-4 items-center">
                 <FontAwesomeIcon
                   icon={faArrowLeft}
                   size="xl"
                   onClick={
-                    isActive ? () => setIsActive(false) : () => navigate(-1)
+                    isActiveSearchKeyword
+                      ? () => setIsActiveSearchKeyword(false)
+                      : () => navigate(-1)
                   }
                 />
                 {pathname === "/cart_detail" ? (
@@ -137,8 +147,8 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
               <div
                 className={
                   pathname === "/wishlist"
-                    ? "w-full row-[2] col-[1/5] relative border border-gray-700 rounded-md"
-                    : "w-full relative border border-gray-700 rounded-md"
+                    ? "w-full row-[2] col-[1/5] relative bg-white border border-gray-700 rounded-md z-50"
+                    : "w-full relative border border-gray-700 rounded-md z-50"
                 }>
                 <FontAwesomeIcon
                   icon={faMagnifyingGlass}
@@ -147,7 +157,7 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
                 />
                 <input
                   type="text"
-                  className="border-none outline-none absolute top-0 bottom-0 right-1 left-8 placeholder:font-bold "
+                  className="border-none outline-none absolute top-0 bottom-0 right-1 left-8 placeholder:font-bold z-50"
                   value={seacrhKeyword}
                   placeholder={
                     pathname === "/wishlist"
@@ -159,7 +169,7 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
                 />
               </div>
             )}
-            {!isActive
+            {!isActiveSearchKeyword
               ? pathname !== "/ulasan_pembeli" && (
                   <nav
                     className={
@@ -261,39 +271,17 @@ function Navbar({ setIsActive, setIsOpenMainMenu, isOpenMainMenu }) {
         </header>
       )}
 
-      {isActive ? (
-        <div className="fixed top-[-4px] w-[100%] h-[100vh] mt-14 pt-5 z-50 bg-white px-5">
-          {seacrhKeyword.length > 0 ? (
-            isLoading ? (
-              <p className="text-2xl text-center mt-8 font-bold">Loading...</p>
-            ) : noResult ? (
-              <p className="text-2xl mt-20 text-center font-bold">
-                Pencarian tidak di temukan
-              </p>
-            ) : (
-              data.map(({ title, id }) => {
-                return (
-                  <div
-                    className="w-full grid grid-cols-[max-content_1fr]  items-center mb-5 gap-x-2"
-                    key={id}>
-                    <FontAwesomeIcon icon={faMagnifyingGlass} size="xl" />
-                    <Link
-                      to={`/product_detail/${id}`}
-                      onClick={() => setIsActive(!isActive)}
-                      className="grid grid-cols-[1fr_max-content] gap-x-1 items-center">
-                      <p>{title.slice(0, 20)}</p>
-                      <FontAwesomeIcon
-                        icon={faArrowUpRightFromSquare}
-                        size="xl"
-                      />
-                    </Link>
-                  </div>
-                )
-              })
-            )
-          ) : null}
-        </div>
-      ) : null}
+      <SearchKeyword
+        seacrhKeyword={seacrhKeyword}
+        isLoading={isLoading}
+        isActiveSearchKeyword={isActiveSearchKeyword}
+        setIsActiveSearchKeyword={setIsActiveSearchKeyword}
+        noResult={noResult}
+        data={data}
+        styleLayout={
+          "fixed top-[-4px] w-[100%] h-[100vh] mt-14 pt-5 z-50 bg-white px-5"
+        }
+      />
     </>
   )
 }

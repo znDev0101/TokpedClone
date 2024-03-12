@@ -1,16 +1,13 @@
 import { useEffect } from "react"
 
-export default function useClickOutside(mainRef, cb, opsiRef) {
+export default function useClickOutside(mainRef, cb) {
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (!opsiRef?.current?.contains(e.target)) {
-        if (mainRef?.current && !mainRef?.current?.contains(e.target)) {
-          cb()
-        }
-        console.log("TRUE")
+      if (mainRef.current && !mainRef?.current?.contains(e.target)) {
+        cb()
       }
+      // console.log(!mainRef?.current?.contains(e.target))
     }
-
     document.addEventListener("click", handleClickOutside)
 
     return () => {

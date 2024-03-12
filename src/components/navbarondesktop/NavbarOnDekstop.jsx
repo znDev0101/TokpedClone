@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useRef, useEffect, useContext } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import {
   faCartShopping,
@@ -8,13 +8,24 @@ import {
 import Keranjang from "../../assets/images/Keranjang.svg"
 import LogoTokped from "../../assets/images/LogoTokped.svg"
 import wishlist from "../../assets/images/wishlist.png"
+import { useDebounce } from "../../hooks/useDebounce"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useSelector } from "react-redux"
 import { faBell, faHeart } from "@fortawesome/free-regular-svg-icons"
+import SearchKeyword from "../searchkeyword/SearchKeyword"
+import { MyContext } from "../../context/MyContext"
 
-const NavbarOnDekstop = () => {
+const NavbarOnDekstop = ({
+  isActiveSearchKeyword,
+  setIsActiveSearchKeyword,
+}) => {
   const [isOpenCartMenu, setIsOpenCartMenu] = useState(false)
   const [isOpenHeartMenuDropdown, setIsOpenHeartMenuDropdown] = useState(false)
+  const [data, setData] = useState([])
+  const [seacrhKeyword, setSeacrhKeyword] = useState("")
+  const [noResult, setNoResult] = useState(false)
+  const valueDebounce = useDebounce(seacrhKeyword)
+  const { isShowModal, setIsShowModal } = useContext(MyContext)
   const { cartProduct, totalCart } = useSelector((state) => state.cart)
   const { wishListProduct } = useSelector((state) => state.wishList)
   const cartRef = useRef()
@@ -24,9 +35,59 @@ const NavbarOnDekstop = () => {
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
+  useEffect(() => {
+    if (seacrhKeyword.length > 0 && data.length == 0) {
+      setNoResult(true)
+    } else {
+      setNoResult(false)
+    }
+  }, [data])
+
+  useEffect(() => {
+    if (pathname !== "/") {
+      setData([])
+      setSeacrhKeyword("")
+    }
+  }, [pathname])
+
+  useEffect(() => {
+    if (seacrhKeyword.length === 0) setData([])
+  }, [seacrhKeyword])
+
+  useEffect(() => {
+    const getData = async () => {
+      setIsLoading(true)
+      try {
+        const response = await fetch("https://fakestoreapi.com/products")
+        const result = await response.json()
+        const resultSearch = result.filter(({ title }) =>
+          title.toLowerCase().includes(seacrhKeyword.toLowerCase())
+        )
+
+        if (resultSearch.length > 10) {
+          const coppyArr = resultSearch.slice(0, 10)
+          setData(coppyArr)
+          setIsLoading(false)
+        } else {
+          setData(resultSearch)
+          setIsLoading(false)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    if (seacrhKeyword.length > 0) getData()
+  }, [valueDebounce])
+
+  const handleClickSearchKeyword = () => {
+    setIsActiveSearchKeyword(true)
+    console.log(isActiveSearchKeyword)
+  }
+
   return (
     <header
-      className={`w-full fixed top-0 z-50 ${
+      className={`w-full fixed top-0 z-40 hidden lg:inline-block ${
         pathname === "/cart_detail" && `shadow-md`
       }`}>
       {/* nav one */}
@@ -53,7 +114,8 @@ const NavbarOnDekstop = () => {
           </li>
         </ul>
       </nav>
-      <nav className="grid grid-cols-[1fr_5fr_2.5fr] grid-rows-[repeat(2,max-content)] gap-x-10 items-center px-8 py-3  bg-white border-b border-gray-200">
+      <nav
+        className={` grid grid-cols-[1fr_5fr_2.5fr] grid-rows-[repeat(2,max-content)] gap-x-10 items-center  bg-white  px-8 py-3 border-b border-gray-200`}>
         <Link to="/">
           <img
             src={LogoTokped}
@@ -63,19 +125,26 @@ const NavbarOnDekstop = () => {
         </Link>
         <div className="w-full flex gap-x-4 items-center ">
           <span>Kategori</span>
-          <div className="w-full h-10 flex items-center border gap-x-3 border-gray-200 rounded-md">
+          <div
+            className="w-full relative h-10 flex items-center border border-gray-300  gap-x-3 rounded-md focus-within:border focus-within:border-green-500 duration-200"
+            onClick={handleClickSearchKeyword}>
             <FontAwesomeIcon
               icon={faMagnifyingGlass}
               className=" text-gray-400 ms-3"
               size="lg"
             />
-            <div className="flex flex-col">
-              <input
-                type="text"
-                className="w-[90%] h-full placeholder:text-gray-500 focus:outline-none"
-                placeholder="Cari di Tokopedia"
-              />
-            </div>
+            <input
+              type="text"
+              className="w-[90%] h-full placeholder:text-gray-500 focus:outline-none "
+              placeholder="Cari di Tokopedia"
+            />
+            <SearchKeyword
+              styleLayout={`h-[70dvh] border absolute top-10 bg-gray-400 right-0 left-0 rounded-md overflow-auto`}
+              isActiveSearchKeyword={isActiveSearchKeyword}
+              setIsActiveSearchKeyword={setIsActiveSearchKeyword}
+              noResult={noResult}
+              data={data}
+            />
           </div>
         </div>
         <div className="grid grid-cols-[repeat(3,1fr)] gap-x-10 items-center ">
@@ -153,11 +222,11 @@ const NavbarOnDekstop = () => {
                               className="flex justify-between items-start px-2"
                               key={id}>
                               <div className="flex gap-x-4">
-                                <div className="w-10 h-10">
+                                <div className="w-14 h-14 ">
                                   <img
                                     src={imageProduct}
                                     alt="img-product"
-                                    className="object-cover"
+                                    className="object-contain w-full h-full"
                                   />
                                 </div>
                                 <h5>
@@ -234,7 +303,7 @@ const NavbarOnDekstop = () => {
                     </div>
                   ) : (
                     <div
-                      className={`flex flex-col gap-y-7 mt-2 ${
+                      className={`flex flex-col gap-y-5 mt-2 ${
                         wishListProduct.length >= 5
                           ? "h-72 overflow-y-scroll py-2"
                           : "h-max py-2"
@@ -246,15 +315,15 @@ const NavbarOnDekstop = () => {
                               className="flex justify-between items-start px-2"
                               key={id}>
                               <div className="flex gap-x-4">
-                                <div className="w-10 h-10">
+                                <div className="w-14 h-14">
                                   <img
                                     src={image}
                                     alt="img-product"
-                                    className="object-cover"
+                                    className="object-contain w-full h-full"
                                   />
                                 </div>
                                 <h5>
-                                  {title.length >= 20
+                                  {title?.length >= 20
                                     ? `${title.slice(0, 20)}...`
                                     : `${title}`}
                                 </h5>

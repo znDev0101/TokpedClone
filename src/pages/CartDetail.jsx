@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useContext } from "react"
 import Keranjang from "../assets/images/Keranjang.svg"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useOutletContext } from "react-router"
@@ -17,32 +17,31 @@ import SumPrice from "../components/sumprice/SumPrice"
 import RingkasanBelanja from "../components/ringkasanbelanja/RingkasanBelanja"
 import { useCheckedProduct } from "../hooks/useCheckedProduct"
 import useClickOutside from "../hooks/useClickOutside"
+import { MyContext } from "../context/MyContext"
 
 const CartDetail = () => {
-  const [showModal, setShowModal] = useState(false)
   const [isShowDeleteBtn, setIsShowDeleteBtn] = useState(false)
   const [windowScrollY, setWindowScrollY] = useState(0)
   const dispatch = useDispatch()
   const modalRef = useRef(null)
-  const btnHapusRef = useRef(null)
 
   const { isChecked, setIsChecked } = useCheckedProduct()
 
   const { isOpenMainMenu } = useOutletContext()
+  const { isShowModal, setIsShowModal } = useContext(MyContext)
 
   const navigate = useNavigate()
 
-  const { cartProduct, selectedProduct, cartBoolean, totalCart } = useSelector(
-    (state) => state.cart
-  )
+  const { cartProduct, selectedProduct, cartBoolean, totalCart, totalPrice } =
+    useSelector((state) => state.cart)
   const { data } = useFetch("https://fakestoreapi.com/products/")
 
   // call custom hook outside click
   const clickCloseOutsideModal = () => {
-    setShowModal(false)
+    setIsShowModal(false)
   }
 
-  useClickOutside(modalRef, clickCloseOutsideModal, btnHapusRef)
+  useClickOutside(modalRef, clickCloseOutsideModal)
 
   useEffect(() => {
     return () => {
@@ -76,7 +75,7 @@ const CartDetail = () => {
 
   const handleDelete = () => {
     dispatch(deleteCartProduct())
-    setShowModal(!showModal)
+    setIsShowModal(!isShowModal)
     toast.success("Belanjaan kamu berhasil di hapus", {
       position: "bottom-right",
       autoClose: 5000,
@@ -101,9 +100,9 @@ const CartDetail = () => {
 
   return (
     <div
-      className={`w-full lg:bg-[#f0f3f7]  pt-10 pb-16 z-40 ${
+      className={`w-full lg:bg-[#f0f3f7]  pt-10 pb-16 ${
         cartProduct.length > 2 ? `h-full` : `h-screen`
-      } ${showModal && `overflow-auto`} `}>
+      } ${isShowModal && `overflow-auto`} `}>
       <div className="lg:max-w-[75rem] lg:mx-auto">
         <h1 className="hidden lg:block font-bold lg:mt-28 lg:mb-8 lg:text-2xl">
           Keranjang
@@ -150,8 +149,8 @@ const CartDetail = () => {
                 <span>{selectedProduct.length} product terpilih</span>
                 <button
                   className="text-end font-bold text-green-600"
-                  onClick={() => setShowModal(!showModal)}
-                  ref={btnHapusRef}>
+                  onClick={() => setIsShowModal(!isShowModal)}
+                  ref={modalRef}>
                   Hapus
                 </button>
               </div>
@@ -171,10 +170,11 @@ const CartDetail = () => {
                     <span className="text-gray-400">{`(${totalCart})`}</span>{" "}
                   </span>
                 </div>
-                {selectedProduct.length !== 0 && (
+                {selectedProduct.length !== 0 && screen.width > 1200 && (
                   <span
                     className="font-bold text-green-600 hover:cursor-pointer"
-                    onClick={() => setShowModal(!showModal)}>
+                    onClick={() => setIsShowModal(!isShowModal)}
+                    ref={modalRef}>
                     Hapus
                   </span>
                 )}
@@ -220,22 +220,19 @@ const CartDetail = () => {
                 })}
               </div>
 
-              <Modal
-                showModal={showModal}
-                modalTitle={`Hapus ${selectedProduct.length} Produk`}
-                modalParagraph={
-                  "Product yang kamu pilih akan di hapus dari Keranjang "
-                }
-                setShowModal={setShowModal}
-                handleDelete={handleDelete}
-                modalRef={modalRef}
-              />
               <SumPrice />
             </div>
           )}
           <RingkasanBelanja />
         </div>
       </div>
+      <Modal
+        isShowModal={isShowModal}
+        modalTitle={`Hapus ${selectedProduct.length} Produk`}
+        modalParagraph={"Product yang kamu pilih akan di hapus dari Keranjang "}
+        setIsShowModal={setIsShowModal}
+        handleDelete={handleDelete}
+      />
     </div>
   )
 }

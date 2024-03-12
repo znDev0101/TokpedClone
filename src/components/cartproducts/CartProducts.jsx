@@ -6,7 +6,6 @@ import {
 import {
   faHeart as faHeartSolid,
   faSoap,
-  faTrash,
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React, { useState, useEffect, useRef } from "react"

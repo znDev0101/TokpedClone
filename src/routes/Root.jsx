@@ -1,4 +1,5 @@
 import React from "react"
+
 import { Outlet, useLocation, useParams } from "react-router"
 import Navbar from "../components/navbar/Navbar"
 import Footer from "../components/footer/Footer"
@@ -9,7 +10,8 @@ import { ToastContainer } from "react-toastify"
 import NavbarOnDekstop from "../components/navbarondesktop/NavbarOnDekstop"
 
 function Root() {
-  const [isActive, setIsActive] = useState(false)
+  const [isActiveSearchKeyword, setIsActiveSearchKeyword] = useState(false)
+  const [isShowModal, setIsShowModal] = useState(false)
   const [isOpenMainMenu, setIsOpenMainMenu] = useState(false)
   const [aturWishList, setAturWishList] = useState(false)
   const [urlPath, setUrlPath] = useState([])
@@ -17,36 +19,49 @@ function Root() {
   const { productId } = useParams()
 
   return (
-    <MyContext.Provider value={{ isActive, setAturWishList, aturWishList }}>
-      <div className="w-full">
-        <ToastContainer className="mb-14" />
+    <div className="w-full h-full relative">
+      <div
+        className={`absolute top-0 bottom-0 right-0 left-0  ${
+          isShowModal ? `bg-gray-500 opacity-60 duration-300 z-50` : `-z-50`
+        } `}></div>
+      <MyContext.Provider
+        value={{
+          isActiveSearchKeyword,
+          isShowModal,
+          setIsShowModal,
+          setAturWishList,
+          aturWishList,
+        }}>
+        <ToastContainer className={`mb-12`} />
         {/* navbar on mobile */}
-        {screen.width <= 428 && (
-          <Navbar
-            setIsActive={setIsActive}
-            isOpenMainMenu={isOpenMainMenu}
-            setIsOpenMainMenu={setIsOpenMainMenu}
-          />
-        )}
+        <Navbar
+          setIsActiveSearchKeyword={setIsActiveSearchKeyword}
+          isOpenMainMenu={isOpenMainMenu}
+          setIsOpenMainMenu={setIsOpenMainMenu}
+        />
 
         {/* navbar on dekstop */}
-        {screen.width >= 1280 && <NavbarOnDekstop />}
+        <NavbarOnDekstop
+          isActiveSearchKeyword={isActiveSearchKeyword}
+          setIsActiveSearchKeyword={setIsActiveSearchKeyword}
+        />
 
         <Outlet context={{ setUrlPath, isOpenMainMenu }} />
+
         {screen.width < 500 &&
         pathname !== "/cart_detail" &&
         pathname !== `/product_detail/${productId}` &&
         pathname !== `/products/category/${urlPath}` &&
         pathname !== "/ulasan_pembeli" ? (
           <>
-            {!isActive && !isOpenMainMenu && !aturWishList ? (
+            {!isActiveSearchKeyword && !isOpenMainMenu && !aturWishList ? (
               <NavbarOnMobile />
             ) : null}
           </>
         ) : null}
-        <Footer />
-      </div>
-    </MyContext.Provider>
+        {/* <Footer /> */}
+      </MyContext.Provider>
+    </div>
   )
 }
 

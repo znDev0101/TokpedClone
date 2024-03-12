@@ -22,8 +22,8 @@ function CardProducts({ title, image, price, rating, urlPath, id }) {
   return (
     <>
       {aturWishList ? (
-        <div className="w-full relative  grid grid-rows-[16rem_1rem_1.2rem_1.2rem] border-2 border-gray-300 rounded-md shadow-md gap-y-5 pb-3">
-          <div className="w-6 h-6 absolute right-3 top-2 ">
+        <div className="w-full relative  grid grid-rows-[16rem_1rem_1.2rem_1.2rem] lg:grid-rows-[12rem_1rem_1.2rem_1.2rem] border-2 border-gray-300 rounded-md shadow-md gap-y-4 lg:gap-y-2 pb-3 ">
+          <div className="w-5 h-5 absolute right-3 top-2 ">
             <input
               type="checkbox"
               checked={checkBoxWishListBoolean[indexCheckBoxBoolean]?.boolean}
@@ -31,16 +31,16 @@ function CardProducts({ title, image, price, rating, urlPath, id }) {
               className="w-full h-full hover:cursor-pointer"
             />
           </div>
-          <div className="w-full h-full flex items-center overflow-hidden px-2  mt-3 mx-auto">
+          <div className="w-full h-full lg:w-44 lg:h-44 flex items-center overflow-hidden px-2  mt-2 mx-auto">
             <img
               src={image}
               alt="image-product"
               className="object-contain w-full h-full"
             />
           </div>
-          <h5 className="px-2 h-5 overflow-hidden">{title.slice(0, 17)}</h5>
+          <h5 className="px-2 h-5 overflow-hidden">{title?.slice(0, 17)}</h5>
           <h5 className="px-2 font-bold">${price}</h5>
-          <div className="flex items-center gap-x-2 ms-2">
+          <div className="flex items-center gap-x-2 ms-2 lg:text-sm">
             <span className="text-gray-600">{rating?.rate}</span>
             <span className="text-gray-600">|</span>
             <FontAwesomeIcon icon={faStar} className="text-yellow-300" />
@@ -49,17 +49,17 @@ function CardProducts({ title, image, price, rating, urlPath, id }) {
         </div>
       ) : (
         <Link to={`${urlPath}/${id}`}>
-          <div className="w-full  grid grid-rows-[16rem_1rem_1.2rem_1.2rem] border-2 border-gray-300 rounded-md shadow-md gap-y-5 pb-3">
-            <div className="w-full h-full flex items-center overflow-hidden px-2  mt-3 mx-auto">
+          <div className="w-full relative  grid grid-rows-[10rem_1rem_1.2rem_1.2rem] lg:grid-rows-[12rem_1rem_1.2rem_1.2rem] border-2 border-gray-300 rounded-md shadow-md gap-y-3 lg:gap-y-2 pb-3 ">
+            <div className="w-full h-full lg:w-44 lg:h-44 flex items-center overflow-hidden px-2  mt-2 mx-auto">
               <img
                 src={image}
                 alt="image-product"
                 className="object-contain w-full h-full"
               />
             </div>
-            <h5 className="px-2 h-5 overflow-hidden">{title?.slice(0, 17)}</h5>
+            <h5 className="px-2 h-5 lg:text-sm">{title?.slice(0, 17)}</h5>
             <h5 className="px-2 font-bold">${price}</h5>
-            <div className="flex items-center gap-x-2 ms-2">
+            <div className="flex items-center gap-x-2 ms-2 lg:text-sm">
               <span className="text-gray-600">{rating?.rate}</span>
               <span className="text-gray-600">|</span>
               <FontAwesomeIcon icon={faStar} className="text-yellow-300" />

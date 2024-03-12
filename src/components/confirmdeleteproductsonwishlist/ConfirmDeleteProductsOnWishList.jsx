@@ -2,9 +2,9 @@ import React, { forwardRef } from "react"
 import Button from "../button/Button"
 
 const ConfirmDeleteProductsOnWishList = forwardRef(
-  ({ showModal, setShowModal, itemSelected }, btnHapusRef) => {
+  ({ isShowModal, setIsShowModal, itemSelected }, modalRef) => {
     return (
-      <div className="w-full fixed bottom-0 lg:hidden">
+      <div className="w-full fixed bottom-0 z-50 lg:hidden" ref={modalRef}>
         <div className="px-5 py-1">
           <Button
             textButton={
@@ -16,8 +16,7 @@ const ConfirmDeleteProductsOnWishList = forwardRef(
                 : `bg-green-600 text-white`
             }`}
             disableBtn={itemSelected === 0}
-            handleClick={() => setShowModal(!showModal)}
-            ref={btnHapusRef}
+            handleClick={() => setIsShowModal(!isShowModal)}
           />
         </div>
       </div>
