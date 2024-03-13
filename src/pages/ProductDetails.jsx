@@ -65,8 +65,6 @@ const ProductDetails = () => {
     setIndexHeartBoolean(findIndexWishListBoolean)
   }, [wishListHeartBoolean, id])
 
-  useEffect(() => {}, [])
-
   const handleAddToCart = () => {
     const conditionStock = cartProduct.filter((data) => data.id == id)
     if (conditionStock[0]?.stock === 0) {
@@ -187,7 +185,7 @@ const ProductDetails = () => {
 
       <ScrollToTop
         styleIfTrue={
-          "fixed w-12 justify-center items-center flex h-12 bottom-20 right-6 rounded-full shadow-lg bg-white  duration-300 translate-y-0 "
+          "fixed w-12 justify-center items-center flex h-12 bottom-20 lg:bottom-10 right-6 rounded-full shadow-lg bg-white  duration-300 translate-y-0 "
         }
         styleIffalse={
           "fixed w-12 justify-center items-center flex h-12 bottom-0 right-6 rounded-full shadow-lg bg-white  duration-300 translate-y-full"

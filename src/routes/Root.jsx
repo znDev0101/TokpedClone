@@ -19,19 +19,19 @@ function Root() {
   const { productId } = useParams()
 
   return (
-    <div className="w-full h-full relative">
-      <div
-        className={`absolute top-0 bottom-0 right-0 left-0  ${
-          isShowModal ? `bg-gray-500 opacity-60 duration-300 z-50` : `-z-50`
-        } `}></div>
-      <MyContext.Provider
-        value={{
-          isActiveSearchKeyword,
-          isShowModal,
-          setIsShowModal,
-          setAturWishList,
-          aturWishList,
-        }}>
+    <MyContext.Provider
+      value={{
+        isActiveSearchKeyword,
+        isShowModal,
+        setIsShowModal,
+        setAturWishList,
+        aturWishList,
+      }}>
+      <div className="w-full h-full relative">
+        <div
+          className={`absolute top-0 bottom-0 right-0 left-0 ${
+            isShowModal ? `bg-gray-500 opacity-60 z-50` : `-z-50`
+          } `}></div>
         <ToastContainer className={`mb-12`} />
         {/* navbar on mobile */}
         <Navbar
@@ -60,8 +60,8 @@ function Root() {
           </>
         ) : null}
         {/* <Footer /> */}
-      </MyContext.Provider>
-    </div>
+      </div>
+    </MyContext.Provider>
   )
 }
 

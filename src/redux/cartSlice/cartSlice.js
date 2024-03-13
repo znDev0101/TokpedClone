@@ -6,7 +6,6 @@ const initialState = {
   totalCart: 0,
   selectedProduct: [],
   cartBoolean: [],
-  firstCartProduct: [],
 }
 
 export const cartSlice = createSlice({
@@ -18,16 +17,12 @@ export const cartSlice = createSlice({
       const findCartProduct = state.cartProduct.findIndex(
         (data) => data.id == id
       )
-      const findFirstCartProduct = state.firstCartProduct.findIndex(
-        (data) => data.id == id
-      )
       if (findCartProduct >= 0) {
         if (state.cartProduct[findCartProduct].stock !== 0) {
           state.cartProduct[findCartProduct].stock -= 1
           state.cartProduct[findCartProduct].quantity += 1
           state.totalCart += 1
           state.cartProduct[findCartProduct].price += price
-          state.firstCartProduct[findFirstCartProduct].cart += 1
         }
       } else {
         state.cartProduct.push({
@@ -39,7 +34,6 @@ export const cartSlice = createSlice({
           stock: data[0].stock - 1,
         })
         state.cartBoolean.push({ id: id, boolean: false })
-        state.firstCartProduct.push({ id, cart: 1 })
         state.totalCart += 1
       }
     },
@@ -208,9 +202,6 @@ export const cartSlice = createSlice({
 
       state.cartProduct = state.cartProduct.filter((data) => data.id != id)
 
-      state.firstCartProduct = state.firstCartProduct.filter(
-        (data) => data.id != id
-      )
       state.selectedProduct = state.selectedProduct.filter(
         (data) => data.id != id
       )
@@ -247,6 +238,10 @@ export const cartSlice = createSlice({
             (data) => data.id != action.payload?.id
           )
         }
+
+        state.cartBoolean = state.cartBoolean.filter(
+          (data) => data.id != action.payload?.id
+        )
       }
 
       if (state.selectedProduct.length !== 0) {
@@ -261,6 +256,7 @@ export const cartSlice = createSlice({
         })
 
         state.selectedProduct = []
+        state.totalPrice = 0
       }
     },
   },

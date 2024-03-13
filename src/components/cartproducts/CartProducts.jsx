@@ -40,6 +40,7 @@ const CartProducts = ({
   category,
   description,
   rating,
+  handleDelete,
 }) => {
   const { cartBoolean } = useSelector((state) => state.cart)
   const { wishListHeartBoolean } = useSelector((state) => state.wishList)
@@ -199,7 +200,7 @@ const CartProducts = ({
               ) : (
                 <FontAwesomeIcon
                   icon={faTrashCan}
-                  onClick={() => dispatch(deleteCartProduct({ id }))}
+                  onClick={() => handleDelete(id)}
                   size="lg"
                   className="text-gray-400 hover:cursor-pointer"
                 />

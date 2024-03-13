@@ -9,7 +9,7 @@ const Modal = forwardRef(
       <>
         {isShowModal && (
           <div
-            className={`max-w-sm h-max m-[40dvh_auto]  lg:max-w-sm p-4 fixed top-0 bottom-0 left-0 right-0 bg-white   rounded-md shadow-md duration-300 z-50 ${
+            className={` w-[85%] h-max m-[40dvh_auto]  lg:max-w-sm p-4 fixed top-0 bottom-0 left-0 right-0 bg-white   rounded-md shadow-md duration-300 z-50 ${
               isShowModal ? `scale-100` : `scale-0`
             }`}
             ref={modalRef}>

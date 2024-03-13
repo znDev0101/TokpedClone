@@ -83,8 +83,6 @@ const WishList = () => {
     setItemSelected(checkBoxWishListBooleanTrue.length)
   }, [checkBoxWishListBoolean])
 
-  console.log(modalRef.current)
-
   return (
     <>
       {wishListProduct.length === 0 ? (

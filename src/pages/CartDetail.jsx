@@ -73,9 +73,11 @@ const CartDetail = () => {
     }
   }, [selectedProduct, cartBoolean])
 
-  const handleDelete = () => {
-    dispatch(deleteCartProduct())
-    setIsShowModal(!isShowModal)
+  const handleDelete = (id) => {
+    dispatch(deleteCartProduct({ id }))
+    if (id === undefined) {
+      setIsShowModal(!isShowModal)
+    }
     toast.success("Belanjaan kamu berhasil di hapus", {
       position: "bottom-right",
       autoClose: 5000,
@@ -136,14 +138,14 @@ const CartDetail = () => {
               </div>
             </>
           ) : (
-            <div className="container">
+            <div className="container min-h-full">
               {/* ONLY ON MOBILE */}
               <div
                 className={`bg-white w-full fixed flex justify-between px-4 py-1 duration-300 lg:hidden ${
                   isShowDeleteBtn &&
                   !isOpenMainMenu &&
                   selectedProduct.length !== 0
-                    ? `top-14 z-50 `
+                    ? `top-14 z-40 `
                     : `top-0 -z-20 `
                 }`}>
                 <span>{selectedProduct.length} product terpilih</span>
@@ -208,6 +210,7 @@ const CartDetail = () => {
                               category={category}
                               dataCart={cartProduct}
                               dataCartProduct={dataCartProduct}
+                              handleDelete={handleDelete}
                               title={title}
                               image={image}
                               description={description}

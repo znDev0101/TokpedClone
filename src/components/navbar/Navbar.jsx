@@ -96,7 +96,7 @@ function Navbar({
   return (
     <>
       {pathname !== "/login" && (
-        <header className="w-full bg-white fixed top-0 grid grid-rows-[2rem] py-3  z-50 lg:hidden">
+        <header className="w-full bg-white fixed top-0 grid grid-rows-[2rem] py-3  z-40 lg:hidden">
           {/* Navbar One */}
           <div
             className={
