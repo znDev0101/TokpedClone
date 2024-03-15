@@ -145,7 +145,7 @@ const ProductDetails = () => {
   }
 
   return (
-    <div className="w-full mt-16  ">
+    <div className="w-full pt-16  lg:pt-10 bg-white ">
       <BreadCrumbs title={title} category={category} />
       {/* Breadcrumbs only on dekstop */}
       <div className="grid px-4 lg:max-w-6xl lg:mx-auto lg:grid-cols-[2fr_1fr] lg:place-items-end lg:grid-rows-[repeat(2,max-content)] lg:items-start lg:gap-y-20">

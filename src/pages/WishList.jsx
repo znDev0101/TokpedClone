@@ -28,6 +28,7 @@ const WishList = () => {
   const { isShowModal, setIsShowModal, aturWishList, setAturWishList } =
     useContext(MyContext)
   const modalRef = useRef(null)
+  const btnConfirmDeleteRef = useRef(null)
 
   const handleDelete = () => {
     dispatch(removeItemsFromWishList())
@@ -65,7 +66,7 @@ const WishList = () => {
     setIsShowModal(false)
   }
 
-  useClickOutside(modalRef, handleClickOutsideModal)
+  useClickOutside(modalRef, btnConfirmDeleteRef, handleClickOutsideModal)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -87,7 +88,7 @@ const WishList = () => {
     <>
       {wishListProduct.length === 0 ? (
         <div
-          className={`w-full h-[100dvh] lg:min-h-screen lg:max-w-6xl flex flex-col items-center justify-center  lg:grid lg:grid-cols-[repeat(2,1fr)] lg:mx-auto lg:items-center  gap-y-3 px-4`}>
+          className={`w-full min-h-screen bg-white lg:max-w-6xl flex flex-col items-center justify-center  lg:grid lg:grid-cols-[repeat(2,1fr)] lg:mx-auto lg:items-center  gap-y-3 px-4`}>
           <div className="w-72 h-56 lg:w-96 lg:h-64 lg:col-[2] lg:justify-self-end ">
             <img
               src={wishlist}
@@ -111,7 +112,7 @@ const WishList = () => {
           </div>
         </div>
       ) : (
-        <div className={`w-full min-h-screen relative `}>
+        <div className={`w-full min-h-screen relative bg-white`}>
           <div className=" px-4 lg:max-w-6xl lg:mx-auto items-center flex justify-between pt-28 lg:pt-40">
             {aturWishList && screen.width > 1200 ? (
               <div className="flex items-center gap-x-4">
@@ -129,7 +130,6 @@ const WishList = () => {
                   } `}
                   handleClick={() => setIsShowModal(true)}
                   disableBtn={itemSelected === 0}
-                  ref={modalRef}
                 />
                 <span
                   className="text-green-600 font-bold hover:cursor-pointer"
@@ -211,12 +211,13 @@ const WishList = () => {
             }
             isShowModal={isShowModal}
             setIsShowModal={setIsShowModal}
+            ref={modalRef}
           />
           <ConfirmDeleteProductsOnWishList
             isShowModal={isShowModal}
             setIsShowModal={setIsShowModal}
             itemSelected={itemSelected}
-            ref={modalRef}
+            ref={btnConfirmDeleteRef}
           />
         </div>
       )}

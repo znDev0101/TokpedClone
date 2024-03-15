@@ -11,6 +11,7 @@ import Category from "../category/Category"
 import ScrollToTop from "../scrolltotop/ScrollToTop"
 import { useLocation, useNavigate } from "react-router"
 import { useGetAllProductsQuery } from "../../redux/services/ecommerceApi"
+import ModalSignIn from "../modalsignin/ModalSignIn"
 
 function HomeProducts() {
   const { data, error, isLoading } = useGetAllProductsQuery()
@@ -57,11 +58,13 @@ function HomeProducts() {
       {/* Layout Products */}
 
       {isLoading ? (
-        <h1 className="text-4xl my-20 text-center">Loading...</h1>
+        <h1 className="min-h-screen bg-white text-4xl my-20 text-center">
+          Loading...
+        </h1>
       ) : (
         <div
           className={
-            "w-full min-h-screen mx-auto mt-8 lg:mt-0 lg:pt-40 pb-20 lg:pb-10 px-4 lg:px-16 "
+            "w-full min-h-screen mx-auto bg-white mt-8 lg:mt-0 lg:pt-40 pb-20 lg:pb-10 px-4 lg:px-16"
           }>
           <Category />
           <div
@@ -84,6 +87,7 @@ function HomeProducts() {
               )
             })}
           </div>
+
           <ScrollToTop
             styleIfTrue={
               "fixed w-12 justify-center items-center flex h-12 bottom-20 lg:bottom-7 right-6 rounded-full shadow-lg bg-white z-50 duration-300 translate-y-0 "

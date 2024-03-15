@@ -151,7 +151,7 @@ const CartProducts = ({
   }
 
   return (
-    <div className="mt-5 flex px-5 py-1  lg:mt-0">
+    <div className="pt-5 flex px-5 py-1 lg:mt-0 lg:bg-white lg:rounded-md">
       <div className="w-5 h-5 flex-[0_0_auto]">
         <input
           type="checkbox"
@@ -189,7 +189,7 @@ const CartProducts = ({
               </div>
             </div>
           </Link>
-          <div className=" flex lg:flex items-center mt-7  justify-between lg:justify-end lg:gap-x-4 lg:bottom-2">
+          <div className=" flex lg:flex items-center pt-7  justify-between lg:justify-end lg:gap-x-4 lg:bottom-2">
             <div className="flex gap-x-5 ">
               {screen.width <= 428 ? (
                 <FontAwesomeIcon

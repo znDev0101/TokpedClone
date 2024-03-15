@@ -23,6 +23,7 @@ const CartDetail = () => {
   const [isShowDeleteBtn, setIsShowDeleteBtn] = useState(false)
   const [windowScrollY, setWindowScrollY] = useState(0)
   const dispatch = useDispatch()
+  const btnHapusRef = useRef(null)
   const modalRef = useRef(null)
 
   const { isChecked, setIsChecked } = useCheckedProduct()
@@ -34,14 +35,7 @@ const CartDetail = () => {
 
   const { cartProduct, selectedProduct, cartBoolean, totalCart, totalPrice } =
     useSelector((state) => state.cart)
-  const { data } = useFetch("https://fakestoreapi.com/products/")
-
-  // call custom hook outside click
-  const clickCloseOutsideModal = () => {
-    setIsShowModal(false)
-  }
-
-  useClickOutside(modalRef, clickCloseOutsideModal)
+  const { data, loading } = useFetch("https://fakestoreapi.com/products/")
 
   useEffect(() => {
     return () => {
@@ -73,6 +67,12 @@ const CartDetail = () => {
     }
   }, [selectedProduct, cartBoolean])
 
+  const clickOutside = () => {
+    setIsShowModal(false)
+  }
+
+  useClickOutside(modalRef, btnHapusRef, clickOutside)
+
   const handleDelete = (id) => {
     dispatch(deleteCartProduct({ id }))
     if (id === undefined) {
@@ -101,10 +101,7 @@ const CartDetail = () => {
   }
 
   return (
-    <div
-      className={`w-full lg:bg-[#f0f3f7]  pt-10 pb-16 ${
-        cartProduct.length > 2 ? `h-full` : `h-screen`
-      } ${isShowModal && `overflow-auto`} `}>
+    <div className={`w-full min-h-screen lg:bg-[#f0f3f7] lg:py-10`}>
       <div className="lg:max-w-[75rem] lg:mx-auto">
         <h1 className="hidden lg:block font-bold lg:mt-28 lg:mb-8 lg:text-2xl">
           Keranjang
@@ -112,7 +109,7 @@ const CartDetail = () => {
         <div className="lg:grid lg:grid-cols-[2fr_1fr] lg:gap-x-5">
           {cartProduct.length === 0 ? (
             <>
-              <div className="w-full px-3 mt-12 lg:mt-0 lg:p-10 lg:bg-white">
+              <div className="w-full min-h-screen lg:min-h-0  px-3 pt-16  lg:p-10  bg-white">
                 <div className="lg:max-w-lg lg:m-auto   grid grid-cols-[max-content_1fr] lg:gap-x-4 lg:items-center">
                   <div className="w-36 h-36  lg:w-32 lg:h-32 mt-2">
                     <img
@@ -137,8 +134,13 @@ const CartDetail = () => {
                 </div>
               </div>
             </>
+          ) : loading ? (
+            <p className="w-full flex justify-center items-center min-h-screen bg-white text-5xl">
+              Loading...
+            </p>
           ) : (
-            <div className="container min-h-full">
+            <div
+              className={`container min-h-screen lg:min-h-0 bg-white lg:bg-transparent`}>
               {/* ONLY ON MOBILE */}
               <div
                 className={`bg-white w-full fixed flex justify-between px-4 py-1 duration-300 lg:hidden ${
@@ -152,7 +154,7 @@ const CartDetail = () => {
                 <button
                   className="text-end font-bold text-green-600"
                   onClick={() => setIsShowModal(!isShowModal)}
-                  ref={modalRef}>
+                  ref={btnHapusRef}>
                   Hapus
                 </button>
               </div>
@@ -176,7 +178,7 @@ const CartDetail = () => {
                   <span
                     className="font-bold text-green-600 hover:cursor-pointer"
                     onClick={() => setIsShowModal(!isShowModal)}
-                    ref={modalRef}>
+                    ref={btnHapusRef}>
                     Hapus
                   </span>
                 )}
@@ -184,8 +186,8 @@ const CartDetail = () => {
               <div
                 className={`w-full duration-300 lg:mt-0 ${
                   isShowDeleteBtn && selectedProduct.length !== 0
-                    ? `mt-14`
-                    : `my-7 lg:my-0`
+                    ? `pt-14 lg:pt-0`
+                    : `pt-5 lg:py-0`
                 }`}>
                 {cartProduct.map((dataCartProduct) => {
                   return data
@@ -201,10 +203,9 @@ const CartDetail = () => {
                         rating,
                       }) => {
                         return (
-                          <div
-                            className={`lg:mt-2 lg:col-[1/2] lg:bg-white lg:rounded-md duration-300`}
-                            key={id}>
+                          <div className={`lg:mt-2 lg:col-[1/2] pt-10 lg:pt-0`}>
                             <CartProducts
+                              key={id}
                               id={id}
                               price={price}
                               category={category}
@@ -230,11 +231,10 @@ const CartDetail = () => {
         </div>
       </div>
       <Modal
-        isShowModal={isShowModal}
         modalTitle={`Hapus ${selectedProduct.length} Produk`}
         modalParagraph={"Product yang kamu pilih akan di hapus dari Keranjang "}
-        setIsShowModal={setIsShowModal}
         handleDelete={handleDelete}
+        ref={modalRef}
       />
     </div>
   )
