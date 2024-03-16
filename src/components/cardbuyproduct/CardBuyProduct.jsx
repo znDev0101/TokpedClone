@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { addToCartOnDekstop } from "../../redux/cartSlice/cartSlice"
 import { useDispatch } from "react-redux"
 
@@ -20,6 +20,8 @@ const CardBuyProduct = ({
   wishListHeartBoolean,
   indexHeartBoolean,
   handleClickAddToWishList,
+  isAnimation,
+  setIsAnimation,
   ...otherData
 }) => {
   const { quantity: quantityProduct, stock, price, title, image } = otherData
@@ -125,26 +127,31 @@ const CardBuyProduct = ({
         </button>
       </div>
       <div className="flex justify-center items-center gap-x-3 mt-5">
-        <div className="flex items-center gap-x-2">
+        <div className="flex items-center gap-x-2 hover:cursor-pointer">
           <FontAwesomeIcon icon={faMessage} />
           <span className="font-bold text-xs">Chat</span>
         </div>
         <span>|</span>
-        {wishListHeartBoolean[indexHeartBoolean]?.boolean ? (
-          <div
-            className="flex items-center gap-x-2 hover:cursor-pointer"
-            onClick={handleClickAddToWishList}>
-            <FontAwesomeIcon icon={faHeartSolid} className="text-pink-600" />
-            <span className="font-bold text-xs">Wishlist</span>
-          </div>
-        ) : (
-          <div
-            className="flex items-center gap-x-2 hover:cursor-pointer"
-            onClick={handleClickAddToWishList}>
-            <FontAwesomeIcon icon={faHeartRegular} />
-            <span className="font-bold text-xs">Wishlist</span>
-          </div>
-        )}
+        <div className="flex items-center gap-x-2 hover:cursor-pointer">
+          <span>
+            <FontAwesomeIcon
+              icon={
+                wishListHeartBoolean[indexHeartBoolean]?.boolean
+                  ? faHeartSolid
+                  : faHeartRegular
+              }
+              onClick={handleClickAddToWishList}
+              className={
+                wishListHeartBoolean[indexHeartBoolean]?.boolean
+                  ? `text-pink-500 ${isAnimation && `animate-heart`}`
+                  : ``
+              }
+              onAnimationEnd={() => setIsAnimation(false)}
+            />
+          </span>
+          <span className="font-bold text-xs">WishList</span>
+        </div>
+
         <span>|</span>
         <div className="flex items-center gap-x-2 hover:cursor-pointer">
           <FontAwesomeIcon icon={faShareNodes} />

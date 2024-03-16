@@ -30,6 +30,7 @@ const ProductDetails = () => {
   const [filterVarianProduct, setfilterVarianProduct] = useState([])
   const { cartProduct } = useSelector((state) => state.cart)
   const { wishListHeartBoolean } = useSelector((state) => state.wishList)
+  const [isAnimation, setIsAnimation] = useState(false)
 
   const navOnProductDetailRef = useRef(null)
 
@@ -141,6 +142,7 @@ const ProductDetails = () => {
         theme: "light",
         transition: Bounce,
       })
+      setIsAnimation(true)
     }
   }
 
@@ -161,6 +163,8 @@ const ProductDetails = () => {
             wishListHeartBoolean={wishListHeartBoolean}
             indexHeartBoolean={indexHeartBoolean}
             handleClickAddToWishList={handleClickAddToWishList}
+            isAnimation={isAnimation}
+            setIsAnimation={setIsAnimation}
           />
         </div>
         <UlasanPembeli dataLimit={dataLimit} />
@@ -177,6 +181,8 @@ const ProductDetails = () => {
             stock={filterVarianProduct[0]?.stock}
             price={priceProduct}
             description={description}
+            setIsAnimation={setIsAnimation}
+            isAnimation={isAnimation}
           />
         )}
       </div>

@@ -14,6 +14,8 @@ const InfoProduct = ({
   wishListHeartBoolean,
   indexHeartBoolean,
   handleClickAddToWishList,
+  isAnimation,
+  setIsAnimation,
   ...data
 }) => {
   const { idProduct, title, price, rating, description, category } = data
@@ -33,23 +35,21 @@ const InfoProduct = ({
               />
             </div>
           </div>
-          {wishListHeartBoolean[indexHeartBoolean]?.boolean ? (
-            <span
+          <span className="block lg:hidden">
+            <FontAwesomeIcon
+              icon={
+                wishListHeartBoolean[indexHeartBoolean]?.boolean
+                  ? faHeartSolid
+                  : faHeartRegular
+              }
               onClick={handleClickAddToWishList}
-              className="contents lg:hidden">
-              <FontAwesomeIcon
-                icon={faHeartSolid}
-                size="lg"
-                className="text-pink-500 "
-              />
-            </span>
-          ) : (
-            <span
-              onClick={handleClickAddToWishList}
-              className="contents lg:hidden">
-              <FontAwesomeIcon icon={faHeartRegular} size="lg" />
-            </span>
-          )}
+              className={`${
+                wishListHeartBoolean[indexHeartBoolean]?.boolean &&
+                `text-pink-500 ${isAnimation && `animate-heart`} `
+              }`}
+              onAnimationEnd={() => setIsAnimation(false)}
+            />
+          </span>
         </div>
         {/* only mobile */}
         {screen.width <= 428 && (

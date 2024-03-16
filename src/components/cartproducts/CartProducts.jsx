@@ -21,9 +21,7 @@ import {
   selectProduct,
   decrementCart,
   removeCart,
-  booleanChecked,
   booleanCart,
-  deleteCartProduct,
 } from "../../redux/cartSlice/cartSlice"
 import {
   setBooleanWishList,
@@ -47,6 +45,8 @@ const CartProducts = ({
   const dispatch = useDispatch()
   const [isChecked, setIsChecked] = useState([])
   const [indexWishListBoolean, setIndexWishListBoolean] = useState(0)
+
+  const [isAnimation, setIsAnimation] = useState(false)
 
   const { price, stock, quantity } = dataCartProduct
 
@@ -135,6 +135,7 @@ const CartProducts = ({
         theme: "light",
         transition: Bounce,
       })
+      setIsAnimation(true)
     }
   }
 
@@ -205,21 +206,19 @@ const CartProducts = ({
                   className="text-gray-400 hover:cursor-pointer"
                 />
               )}
-              {wishListHeartBoolean[indexWishListBoolean]?.boolean == true ? (
-                <FontAwesomeIcon
-                  icon={faHeartSolid}
-                  onClick={handleWishlist}
-                  className="text-pink-600 hover:cursor-pointer"
-                  size="lg"
-                />
-              ) : (
-                <FontAwesomeIcon
-                  icon={faHeartRegular}
-                  onClick={handleWishlist}
-                  size="lg"
-                  className="hover:cursor-pointer text-gray-400"
-                />
-              )}
+              <FontAwesomeIcon
+                icon={
+                  wishListHeartBoolean[indexWishListBoolean]?.boolean
+                    ? faHeartSolid
+                    : faHeartRegular
+                }
+                className={`${
+                  wishListHeartBoolean[indexWishListBoolean]?.boolean &&
+                  `text-pink-500 ${isAnimation && `animate-heart`}`
+                }`}
+                onClick={handleWishlist}
+                onAnimationEnd={() => setIsAnimation(false)}
+              />
             </div>
             <div className="flex justify-between items-center w-20 h-6 rounded-md border border-gray-500  p-1 ">
               <button

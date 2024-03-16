@@ -58,7 +58,7 @@ function HomeProducts() {
       {/* Layout Products */}
 
       {isLoading ? (
-        <h1 className="w-full min-h-screen  lg:flex lg:items-center lg:justify-center text-center my-40  bg-white z-50 text-5xl lg:text-6xl">
+        <h1 className="w-full min-h-screen  lg:flex lg:items-center lg:justify-center text-center my-52 lg:my-0  bg-white z-50 text-5xl lg:text-6xl">
           Loading...
         </h1>
       ) : (

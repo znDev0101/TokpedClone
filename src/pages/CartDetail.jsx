@@ -187,7 +187,7 @@ const CartDetail = () => {
                 className={`w-full duration-300 lg:mt-0 ${
                   isShowDeleteBtn && selectedProduct.length !== 0
                     ? `pt-20 lg:pt-0`
-                    : `pt-20 pb-20 lg:py-0`
+                    : `pt-14 pb-20 lg:py-0`
                 }`}>
                 {cartProduct.map((dataCartProduct) => {
                   return data
