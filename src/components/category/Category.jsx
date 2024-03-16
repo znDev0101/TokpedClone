@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 
 function Category() {
   return (
-    <div className="w-full h-20 grid grid-cols-5 gap-x-5 text-center overflow-x-scroll overflow-y-hidden lg:overflow-x-hidden">
+    <div className="w-full h-20  grid grid-cols-5 gap-x-5 text-center overflow-x-scroll overflow-y-hidden lg:overflow-x-hidden ">
       <div className="flex flex-col gap-y-1 items-center">
         <FontAwesomeIcon icon={faList} size="2xl" />
         <p className="text-sm lg:text-lg">Liat Semua</p>

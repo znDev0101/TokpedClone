@@ -13,7 +13,6 @@ export default function useClickOutside(
       ) {
         cb()
       }
-      console.log("true")
     }
   }
   useEffect(() => {

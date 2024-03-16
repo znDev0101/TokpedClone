@@ -1,5 +1,4 @@
 import React, { forwardRef, useContext, useEffect } from "react"
-import useClickOutside from "../../hooks/useClickOutside"
 import { Link } from "react-router-dom"
 import Button from "../button/Button"
 import { MyContext } from "../../context/MyContext"
@@ -20,8 +19,10 @@ const ModalSignIn = forwardRef(({}, insideElementRef) => {
 
   return (
     <div
-      className={`max-w-sm h-max m-auto fixed top-0 bottom-0 left-0 right-0 px-10 bg-white rounded-md pb-7 ${
-        isShowModalSignIn ? `scale-100 z-50 duration-300` : `scale-75 -z-50 `
+      className={`max-w-sm min-h-max m-auto fixed top-16 bottom-0 left-0 right-0 px-10 bg-white rounded-md pb-7 ${
+        isShowModalSignIn
+          ? `scale-100 z-50 duration-300 opacity-100`
+          : `scale-150 -z-50 opacity-0`
       }`}
       ref={insideElementRef}>
       <FontAwesomeIcon

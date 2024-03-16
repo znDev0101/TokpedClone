@@ -106,7 +106,7 @@ const CartDetail = () => {
         <h1 className="hidden lg:block font-bold lg:mt-28 lg:mb-8 lg:text-2xl">
           Keranjang
         </h1>
-        <div className="lg:grid lg:grid-cols-[2fr_1fr] lg:gap-x-5">
+        <div className="lg:grid lg:grid-cols-[2fr_1fr] lg:gap-x-5 lg:relative">
           {cartProduct.length === 0 ? (
             <>
               <div className="w-full min-h-screen lg:min-h-0  px-3 pt-16  lg:p-10  bg-white">
@@ -135,7 +135,7 @@ const CartDetail = () => {
               </div>
             </>
           ) : loading ? (
-            <p className="w-full flex justify-center items-center min-h-screen bg-white text-5xl">
+            <p className="w-full flex justify-center items-center min-h-screen bg-white text-5xl lg:fixed lg:top-0 lg:bottom-0 lg:right-42 lg:left-0">
               Loading...
             </p>
           ) : (
@@ -186,8 +186,8 @@ const CartDetail = () => {
               <div
                 className={`w-full duration-300 lg:mt-0 ${
                   isShowDeleteBtn && selectedProduct.length !== 0
-                    ? `pt-14 lg:pt-0`
-                    : `pt-5 lg:py-0`
+                    ? `pt-20 lg:pt-0`
+                    : `pt-20 pb-20 lg:py-0`
                 }`}>
                 {cartProduct.map((dataCartProduct) => {
                   return data
@@ -203,7 +203,7 @@ const CartDetail = () => {
                         rating,
                       }) => {
                         return (
-                          <div className={`lg:mt-2 lg:col-[1/2] pt-10 lg:pt-0`}>
+                          <div className={`lg:mt-2 lg:col-[1/2]`}>
                             <CartProducts
                               key={id}
                               id={id}

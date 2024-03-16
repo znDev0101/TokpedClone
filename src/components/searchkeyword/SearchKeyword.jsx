@@ -21,7 +21,9 @@ const SearchKeyword = ({
         <div className={styleLayout}>
           {seacrhKeyword?.length > 0 ? (
             isLoading ? (
-              <p className="text-2xl text-center mt-8 font-bold">Loading...</p>
+              <p className="text-2xl lg:text-4xl text-center mt-8 font-bold">
+                Loading...
+              </p>
             ) : noResult ? (
               <p className="text-2xl mt-20 text-center font-bold">
                 Pencarian tidak di temukan
@@ -32,12 +34,14 @@ const SearchKeyword = ({
                   <div
                     className="w-full grid grid-cols-[max-content_1fr]  items-center mb-5 gap-x-2"
                     key={id}>
-                    <FontAwesomeIcon icon={faMagnifyingGlass} size="xl" />
+                    <FontAwesomeIcon
+                      icon={faMagnifyingGlass}
+                      size="xl"
+                      className="text-gray-400"
+                    />
                     <Link
                       to={`/product_detail/${id}`}
-                      onClick={() =>
-                        setIsActiveSearchKeyword(!isActiveSearchKeyword)
-                      }
+                      onClick={() => setIsActiveSearchKeyword(false)}
                       className="grid grid-cols-[1fr_max-content] gap-x-1 items-center">
                       <p>{title.slice(0, 20)}</p>
                       <FontAwesomeIcon

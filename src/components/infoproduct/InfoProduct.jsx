@@ -40,7 +40,7 @@ const InfoProduct = ({
               <FontAwesomeIcon
                 icon={faHeartSolid}
                 size="lg"
-                className="text-pink-500"
+                className="text-pink-500 "
               />
             </span>
           ) : (

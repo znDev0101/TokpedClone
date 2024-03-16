@@ -29,6 +29,7 @@ const WishList = () => {
     useContext(MyContext)
   const modalRef = useRef(null)
   const btnConfirmDeleteRef = useRef(null)
+  const btnHapusRef = useRef(null)
 
   const handleDelete = () => {
     dispatch(removeItemsFromWishList())
@@ -66,7 +67,11 @@ const WishList = () => {
     setIsShowModal(false)
   }
 
-  useClickOutside(modalRef, btnConfirmDeleteRef, handleClickOutsideModal)
+  useClickOutside(
+    modalRef,
+    screen.width > 1200 ? btnHapusRef : btnConfirmDeleteRef,
+    handleClickOutsideModal
+  )
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -130,6 +135,7 @@ const WishList = () => {
                   } `}
                   handleClick={() => setIsShowModal(true)}
                   disableBtn={itemSelected === 0}
+                  ref={btnHapusRef}
                 />
                 <span
                   className="text-green-600 font-bold hover:cursor-pointer"

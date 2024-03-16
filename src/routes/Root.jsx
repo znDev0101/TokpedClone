@@ -38,11 +38,14 @@ function Root() {
         setIsShowModalSignIn,
         setIsShowModal,
         setAturWishList,
+        setIsActiveSearchKeyword,
         aturWishList,
       }}>
       <div className={`w-full  relative`}>
         <div
           className={`absolute top-0 bottom-0 right-0 left-0 ${
+            isActiveSearchKeyword && `top-32 bg-gray-500 opacity-60 z-40`
+          }  ${
             isShowModal || isShowModalSignIn
               ? `bg-gray-500 opacity-60 z-50`
               : `-z-50`
@@ -51,16 +54,11 @@ function Root() {
         <ToastContainer className={`mb-12`} />
         {/* navbar on mobile */}
         <Navbar
-          setIsActiveSearchKeyword={setIsActiveSearchKeyword}
           isOpenMainMenu={isOpenMainMenu}
           setIsOpenMainMenu={setIsOpenMainMenu}
         />
         {/* navbar on dekstop */}
-        <NavbarOnDekstop
-          isActiveSearchKeyword={isActiveSearchKeyword}
-          setIsActiveSearchKeyword={setIsActiveSearchKeyword}
-          ref={btnMasukRef}
-        />
+        <NavbarOnDekstop ref={btnMasukRef} />
         <Outlet context={{ setUrlPath, isOpenMainMenu }} />
         {screen.width < 500 &&
         pathname !== "/cart_detail" &&

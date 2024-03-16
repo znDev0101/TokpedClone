@@ -20,7 +20,7 @@ function HomeProducts() {
 
   return (
     <>
-      <div className={`w-[92%] pt-16 m-auto lg:hidden`}>
+      <div className={`w-[92%] h-full pt-16 m-auto  lg:hidden`}>
         <div className="items-center flex gap-x-2">
           <FontAwesomeIcon
             icon={faLocationDot}
@@ -58,7 +58,7 @@ function HomeProducts() {
       {/* Layout Products */}
 
       {isLoading ? (
-        <h1 className="min-h-screen bg-white text-4xl my-20 text-center">
+        <h1 className="w-full min-h-screen  lg:flex lg:items-center lg:justify-center text-center my-40  bg-white z-50 text-5xl lg:text-6xl">
           Loading...
         </h1>
       ) : (

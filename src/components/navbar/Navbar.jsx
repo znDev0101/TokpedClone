@@ -26,11 +26,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { resetCheckBooleanFalse } from "../../redux/wishlistSlice/wishListSlice"
 import SearchKeyword from "../searchkeyword/SearchKeyword"
 
-function Navbar({
-  setIsActiveSearchKeyword,
-  setIsOpenMainMenu,
-  isOpenMainMenu,
-}) {
+function Navbar({ setIsOpenMainMenu, isOpenMainMenu }) {
   const [seacrhKeyword, setSeacrhKeyword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState([])
@@ -41,8 +37,12 @@ function Navbar({
   const totalCart = useSelector((state) => state.cart.totalCart)
   const dispatch = useDispatch()
 
-  const { isActiveSearchKeyword, aturWishList, setAturWishList } =
-    useContext(MyContext)
+  const {
+    isActiveSearchKeyword,
+    aturWishList,
+    setAturWishList,
+    setIsActiveSearchKeyword,
+  } = useContext(MyContext)
 
   useEffect(() => {
     if (seacrhKeyword.length > 0 && data.length == 0) {
@@ -92,6 +92,8 @@ function Navbar({
   const handleClick = () => {
     if (pathname !== "/wishlist") setIsActiveSearchKeyword(true)
   }
+
+  console.log(isActiveSearchKeyword)
 
   return (
     <>
@@ -164,7 +166,7 @@ function Navbar({
                       ? "Cari barang atau toko"
                       : "Cari di Tokopedia"
                   }
-                  onClick={handleClick}
+                  onClick={() => setIsActiveSearchKeyword(true)}
                   onChange={(e) => setSeacrhKeyword(e.target.value)}
                 />
               </div>
@@ -279,7 +281,7 @@ function Navbar({
         noResult={noResult}
         data={data}
         styleLayout={
-          "fixed top-[-4px] w-[100%] h-[100vh] mt-14 pt-5 z-50 bg-white px-5"
+          "block lg:hidden fixed top-[-4px] w-full h-screen mt-14 pt-5 z-50 bg-white px-5"
         }
       />
     </>

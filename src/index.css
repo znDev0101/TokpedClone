@@ -14,3 +14,19 @@
 .align_items_center {
   align-items: center;
 }
+
+.animate-heart {
+  animation: heartanimation 0.4s ease;
+}
+
+@keyframes heartanimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
