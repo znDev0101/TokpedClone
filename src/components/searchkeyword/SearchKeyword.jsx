@@ -1,9 +1,7 @@
 import React from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {
-  faMagnifyingGlass,
-  faArrowUpRightFromSquare,
-} from "@fortawesome/free-solid-svg-icons"
+import { IoIosSearch } from "react-icons/io"
+import { GoArrowUpLeft } from "react-icons/go"
+
 import { Link } from "react-router-dom"
 
 const SearchKeyword = ({
@@ -34,20 +32,13 @@ const SearchKeyword = ({
                   <div
                     className="w-full grid grid-cols-[max-content_1fr]  items-center mb-5 gap-x-2"
                     key={id}>
-                    <FontAwesomeIcon
-                      icon={faMagnifyingGlass}
-                      size="xl"
-                      className="text-gray-400"
-                    />
+                    <IoIosSearch className="text-gray-400 text-2xl" />
                     <Link
                       to={`/product_detail/${id}`}
                       onClick={() => setIsActiveSearchKeyword(false)}
                       className="grid grid-cols-[1fr_max-content] gap-x-1 items-center">
                       <p>{title.slice(0, 20)}</p>
-                      <FontAwesomeIcon
-                        icon={faArrowUpRightFromSquare}
-                        size="xl"
-                      />
+                      <GoArrowUpLeft />
                     </Link>
                   </div>
                 )

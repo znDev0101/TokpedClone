@@ -6,20 +6,19 @@ import React, {
   forwardRef,
 } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import {
-  faCartShopping,
-  faMagnifyingGlass,
-  faPhone,
-} from "@fortawesome/free-solid-svg-icons"
+import { GiSmartphone } from "react-icons/gi"
+import { IoIosSearch } from "react-icons/io"
+import { IoCartOutline } from "react-icons/io5"
+import { IoNotificationsOutline } from "react-icons/io5"
+
 import Keranjang from "../../assets/images/Keranjang.svg"
 import LogoTokped from "../../assets/images/LogoTokped.svg"
 import wishlist from "../../assets/images/wishlist.png"
 import { useDebounce } from "../../hooks/useDebounce"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useSelector } from "react-redux"
-import { faBell, faHeart } from "@fortawesome/free-regular-svg-icons"
 import SearchKeyword from "../searchkeyword/SearchKeyword"
 import { MyContext } from "../../context/MyContext"
+import { FaRegHeart } from "react-icons/fa6"
 
 const NavbarOnDekstop = forwardRef(({}, conditionElementRef) => {
   const [isOpenCartMenu, setIsOpenCartMenu] = useState(false)
@@ -116,7 +115,7 @@ const NavbarOnDekstop = forwardRef(({}, conditionElementRef) => {
       {/* nav one */}
       <nav className="flex justify-between px-8 py-1 bg-gray-200">
         <div className="flex items-center gap-x-3">
-          <FontAwesomeIcon icon={faPhone} />
+          <GiSmartphone className="text-xl text-gray-500" />
           <span className="text-sm">Download Tokopedia App</span>
         </div>
         <ul className="flex gap-x-9">
@@ -149,11 +148,7 @@ const NavbarOnDekstop = forwardRef(({}, conditionElementRef) => {
         <div className="w-full flex gap-x-4 items-center ">
           <span>Kategori</span>
           <div className="w-full relative h-10 flex items-center border border-gray-300  gap-x-3 rounded-md focus-within:border focus-within:border-green-500 duration-200">
-            <FontAwesomeIcon
-              icon={faMagnifyingGlass}
-              className=" text-gray-400 ms-3"
-              size="lg"
-            />
+            <IoIosSearch className=" text-gray-400 ms-3" />
             <input
               type="text"
               className="w-[90%] h-full placeholder:text-gray-500 focus:outline-none "
@@ -179,9 +174,8 @@ const NavbarOnDekstop = forwardRef(({}, conditionElementRef) => {
               className="relative flex flex-col justify-center items-center  p-2 duration-300 hover:bg-gray-100 rounded-md hover:cursor-pointer after:absolute after:w-full after:h-4 after:border  after:-bottom-2 after:opacity-0"
               onMouseEnter={() => setIsOpenCartMenu(true)}
               onMouseLeave={() => setIsOpenCartMenu(false)}>
-              <FontAwesomeIcon
-                size="lg"
-                icon={faCartShopping}
+              <IoCartOutline
+                className="text-2xl"
                 onClick={() => navigate("/cart_detail")}
               />
               <span className="absolute w-max h-max top-0 -right-1 text-center rounded-full text-xs bg-green-600 text-white font-bold px-[.4rem]">
@@ -241,27 +235,29 @@ const NavbarOnDekstop = forwardRef(({}, conditionElementRef) => {
                           priceProduct,
                         }) => {
                           return (
-                            <div
-                              className="flex justify-between items-start px-2"
-                              key={id}>
-                              <div className="flex gap-x-4">
-                                <div className="w-14 h-14 ">
-                                  <img
-                                    src={imageProduct}
-                                    alt="img-product"
-                                    className="object-contain w-full h-full"
-                                  />
+                            <Link to={`product_detail/${id}`}>
+                              <div
+                                className="flex justify-between items-start px-2"
+                                key={id}>
+                                <div className="flex gap-x-4">
+                                  <div className="w-14 h-14 ">
+                                    <img
+                                      src={imageProduct}
+                                      alt="img-product"
+                                      className="object-contain w-full h-full"
+                                    />
+                                  </div>
+                                  <h5>
+                                    {title?.length >= 20
+                                      ? `${title.slice(0, 20)}...`
+                                      : `${title}`}
+                                  </h5>
                                 </div>
-                                <h5>
-                                  {title?.length >= 20
-                                    ? `${title.slice(0, 20)}...`
-                                    : `${title}`}
-                                </h5>
+                                <span className="font-bold">
+                                  {quantity} X ${priceProduct}
+                                </span>
                               </div>
-                              <span className="font-bold">
-                                {quantity} X ${priceProduct}
-                              </span>
-                            </div>
+                            </Link>
                           )
                         }
                       )}
@@ -271,7 +267,7 @@ const NavbarOnDekstop = forwardRef(({}, conditionElementRef) => {
               )}
             </div>
             <div className="relative p-2">
-              <FontAwesomeIcon size="lg" icon={faBell} />
+              <IoNotificationsOutline className="text-2xl" />
             </div>
             <div
               className="relative flex justify-center m-[unset] p-2 duration-300 hover:bg-gray-100 rounded-md hover:cursor-pointer after:absolute after:w-full after:h-4 after:border  after:-bottom-2 after:opacity-0"
@@ -281,9 +277,8 @@ const NavbarOnDekstop = forwardRef(({}, conditionElementRef) => {
               onMouseLeave={() =>
                 setIsOpenHeartMenuDropdown(!isOpenHeartMenuDropdown)
               }>
-              <FontAwesomeIcon
-                size="lg"
-                icon={faHeart}
+              <FaRegHeart
+                className="text-xl"
                 onClick={() => navigate("/wishlist")}
               />
               <span className="absolute w-max h-max top-0 -right-1 text-center rounded-full text-xs bg-green-600 text-white font-bold px-[.4rem]">
@@ -332,25 +327,27 @@ const NavbarOnDekstop = forwardRef(({}, conditionElementRef) => {
                       } `}>
                       {wishListProduct.map(({ id, image, title, price }) => {
                         return (
-                          <div
-                            className="flex justify-between items-start px-2"
-                            key={id}>
-                            <div className="flex gap-x-4">
-                              <div className="w-14 h-14">
-                                <img
-                                  src={image}
-                                  alt="img-product"
-                                  className="object-contain w-full h-full"
-                                />
+                          <Link to={`/product_detail/${id}`}>
+                            <div
+                              className="flex justify-between items-start px-2"
+                              key={id}>
+                              <div className="flex gap-x-4">
+                                <div className="w-14 h-14">
+                                  <img
+                                    src={image}
+                                    alt="img-product"
+                                    className="object-contain w-full h-full"
+                                  />
+                                </div>
+                                <h5>
+                                  {title?.length >= 20
+                                    ? `${title.slice(0, 20)}...`
+                                    : `${title}`}
+                                </h5>
                               </div>
-                              <h5>
-                                {title?.length >= 20
-                                  ? `${title.slice(0, 20)}...`
-                                  : `${title}`}
-                              </h5>
+                              <span className="font-bold">${price}</span>
                             </div>
-                            <span className="font-bold">${price}</span>
-                          </div>
+                          </Link>
                         )
                       })}
                     </div>

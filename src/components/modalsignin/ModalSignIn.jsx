@@ -2,9 +2,8 @@ import React, { forwardRef, useContext, useEffect } from "react"
 import { Link } from "react-router-dom"
 import Button from "../button/Button"
 import { MyContext } from "../../context/MyContext"
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faQrcode, faXmark } from "@fortawesome/free-solid-svg-icons"
+import { BsQrCodeScan } from "react-icons/bs"
+import { FaXmark } from "react-icons/fa6"
 
 const ModalSignIn = forwardRef(({}, insideElementRef) => {
   const { isShowModalSignIn, setIsShowModalSignIn } = useContext(MyContext)
@@ -25,10 +24,8 @@ const ModalSignIn = forwardRef(({}, insideElementRef) => {
           : `scale-150 -z-50 opacity-0`
       }`}
       ref={insideElementRef}>
-      <FontAwesomeIcon
-        icon={faXmark}
-        className="absolute top-5 right-7 hover:cursor-pointer hover:bg-gray-200 p-1 rounded-md duration-200"
-        size="2xl"
+      <FaXmark
+        className="absolute top-5 right-7 hover:cursor-pointer hover:bg-gray-200 p-1 rounded-md duration-200 text-5xl"
         onClick={() => setIsShowModalSignIn(false)}
       />
       <div className="flex items-end justify-between mt-28">
@@ -60,7 +57,7 @@ const ModalSignIn = forwardRef(({}, insideElementRef) => {
           <hr className="border border-gray-300 w-full" />
         </div>
         <button className="flex items-center gap-x-2 justify-center text-gray-500 font-bold border border-gray-400 py-2 rounded-md">
-          <FontAwesomeIcon icon={faQrcode} size="lg" />
+          <BsQrCodeScan />
           Scan Kode QR
         </button>
         <Button

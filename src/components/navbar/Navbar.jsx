@@ -5,19 +5,14 @@ import {
   useNavigate,
   useOutletContext,
 } from "react-router-dom"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {
-  faMagnifyingGlass,
-  faCartShopping,
-  faBars,
-  faArrowLeft,
-  faArrowUpRightFromSquare,
-} from "@fortawesome/free-solid-svg-icons"
-import {
-  faEnvelope,
-  faBell,
-  faHeart,
-} from "@fortawesome/free-regular-svg-icons"
+
+import { IoCartOutline } from "react-icons/io5"
+import { CiHeart } from "react-icons/ci"
+import { FaBars, FaRegHeart } from "react-icons/fa6"
+import { FaArrowLeftLong } from "react-icons/fa6"
+import { IoIosSearch } from "react-icons/io"
+import { IoNotificationsOutline } from "react-icons/io5"
+
 import { useState } from "react"
 import { useDebounce } from "../../hooks/useDebounce"
 import MainMenu from "../mainmenu/MainMenu"
@@ -25,6 +20,7 @@ import { MyContext } from "../../context/MyContext"
 import { useDispatch, useSelector } from "react-redux"
 import { resetCheckBooleanFalse } from "../../redux/wishlistSlice/wishListSlice"
 import SearchKeyword from "../searchkeyword/SearchKeyword"
+import { GoMail } from "react-icons/go"
 
 function Navbar({ setIsOpenMainMenu, isOpenMainMenu }) {
   const [seacrhKeyword, setSeacrhKeyword] = useState("")
@@ -93,8 +89,6 @@ function Navbar({ setIsOpenMainMenu, isOpenMainMenu }) {
     if (pathname !== "/wishlist") setIsActiveSearchKeyword(true)
   }
 
-  console.log(isActiveSearchKeyword)
-
   return (
     <>
       {pathname !== "/login" && (
@@ -118,15 +112,15 @@ function Navbar({ setIsOpenMainMenu, isOpenMainMenu }) {
             pathname !== "/" ||
             pathname === "/cart_detail" ? (
               <div className="flex gap-x-4 items-center">
-                <FontAwesomeIcon
-                  icon={faArrowLeft}
-                  size="xl"
+                <FaArrowLeftLong
+                  className="text-xl"
                   onClick={
                     isActiveSearchKeyword
                       ? () => setIsActiveSearchKeyword(false)
                       : () => navigate(-1)
                   }
                 />
+
                 {pathname === "/cart_detail" ? (
                   <h5 className="col-[1/2] text-lg font-bold">Keranjang</h5>
                 ) : pathname === "/ulasan_pembeli" ? (
@@ -149,14 +143,10 @@ function Navbar({ setIsOpenMainMenu, isOpenMainMenu }) {
               <div
                 className={
                   pathname === "/wishlist"
-                    ? "w-full row-[2] col-[1/5] relative bg-white border border-gray-700 rounded-md z-50"
-                    : "w-full relative border border-gray-700 rounded-md z-50"
+                    ? "w-full row-[2] col-[1/5] relative bg-white border border-gray-700 rounded-md py-2 ps-2 z-50"
+                    : "w-full relative border border-gray-700 rounded-md z-50 py-2 ps-2"
                 }>
-                <FontAwesomeIcon
-                  icon={faMagnifyingGlass}
-                  size="lg"
-                  className="p-2"
-                />
+                <IoIosSearch className="text-xl text-gray-700" />
                 <input
                   type="text"
                   className="border-none outline-none absolute top-0 bottom-0 right-1 left-8 placeholder:font-bold z-50"
@@ -180,8 +170,8 @@ function Navbar({ setIsOpenMainMenu, isOpenMainMenu }) {
                     <ul
                       className={
                         pathname === "/cart_detail" || pathname === "/wishlist"
-                          ? "grid grid-cols-[repeat(2,max-content)] gap-x-4 justify-end"
-                          : "grid grid-cols-[repeat(4,max-content)] gap-x-4 justify-end"
+                          ? "grid grid-cols-[repeat(2,max-content)] gap-x-4 justify-end items-center"
+                          : "grid grid-cols-[repeat(4,max-content)] gap-x-4 justify-end items-center"
                       }>
                       {pathname === "/cart_detail" ||
                       pathname === "/wishlist" ? (
@@ -189,11 +179,8 @@ function Navbar({ setIsOpenMainMenu, isOpenMainMenu }) {
                           <li className="relative">
                             {pathname === "/wishlist" && !aturWishList ? (
                               <Link to="/cart_detail">
-                                <FontAwesomeIcon
-                                  icon={faCartShopping}
-                                  size="xl"
-                                />
-                                <span className="absolute w-max h-max bottom-4 -right-3 text-center rounded-full text-sm bg-green-600 text-white font-bold px-[.4rem]">
+                                <IoCartOutline className="text-2xl" />
+                                <span className="absolute w-max h-max bottom-4 -right-3 text-center rounded-full text-xs bg-green-600 text-white font-bold px-[.4rem]">
                                   {totalCart !== 0 && totalCart}
                                 </span>
                               </Link>
@@ -201,19 +188,19 @@ function Navbar({ setIsOpenMainMenu, isOpenMainMenu }) {
                               pathname === "/cart_detail" &&
                               !aturWishList && (
                                 <Link to="/wishlist">
-                                  <FontAwesomeIcon icon={faHeart} size="xl" />
+                                  <FaRegHeart className="text-xl" />
                                 </Link>
                               )
                             )}
                           </li>
                           {!aturWishList ? (
                             <li>
-                              <FontAwesomeIcon
-                                icon={faBars}
-                                size="xl"
+                              <FaBars
                                 onClick={() =>
                                   setIsOpenMainMenu(!isOpenMainMenu)
-                                }></FontAwesomeIcon>
+                                }
+                                className="text-xl"
+                              />
                             </li>
                           ) : (
                             <span
@@ -230,32 +217,27 @@ function Navbar({ setIsOpenMainMenu, isOpenMainMenu }) {
                         <>
                           <li>
                             <Link>
-                              <FontAwesomeIcon icon={faEnvelope} size="xl" />
+                              <GoMail className="text-xl" />
                             </Link>
                           </li>
                           <li className="relative">
                             <Link>
-                              <FontAwesomeIcon icon={faBell} size="xl" />
+                              <IoNotificationsOutline className="text-xl" />
                             </Link>
                           </li>
                           <li className="relative">
                             <Link to="/cart_detail">
-                              <FontAwesomeIcon
-                                icon={faCartShopping}
-                                size="xl"
-                              />
-                              <span className="absolute w-max h-max bottom-4 -right-3 text-center rounded-full text-sm bg-green-600 text-white font-bold px-[.4rem]">
+                              <IoCartOutline className="text-2xl" />
+                              <span className="absolute w-max h-max bottom-4 -right-3 text-center rounded-full text-xs bg-green-600 text-white font-bold px-[.4rem]">
                                 {totalCart !== 0 && totalCart}
                               </span>
                             </Link>
                           </li>
                           <li>
-                            <FontAwesomeIcon
-                              icon={faBars}
-                              size="xl"
-                              onClick={() =>
-                                setIsOpenMainMenu(!isOpenMainMenu)
-                              }></FontAwesomeIcon>
+                            <FaBars
+                              className="text-xl"
+                              onClick={() => setIsOpenMainMenu(!isOpenMainMenu)}
+                            />
                           </li>
                         </>
                       )}

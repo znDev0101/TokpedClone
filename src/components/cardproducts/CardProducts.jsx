@@ -1,10 +1,9 @@
 import React, { useContext, useState, useEffect, useRef } from "react"
-import { Link, useOutletContext } from "react-router-dom"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faStar } from "@fortawesome/free-solid-svg-icons"
+import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { setCheckBoxBooleanWishList } from "../../redux/wishlistSlice/wishListSlice"
 import { MyContext } from "../../context/MyContext"
+import { FaStar } from "react-icons/fa6"
 
 function CardProducts({ title, image, price, rating, urlPath, id }) {
   const { checkBoxWishListBoolean } = useSelector((state) => state.wishList)
@@ -67,7 +66,7 @@ function CardProducts({ title, image, price, rating, urlPath, id }) {
             <div className="flex items-center gap-x-2 ms-2 lg:text-sm">
               <span className="text-gray-600">{rating?.rate}</span>
               <span className="text-gray-600">|</span>
-              <FontAwesomeIcon icon={faStar} className="text-yellow-300" />
+              <FaStar className="text-yellow-400" />
               <span className="text-gray-600">Terjual 99+</span>
             </div>
           </div>
@@ -94,7 +93,7 @@ function CardProducts({ title, image, price, rating, urlPath, id }) {
               <div className="flex items-center gap-x-2 ms-2 lg:text-sm">
                 <span className="text-gray-600">{rating?.rate}</span>
                 <span className="text-gray-600">|</span>
-                <FontAwesomeIcon icon={faStar} className="text-yellow-300" />
+                <FaStar className="text-yellow-400" />
                 <span className="text-gray-600">Terjual 99+</span>
               </div>
             </div>

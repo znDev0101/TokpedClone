@@ -1,18 +1,10 @@
-import {
-  faHeart as faHeartRegular,
-  faNoteSticky,
-  faTrashCan,
-} from "@fortawesome/free-regular-svg-icons"
-import {
-  faHeart as faHeartSolid,
-  faSoap,
-} from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React, { useState, useEffect, useRef } from "react"
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { toast, Bounce } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import { SlNote } from "react-icons/sl"
+import { FaHeart, FaRegHeart, FaRegTrashCan } from "react-icons/fa6"
 
 import {
   incrementCart,
@@ -28,6 +20,7 @@ import {
   addProductToWishList,
   removeProductFromWishList,
 } from "../../redux/wishlistSlice/wishListSlice"
+import { CiHeart } from "react-icons/ci"
 
 const CartProducts = ({
   id,
@@ -158,7 +151,7 @@ const CartProducts = ({
           type="checkbox"
           checked={isChecked}
           onChange={handleChange}
-          className="w-full h-full hover:cursor-pointer"
+          className="w-full h-full hover:cursor-pointer  border border-gray-400 rounded-sm"
         />
       </div>
       <div className="w-full h-full relative grid grid-cols-[max-content_1fr] lg:grid-cols-[max-content_1fr] gap-x-1">
@@ -193,32 +186,30 @@ const CartProducts = ({
           <div className=" flex lg:flex items-center pt-7  justify-between lg:justify-end lg:gap-x-4 lg:bottom-2">
             <div className="flex gap-x-5 ">
               {screen.width <= 428 ? (
-                <FontAwesomeIcon
-                  icon={faNoteSticky}
-                  size="lg"
-                  className="text-gray-400"
+                <SlNote className="text-gray-400 text-xl" />
+              ) : (
+                <FaRegTrashCan
+                  className="text-gray-400 text-xl hover:cursor-pointer"
+                  onClick={() => handleDelete(id)}
+                />
+                // icon trash
+              )}
+
+              {wishListHeartBoolean[indexWishListBoolean]?.boolean ? (
+                <FaHeart
+                  className={` text-gray-400 hover:cursor-pointer text-xl ${
+                    wishListHeartBoolean[indexWishListBoolean]?.boolean &&
+                    `text-pink-500 ${isAnimation && `animate-heart`}`
+                  }`}
+                  onClick={handleWishlist}
+                  onAnimationEnd={() => setIsAnimation(false)}
                 />
               ) : (
-                <FontAwesomeIcon
-                  icon={faTrashCan}
-                  onClick={() => handleDelete(id)}
-                  size="lg"
-                  className="text-gray-400 hover:cursor-pointer"
+                <FaRegHeart
+                  className="text-gray-400 text-xl hover:cursor-pointer"
+                  onClick={handleWishlist}
                 />
               )}
-              <FontAwesomeIcon
-                icon={
-                  wishListHeartBoolean[indexWishListBoolean]?.boolean
-                    ? faHeartSolid
-                    : faHeartRegular
-                }
-                className={`${
-                  wishListHeartBoolean[indexWishListBoolean]?.boolean &&
-                  `text-pink-500 ${isAnimation && `animate-heart`}`
-                }`}
-                onClick={handleWishlist}
-                onAnimationEnd={() => setIsAnimation(false)}
-              />
             </div>
             <div className="flex justify-between items-center w-20 h-6 rounded-md border border-gray-500  p-1 ">
               <button

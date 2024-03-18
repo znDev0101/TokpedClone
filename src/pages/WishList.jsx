@@ -1,8 +1,6 @@
-import { faChartBar } from "@fortawesome/free-regular-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React, { useContext, useState, useEffect, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useLocation, useNavigate } from "react-router"
+import { useNavigate } from "react-router"
 import Button from "../components/button/Button"
 import wishlist from "../assets/images/wishlist.png"
 import CardProducts from "../components/cardproducts/CardProducts"
@@ -15,6 +13,8 @@ import {
 import { MyContext } from "../context/MyContext"
 import { toast, Bounce } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import { LuLayoutGrid } from "react-icons/lu"
+
 import useClickOutside from "../hooks/useClickOutside"
 
 const WishList = () => {
@@ -172,22 +172,21 @@ const WishList = () => {
                 className={`lg:hidden ${aturWishList ? `hidden` : `block`}`}>
                 |
               </span>
-              <FontAwesomeIcon
-                icon={faChartBar}
-                className={`lg:hidden ${aturWishList ? `hidden` : `block`}`}
-              />
+              <LuLayoutGrid className="lg:hidden" />
 
               {/*SELECT OPTION ONLY ON DESKTOP */}
               <span className="hidden lg:block font-bold">Urutkan</span>
-
-              <select
-                name="urutkan-product"
-                className="hidden w-44 p-2 border border-gray-300 rounded-md lg:flex focus:border focus:border-green-500 focus:outline-none">
-                <option value="Terbaru Disimpan">Terbaru Disimpan</option>
-                <option value="Terlama Disimpan">Terlama Disimpan</option>
-                <option value="Harga Tertinggi">Harga Tertinggi</option>
-                <option value="Harga Terendah">Harga Terendah</option>
-              </select>
+              <div className="relative">
+                <select
+                  name="urutkan-product"
+                  className={`hidden lg:hidden appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline`}>
+                  <option value="Terbaru Disimpan">Terbaru Disimpan</option>
+                  <option value="Terlama Disimpan">Terlama Disimpan</option>
+                  <option value="Harga Tertinggi">Harga Tertinggi</option>
+                  <option value="Harga Terendah">Harga Terendah</option>
+                </select>
+                <div className="content-['\25BC'] absolute top-0 p-5 "></div>
+              </div>
               {/*END SELECT OPTION ONLY ON DESKTOP */}
             </div>
           </div>

@@ -2,13 +2,10 @@ import React from "react"
 import bebasOngkir from "../../assets/images/bebas_ongkir.png"
 
 // third party library
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {
-  faStar,
-  faHeart as faHeartSolid,
-} from "@fortawesome/free-solid-svg-icons"
-import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons"
+
+import { CiHeart } from "react-icons/ci"
 import DescriptionInfoProduct from "../descriptioninfoproduct/DescriptionInfoProduct"
+import { FaHeart, FaRegHeart } from "react-icons/fa6"
 
 const InfoProduct = ({
   wishListHeartBoolean,
@@ -36,19 +33,18 @@ const InfoProduct = ({
             </div>
           </div>
           <span className="block lg:hidden">
-            <FontAwesomeIcon
-              icon={
-                wishListHeartBoolean[indexHeartBoolean]?.boolean
-                  ? faHeartSolid
-                  : faHeartRegular
-              }
-              onClick={handleClickAddToWishList}
-              className={`${
-                wishListHeartBoolean[indexHeartBoolean]?.boolean &&
-                `text-pink-500 ${isAnimation && `animate-heart`} `
-              }`}
-              onAnimationEnd={() => setIsAnimation(false)}
-            />
+            {wishListHeartBoolean[indexHeartBoolean]?.boolean ? (
+              <FaHeart
+                className={`${
+                  wishListHeartBoolean[indexHeartBoolean]?.boolean &&
+                  `text-pink-500 ${isAnimation && `animate-heart`}`
+                }`}
+                onAnimationEnd={() => setIsAnimation(false)}
+                onClick={handleClickAddToWishList}
+              />
+            ) : (
+              <FaRegHeart onClick={handleClickAddToWishList} />
+            )}
           </span>
         </div>
         {/* only mobile */}

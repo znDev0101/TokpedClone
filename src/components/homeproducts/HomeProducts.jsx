@@ -1,17 +1,13 @@
 import React from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {
-  faLocationDot,
-  faCaretDown,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons"
+import { MdLocationPin } from "react-icons/md"
+
 import CardProducts from "../cardproducts/CardProducts"
 import Button from "../button/Button"
 import Category from "../category/Category"
 import ScrollToTop from "../scrolltotop/ScrollToTop"
 import { useLocation, useNavigate } from "react-router"
 import { useGetAllProductsQuery } from "../../redux/services/ecommerceApi"
-import ModalSignIn from "../modalsignin/ModalSignIn"
+import { FaCaretDown } from "react-icons/fa"
 
 function HomeProducts() {
   const { data, error, isLoading } = useGetAllProductsQuery()
@@ -22,16 +18,12 @@ function HomeProducts() {
     <>
       <div className={`w-[92%] h-full pt-16 m-auto  lg:hidden`}>
         <div className="items-center flex gap-x-2">
-          <FontAwesomeIcon
-            icon={faLocationDot}
-            size="lg"
-            className="text-green-600"
-          />
+          <MdLocationPin className="text-green-600" />
           <div className="text-sm">
             Dikirim ke{" "}
             <span className="font-bold">Pancoran, Jakarta Selatan</span>
           </div>
-          <FontAwesomeIcon icon={faCaretDown} size="lg" />
+          <FaCaretDown />
         </div>
         <div className=" grid grid-cols-[2fr_1fr] mt-3 items-center">
           <div className="flex gap-x-2 items-center">
@@ -90,7 +82,7 @@ function HomeProducts() {
 
           <ScrollToTop
             styleIfTrue={
-              "fixed w-12 justify-center items-center flex h-12 bottom-20 lg:bottom-7 right-6 rounded-full shadow-lg bg-white z-50 duration-300 translate-y-0 "
+              "fixed w-12 justify-center items-center flex h-12 bottom-20 lg:bottom-7 right-6 text-xl rounded-full shadow-lg bg-white z-50 duration-300 translate-y-0 hover:cursor-pointer "
             }
             styleIffalse={
               "fixed w-12 justify-center items-center flex h-12 bottom-0 right-6 rounded-full shadow-lg bg-white duration-300 translate-y-full"

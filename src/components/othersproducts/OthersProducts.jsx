@@ -12,7 +12,7 @@ function OthersProducts({ idProduct, categoryProducts }) {
           <span className="text-green-700 font-bold">Lihat Semua</span>
         </div>
       </div>
-      <div className="flex flex-nowrap gap-x-3 mt-2 mb-20 px-4 overflow-x-auto lg:max-w-6xl lg:mx-auto">
+      <div className="flex flex-nowrap gap-x-3 mt-2 pb-20 px-4 overflow-x-auto lg:max-w-6xl lg:mx-auto">
         {data
           .filter(
             ({ id, category }) =>

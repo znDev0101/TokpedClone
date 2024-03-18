@@ -1,7 +1,6 @@
 import React from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faMessage } from "@fortawesome/free-regular-svg-icons"
 import Button from "../button/Button"
+import { BiMessageDetail } from "react-icons/bi"
 
 const NavbarOnProductDetail = ({
   style,
@@ -10,8 +9,7 @@ const NavbarOnProductDetail = ({
 }) => {
   return (
     <div className={style} ref={navOnProductDetailRef}>
-      <FontAwesomeIcon icon={faMessage} size="2xl" />
-
+      <BiMessageDetail />
       <Button
         textButton={"Beli"}
         styleButton={

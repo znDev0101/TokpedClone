@@ -1,7 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUser } from "@fortawesome/free-regular-svg-icons"
+import { FaRegUser } from "react-icons/fa6"
 
 function UlasanPembeli({ dataLimit }) {
   return (
@@ -19,7 +18,7 @@ function UlasanPembeli({ dataLimit }) {
             key={id}>
             {/* User Comment */}
             <div className="flex  gap-x-3 items-center">
-              <FontAwesomeIcon icon={faUser} />
+              <FaRegUser />
               <span className="text-sm">{name}</span>
             </div>
             {/* Isi comment */}

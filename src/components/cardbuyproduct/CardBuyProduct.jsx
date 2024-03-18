@@ -1,16 +1,12 @@
 import React, { useState, useEffect, useRef } from "react"
 import { addToCartOnDekstop } from "../../redux/cartSlice/cartSlice"
 import { useDispatch } from "react-redux"
+import { FaHeart, FaMinus, FaRegHeart } from "react-icons/fa6"
+import { FaPlus } from "react-icons/fa6"
+import { BiMessageDetail } from "react-icons/bi"
+import { CiHeart } from "react-icons/ci"
+import { GrShareOption } from "react-icons/gr"
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {
-  faHeart as faHeartSolid,
-  faMinus,
-  faPlus,
-  faShareNodes,
-} from "@fortawesome/free-solid-svg-icons"
-import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons"
-import { faMessage } from "@fortawesome/free-regular-svg-icons"
 import { toast, Bounce } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
@@ -99,13 +95,13 @@ const CardBuyProduct = ({
           <button
             className="text-green-600 text-lg hover:bg-gray-100 px-2"
             onClick={handleDecrement}>
-            <FontAwesomeIcon icon={faMinus} size="xs" />
+            <FaMinus />
           </button>
           <span>{quantity}</span>
           <button
             className="text-green-600 text-lg hover:bg-gray-100 px-2"
             onClick={handleIncrement}>
-            <FontAwesomeIcon icon={faPlus} size="xs" />
+            <FaPlus />
           </button>
         </div>
         <span>
@@ -128,33 +124,41 @@ const CardBuyProduct = ({
       </div>
       <div className="flex justify-center items-center gap-x-3 mt-5">
         <div className="flex items-center gap-x-2 hover:cursor-pointer">
-          <FontAwesomeIcon icon={faMessage} />
+          <BiMessageDetail className="text-xl" />
           <span className="font-bold text-xs">Chat</span>
         </div>
         <span>|</span>
         <div className="flex items-center gap-x-2 hover:cursor-pointer">
           <span>
-            <FontAwesomeIcon
-              icon={
-                wishListHeartBoolean[indexHeartBoolean]?.boolean
-                  ? faHeartSolid
-                  : faHeartRegular
-              }
+            {/* <CiHeart
+              className={`${
+                wishListHeartBoolean[indexHeartBoolean]?.boolean &&
+                `text-pink-500 ${isAnimation && `animate-heart`}
+             `
+              } `}
               onClick={handleClickAddToWishList}
-              className={
-                wishListHeartBoolean[indexHeartBoolean]?.boolean
-                  ? `text-pink-500 ${isAnimation && `animate-heart`}`
-                  : ``
-              }
               onAnimationEnd={() => setIsAnimation(false)}
-            />
+            /> */}
+            {wishListHeartBoolean[indexHeartBoolean]?.boolean ? (
+              <FaHeart
+                className={`${
+                  wishListHeartBoolean[indexHeartBoolean]?.boolean &&
+                  `text-pink-500 ${isAnimation && `animate-heart`}
+             `
+                } `}
+                onClick={handleClickAddToWishList}
+                onAnimationEnd={() => setIsAnimation(false)}
+              />
+            ) : (
+              <FaRegHeart onClick={handleClickAddToWishList} />
+            )}
           </span>
           <span className="font-bold text-xs">WishList</span>
         </div>
 
         <span>|</span>
         <div className="flex items-center gap-x-2 hover:cursor-pointer">
-          <FontAwesomeIcon icon={faShareNodes} />
+          <GrShareOption />
           <span className="font-bold text-xs">Share</span>
         </div>
       </div>

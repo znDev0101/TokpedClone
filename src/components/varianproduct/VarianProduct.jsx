@@ -1,10 +1,9 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faXmark } from "@fortawesome/free-solid-svg-icons"
-import React, { forwardRef, useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import NavbarOnProductDetail from "../navbaronproductdetail/NavbarOnProductDetail"
 import "react-toastify/dist/ReactToastify.css"
 import { useSelector } from "react-redux"
 import { useOutletContext } from "react-router"
+import { FaXmark } from "react-icons/fa6"
 
 const VarianProduct = ({
   isOpenVarianProduct,
@@ -56,11 +55,7 @@ const VarianProduct = ({
       }`}
       ref={varianProductRef}>
       <div className="sticky top-0 flex gap-x-4 pt-3 px-3 py-2 bg-white z-50">
-        <FontAwesomeIcon
-          icon={faXmark}
-          size="2xl"
-          onClick={() => setIsOpenVarianProduct(!isOpenVarianProduct)}
-        />
+        <FaXmark onClick={() => setIsOpenVarianProduct(!isOpenVarianProduct)} />
         <h5 className="font-bold text-2xl">Varian Product</h5>
       </div>
       <div className="w-full px-3 mt-4">

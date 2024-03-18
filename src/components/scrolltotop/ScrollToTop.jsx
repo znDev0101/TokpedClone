@@ -1,35 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect } from "react"
+import { FaArrowUp } from "react-icons/fa6"
 
-function ScrollToTop({ styleIfTrue, onClick, styleIffalse, numberScrollYWindow }) {
-  const [windowScrollY, setWindowScrollY] = useState(0);
-  const [arrowToTop, setArrowToTop] = useState(false);
+function ScrollToTop({
+  styleIfTrue,
+  onClick,
+  styleIffalse,
+  numberScrollYWindow,
+}) {
+  const [windowScrollY, setWindowScrollY] = useState(0)
+  const [arrowToTop, setArrowToTop] = useState(false)
 
   useEffect(() => {
     const getScrollY = () => {
-      setWindowScrollY(window.scrollY);
+      setWindowScrollY(window.scrollY)
       if (window.scrollY < windowScrollY) {
-        setArrowToTop(true);
+        setArrowToTop(true)
       } else {
-        setArrowToTop(false);
+        setArrowToTop(false)
       }
-    };
+    }
 
-    window.addEventListener('scroll', getScrollY);
+    window.addEventListener("scroll", getScrollY)
     return () => {
-      removeEventListener('scroll', getScrollY);
-    };
-  }, [windowScrollY]);
+      removeEventListener("scroll", getScrollY)
+    }
+  }, [windowScrollY])
   return (
     <>
       {windowScrollY > numberScrollYWindow && (
-        <div className={arrowToTop ? `${styleIfTrue}` : `${styleIffalse}`}>
-          <FontAwesomeIcon icon={faArrowUp} size="xl" onClick={onClick} />
+        <div
+          className={arrowToTop ? `${styleIfTrue}` : `${styleIffalse}`}
+          onClick={onClick}>
+          <FaArrowUp />
         </div>
       )}
     </>
-  );
+  )
 }
 
-export default ScrollToTop;
+export default ScrollToTop
