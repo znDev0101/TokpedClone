@@ -117,7 +117,8 @@ const WishList = () => {
           </div>
         </div>
       ) : (
-        <div className={`w-full min-h-screen relative bg-white`}>
+        <div
+          className={`w-full min-h-screen relative bg-white overflow-hidden`}>
           <div className=" px-4 lg:max-w-6xl lg:mx-auto items-center flex justify-between pt-28 lg:pt-40">
             {aturWishList && screen.width > 1200 ? (
               <div className="flex items-center gap-x-4">
