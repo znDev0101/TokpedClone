@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux"
 import { FaHeart, FaMinus, FaRegHeart } from "react-icons/fa6"
 import { FaPlus } from "react-icons/fa6"
 import { BiMessageDetail } from "react-icons/bi"
-import { CiHeart } from "react-icons/ci"
 import { GrShareOption } from "react-icons/gr"
 
 import { toast, Bounce } from "react-toastify"
@@ -16,6 +15,9 @@ const CardBuyProduct = ({
   wishListHeartBoolean,
   indexHeartBoolean,
   handleClickAddToWishList,
+  selectWarnaVarianProduct,
+  selectUkuranVarianProduct,
+  filterVarianProduct,
   isAnimation,
   setIsAnimation,
   ...otherData
@@ -43,6 +45,8 @@ const CardBuyProduct = ({
         price: priceProduct,
         title,
         quantity,
+        selectWarnaVarianProduct,
+        selectUkuranVarianProduct,
       })
     )
     toast.success("Berhasil menambahkan ke keranjang", {
@@ -90,6 +94,21 @@ const CardBuyProduct = ({
     <div className="w-full h-max sticky top-36 right-0 row-[1] max-w-[260px] bg-white border border-gray-300 rounded-md pb-4 ">
       <h1 className="font-bold ps-4 pt-3">Atur Jumlah dan Catatan</h1>
       {/* counter cart */}
+      <div className="flex gap-x-2 items-center px-5 my-5">
+        {filterVarianProduct[0]?.warna !== undefined &&
+          filterVarianProduct[0]?.size && (
+            <>
+              <div className="w-14 h-14">
+                <img src={image} alt="img-product" />
+              </div>
+              <div className="flex gap-x-1">
+                <span>{selectWarnaVarianProduct},</span>
+                <span>{selectUkuranVarianProduct}</span>
+              </div>
+            </>
+          )}
+      </div>
+
       <div className="flex items-center mt-4 ps-4 gap-x-4">
         <div className="flex justify-center items-center border border-gray-300 rounded-lg px-1 py-1 gap-x-2">
           <button
@@ -130,15 +149,6 @@ const CardBuyProduct = ({
         <span>|</span>
         <div className="flex items-center gap-x-2 hover:cursor-pointer">
           <span>
-            {/* <CiHeart
-              className={`${
-                wishListHeartBoolean[indexHeartBoolean]?.boolean &&
-                `text-pink-500 ${isAnimation && `animate-heart`}
-             `
-              } `}
-              onClick={handleClickAddToWishList}
-              onAnimationEnd={() => setIsAnimation(false)}
-            /> */}
             {wishListHeartBoolean[indexHeartBoolean]?.boolean ? (
               <FaHeart
                 className={`${

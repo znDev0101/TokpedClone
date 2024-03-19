@@ -1,6 +1,7 @@
 import React from "react"
 import { Link, useNavigate } from "react-router-dom"
 import Button from "../components/button/Button"
+import { FaArrowLeftLong } from "react-icons/fa6"
 
 export const Login = () => {
   const navigate = useNavigate()
@@ -9,11 +10,7 @@ export const Login = () => {
     <div className="w-full min-h-screen bg-white px-5 flex flex-col pt-5 gap-y-5 ">
       <div className="flex justify-between">
         <div className="flex gap-x-3 items-center ">
-          <FontAwesomeIcon
-            icon={faArrowLeft}
-            size="xl"
-            onClick={() => navigate(-1)}
-          />
+          <FaArrowLeftLong className="text-lg" onClick={() => navigate(-1)} />
           <h5 className="font-bold text-xl">Masuk</h5>
         </div>
         <h5 className="text-green-500 font-bold text-lg">Daftar</h5>

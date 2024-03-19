@@ -53,7 +53,12 @@ function Navbar({ setIsOpenMainMenu, isOpenMainMenu }) {
       setData([])
       setSeacrhKeyword("")
     }
-  }, [pathname])
+
+    if (!isActiveSearchKeyword && seacrhKeyword.length != 0) {
+      setSeacrhKeyword("")
+      console.log("true")
+    }
+  }, [pathname, isActiveSearchKeyword])
 
   useEffect(() => {
     if (seacrhKeyword.length === 0) setData([])

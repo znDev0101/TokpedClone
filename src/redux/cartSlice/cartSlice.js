@@ -13,7 +13,15 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const { id, data, price, title, description } = action.payload
+      const {
+        id,
+        data,
+        price,
+        title,
+        description,
+        selectWarnaVarianProduct,
+        selectUkuranVarianProduct,
+      } = action.payload
       const findCartProduct = state.cartProduct.findIndex(
         (data) => data.id == id
       )
@@ -32,13 +40,24 @@ export const cartSlice = createSlice({
           price: price,
           quantity: 1,
           stock: data[0].stock - 1,
+          warna: selectWarnaVarianProduct,
+          ukuran: selectUkuranVarianProduct,
         })
         state.cartBoolean.push({ id: id, boolean: false })
         state.totalCart += 1
       }
     },
     addToCartOnDekstop: (state, action) => {
-      const { id, image, price, title, quantity, priceProduct } = action.payload
+      const {
+        id,
+        image,
+        price,
+        title,
+        quantity,
+        priceProduct,
+        selectWarnaVarianProduct: warna,
+        selectUkuranVarianProduct: ukuran,
+      } = action.payload
       const indexCartProduct = state.cartProduct.findIndex(
         (data) => data.id == id
       )
@@ -58,6 +77,8 @@ export const cartSlice = createSlice({
           priceProduct: priceProduct,
           title: title,
           quantity: quantity,
+          warna: warna,
+          ukuran: ukuran,
         })
         state.totalCart += quantity
         state.cartBoolean.push({ id: id, boolean: false })

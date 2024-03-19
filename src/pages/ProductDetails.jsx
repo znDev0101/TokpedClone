@@ -28,6 +28,12 @@ const ProductDetails = () => {
   const [dataLimit, setDataLimit] = useState([])
   const [isOpenVarianProduct, setIsOpenVarianProduct] = useState(false)
   const [filterVarianProduct, setfilterVarianProduct] = useState([])
+  const [indexActiveSelecWarnaProduct, setIndexActiveSelectWarnaProduct] =
+    useState(0)
+  const [indexActiveSelectUkuranProduct, setIndexActiveSelectUkuranProduct] =
+    useState(0)
+  const [selectWarnaVarianProduct, setSelectWarnaVarianProduct] = useState([])
+  const [selectUkuranVarianProduct, setSelectUkuranVarianProduct] = useState([])
   const { cartProduct } = useSelector((state) => state.cart)
   const { wishListHeartBoolean } = useSelector((state) => state.wishList)
   const [isAnimation, setIsAnimation] = useState(false)
@@ -99,6 +105,8 @@ const ProductDetails = () => {
           description,
           title,
           price: priceProduct,
+          selectWarnaVarianProduct,
+          selectUkuranVarianProduct,
         })
       )
     }
@@ -146,6 +154,19 @@ const ProductDetails = () => {
     }
   }
 
+  useEffect(() => {
+    if (filterVarianProduct[0]?.warna !== undefined)
+      setSelectWarnaVarianProduct(filterVarianProduct[0]?.warna[0])
+    if (filterVarianProduct[0]?.size !== undefined)
+      setSelectUkuranVarianProduct(filterVarianProduct[0]?.size[0])
+    return () => {
+      setSelectWarnaVarianProduct([])
+      setSelectUkuranVarianProduct([])
+    }
+  }, [filterVarianProduct])
+
+  console.log(filterVarianProduct[0]?.warna)
+
   return (
     <div className="w-full pt-16  lg:pt-10 bg-white ">
       <BreadCrumbs title={title} category={category} />
@@ -160,8 +181,19 @@ const ProductDetails = () => {
             rating={rating}
             description={description}
             category={category}
+            indexActiveSelecWarnaProduct={indexActiveSelecWarnaProduct}
+            setIndexActiveSelectWarnaProduct={setIndexActiveSelectWarnaProduct}
+            indexActiveSelectUkuranProduct={indexActiveSelectUkuranProduct}
+            setIndexActiveSelectUkuranProduct={
+              setIndexActiveSelectUkuranProduct
+            }
+            selectWarnaVarianProduct={selectWarnaVarianProduct}
+            setSelectWarnaVarianProduct={setSelectWarnaVarianProduct}
+            selectUkuranVarianProduct={selectUkuranVarianProduct}
+            setSelectUkuranVarianProduct={setSelectUkuranVarianProduct}
             wishListHeartBoolean={wishListHeartBoolean}
             indexHeartBoolean={indexHeartBoolean}
+            filterVarianProduct={filterVarianProduct}
             handleClickAddToWishList={handleClickAddToWishList}
             isAnimation={isAnimation}
             setIsAnimation={setIsAnimation}
@@ -175,12 +207,15 @@ const ProductDetails = () => {
             indexHeartBoolean={indexHeartBoolean}
             quantity={filterVarianProduct[0]?.quantity}
             data={filterVarianProduct}
+            filterVarianProduct={filterVarianProduct}
             id={id}
             image={image}
             title={title}
             stock={filterVarianProduct[0]?.stock}
             price={priceProduct}
             description={description}
+            selectWarnaVarianProduct={selectWarnaVarianProduct}
+            selectUkuranVarianProduct={selectUkuranVarianProduct}
             setIsAnimation={setIsAnimation}
             isAnimation={isAnimation}
           />
@@ -203,6 +238,14 @@ const ProductDetails = () => {
       {/* ONLY ON MOBILE */}
       <VarianProduct
         isOpenVarianProduct={isOpenVarianProduct}
+        indexActiveSelecWarnaProduct={indexActiveSelecWarnaProduct}
+        setIndexActiveSelectWarnaProduct={setIndexActiveSelectWarnaProduct}
+        indexActiveSelectUkuranProduct={indexActiveSelectUkuranProduct}
+        setIndexActiveSelectUkuranProduct={setIndexActiveSelectUkuranProduct}
+        selectUkuranVarianProduct={selectUkuranVarianProduct}
+        setSelectUkuranVarianProduct={setSelectUkuranVarianProduct}
+        selectWarnaVarianProduct={selectWarnaVarianProduct}
+        setSelectWarnaVarianProduct={setSelectWarnaVarianProduct}
         filterVarianProduct={filterVarianProduct}
         productId={id}
         setIsOpenVarianProduct={setIsOpenVarianProduct}

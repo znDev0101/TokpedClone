@@ -2,13 +2,21 @@ import React, { useEffect, useRef, useState } from "react"
 import NavbarOnProductDetail from "../navbaronproductdetail/NavbarOnProductDetail"
 import "react-toastify/dist/ReactToastify.css"
 import { useSelector } from "react-redux"
-import { useOutletContext } from "react-router"
+import { useLocation, useOutletContext } from "react-router"
 import { FaXmark } from "react-icons/fa6"
 
 const VarianProduct = ({
   isOpenVarianProduct,
-  filterVarianProduct,
   setIsOpenVarianProduct,
+  indexActiveSelecWarnaProduct,
+  setIndexActiveSelectWarnaProduct,
+  indexActiveSelectUkuranProduct,
+  setIndexActiveSelectUkuranProduct,
+  selectUkuranVarianProduct,
+  setSelectUkuranVarianProduct,
+  selectWarnaVarianProduct,
+  setSelectWarnaVarianProduct,
+  filterVarianProduct,
   handleClick,
   navOnProductDetailRef,
   ...data
@@ -16,6 +24,9 @@ const VarianProduct = ({
   const { productId, imageProduct, price, stock: stockProduct } = data
   const { cartProduct } = useSelector((state) => state.cart)
   const [indexCart, setIndexCart] = useState([])
+
+  const { pathname } = useLocation()
+
   const varianProductRef = useRef(null)
 
   const { isOpenMainMenu } = useOutletContext()
@@ -38,6 +49,16 @@ const VarianProduct = ({
     }
   }
 
+  const handleClickSelectWarnaProduct = (data, index) => {
+    setIndexActiveSelectWarnaProduct(index)
+    setSelectWarnaVarianProduct(data)
+  }
+
+  const handleClickSelectUkuranProduct = (data, index) => {
+    setIndexActiveSelectUkuranProduct(index)
+    setSelectUkuranVarianProduct(data)
+  }
+
   useEffect(() => {
     document.addEventListener("click", outsideClick)
 
@@ -54,8 +75,11 @@ const VarianProduct = ({
           : `translate-y-full`
       }`}
       ref={varianProductRef}>
-      <div className="sticky top-0 flex gap-x-4 pt-3 px-3 py-2 bg-white z-50">
-        <FaXmark onClick={() => setIsOpenVarianProduct(!isOpenVarianProduct)} />
+      <div className="sticky top-0 flex gap-x-4 pt-3 px-3 py-2 items-center bg-white z-50">
+        <FaXmark
+          className="text-4xl"
+          onClick={() => setIsOpenVarianProduct(!isOpenVarianProduct)}
+        />
         <h5 className="font-bold text-2xl">Varian Product</h5>
       </div>
       <div className="w-full px-3 mt-4">
@@ -68,6 +92,16 @@ const VarianProduct = ({
             />
           </div>
           <div className="py-1">
+            <div className="flex gap-x-2">
+              <span className="text-xs text-gray-600 font-bold px-2 bg-gray-300 rounded-sm">
+                {selectWarnaVarianProduct}
+              </span>
+              {pathname !== "/product_detail/1" && (
+                <span className="text-xs text-gray-600 font-bold px-2 bg-gray-300 rounded-sm">
+                  {selectUkuranVarianProduct}
+                </span>
+              )}
+            </div>
             <span className="font-bold text-xl">${price}</span>
             <br />
             <span>
@@ -81,15 +115,19 @@ const VarianProduct = ({
         {filterVarianProduct[0]?.warna != undefined && (
           <div className="flex flex-col gap-y-5 mt-10">
             <h5 className="font-bold text-xl">Warna:</h5>
-            <div
-              className={`grid grid-cols-[repeat(auto-fit,minmax(100px,max-content))] gap-x-2 `}>
+
+            <div className={`flex gap-x-4 `}>
               {filterVarianProduct[0]?.warna.map((data, index) => {
                 return (
-                  <span
+                  <button
                     key={index}
-                    className="border border-gray-500 px-2 rounded-md text-gray-700 text-xl text-center ">
+                    className={`border border-gray-400 py-1 px-3 rounded-xl ${
+                      index === indexActiveSelecWarnaProduct &&
+                      `text-green-500 border-green-500 duration-300`
+                    }`}
+                    onClick={() => handleClickSelectWarnaProduct(data, index)}>
                     {data}
-                  </span>
+                  </button>
                 )
               })}
             </div>
@@ -101,11 +139,15 @@ const VarianProduct = ({
             <div className="flex gap-x-2 ">
               {filterVarianProduct[0]?.size.map((data, index) => {
                 return (
-                  <span
+                  <button
                     key={index}
-                    className="border border-gray-500 px-2 rounded-md text-gray-700 text-xl ">
+                    className={`border border-gray-400 py-1 px-3 rounded-xl ${
+                      index === indexActiveSelectUkuranProduct &&
+                      `text-green-500 border-green-500 duration-300`
+                    }`}
+                    onClick={() => handleClickSelectUkuranProduct(data, index)}>
                     {data}
-                  </span>
+                  </button>
                 )
               })}
             </div>

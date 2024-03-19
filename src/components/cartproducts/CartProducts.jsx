@@ -20,7 +20,6 @@ import {
   addProductToWishList,
   removeProductFromWishList,
 } from "../../redux/wishlistSlice/wishListSlice"
-import { CiHeart } from "react-icons/ci"
 
 const CartProducts = ({
   id,
@@ -41,7 +40,7 @@ const CartProducts = ({
 
   const [isAnimation, setIsAnimation] = useState(false)
 
-  const { price, stock, quantity } = dataCartProduct
+  const { price, stock, quantity, warna, ukuran } = dataCartProduct
 
   useEffect(() => {
     if (cartBoolean.length !== 0) {
@@ -179,7 +178,11 @@ const CartProducts = ({
                 <h5>
                   {title.length > 20 ? `${title.slice(0, 20)}` : `${title}`}
                 </h5>
-                <span className="font-bold lg:text-lg">${price}</span>
+                <span className="font-bold lg:text-lg">{price}</span>
+              </div>
+              <div className="flex gap-x-3">
+                <span>Ukuran: {ukuran}</span>
+                <span>Warna: {warna}</span>
               </div>
             </div>
           </Link>
