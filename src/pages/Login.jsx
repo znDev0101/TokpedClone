@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import Button from "../components/button/Button"
 import { FaArrowLeftLong } from "react-icons/fa6"
 
-export const Login = () => {
+const Login = () => {
   const navigate = useNavigate()
 
   return (
@@ -50,3 +50,5 @@ export const Login = () => {
     </div>
   )
 }
+
+export default Login

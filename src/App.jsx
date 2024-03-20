@@ -3,12 +3,15 @@ import Home from "./pages/Home"
 import ProductDetails from "./pages/ProductDetails"
 import Root from "./routes/Root"
 import Products from "./pages/Products"
-import { Login } from "./pages/Login"
 import CartDetail from "./pages/CartDetail"
 import WishList from "./pages/WishList"
 import UlasanPembeli from "./pages/UlasanPembeli"
 import DetailProduct from "./components/detailproduct/DetailProduct"
 import SpesifikasiDetailProduct from "./components/spesifikasidetailproduct/SpesifikasiDetailProduct"
+import { lazy, Suspense } from "react"
+import Loading from "./components/loading/Loading"
+
+const Login = lazy(() => import("./pages/Login"))
 
 function App() {
   const router = createBrowserRouter([
@@ -22,7 +25,11 @@ function App() {
         },
         {
           path: "/login",
-          element: <Login />,
+          element: (
+            <Suspense fallback={<Loading />}>
+              <Login />
+            </Suspense>
+          ),
         },
         {
           path: "/cart_detail",
