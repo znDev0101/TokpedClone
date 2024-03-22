@@ -4,6 +4,7 @@ import Button from "../button/Button"
 import { MyContext } from "../../context/MyContext"
 import { BsQrCodeScan } from "react-icons/bs"
 import { FaXmark } from "react-icons/fa6"
+import { HiXMark } from "react-icons/hi2"
 
 const ModalSignIn = forwardRef(({}, insideElementRef) => {
   const { isShowModalSignIn, setIsShowModalSignIn } = useContext(MyContext)
@@ -24,8 +25,8 @@ const ModalSignIn = forwardRef(({}, insideElementRef) => {
           : `scale-150 -z-50 opacity-0`
       }`}
       ref={insideElementRef}>
-      <FaXmark
-        className="absolute top-5 right-7 hover:cursor-pointer hover:bg-gray-200 p-1 rounded-md duration-200 text-5xl"
+      <HiXMark
+        className="absolute top-4 right-4 hover:cursor-pointer text-gray-800 hover:bg-gray-200 rounded-md duration-200 text-4xl"
         onClick={() => setIsShowModalSignIn(false)}
       />
       <div className="flex items-end justify-between mt-28">

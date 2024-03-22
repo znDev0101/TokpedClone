@@ -10,6 +10,7 @@ import { useState } from "react"
 import { MyContext } from "../context/MyContext"
 import { ToastContainer } from "react-toastify"
 import NavbarOnDekstop from "../components/navbarondesktop/NavbarOnDekstop"
+import { SkeletonTheme } from "react-loading-skeleton"
 
 function Root() {
   const [isActiveSearchKeyword, setIsActiveSearchKeyword] = useState(false)
@@ -51,7 +52,7 @@ function Root() {
               : `-z-50`
           } `}></div>
 
-        <ToastContainer className={`mb-12`} />
+        <ToastContainer className={`mb-12 lg:mb-0`} />
         {/* navbar on mobile */}
         <Navbar
           isOpenMainMenu={isOpenMainMenu}

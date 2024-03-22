@@ -9,7 +9,6 @@ function CardProducts({ title, image, price, rating, urlPath, id }) {
   const { checkBoxWishListBoolean } = useSelector((state) => state.wishList)
   const [indexCheckBoxBoolean, setIndexCheckBoxBoolean] = useState([])
   const { aturWishList } = useContext(MyContext)
-  const [isTextOverflow, setIsTextOverflow] = useState(false)
   const titleRef = useRef(null)
   const dispatch = useDispatch()
 
@@ -19,20 +18,6 @@ function CardProducts({ title, image, price, rating, urlPath, id }) {
     )
     setIndexCheckBoxBoolean(findIndexCheckBoxBoolean)
   }, [checkBoxWishListBoolean])
-
-  useEffect(() => {
-    checkIsTextOverflow(titleRef)
-  }, [])
-
-  const checkIsTextOverflow = (targetElement) => {
-    if (
-      targetElement?.current.scrollWidth > targetElement?.current.clientWidth
-    ) {
-      setIsTextOverflow(true)
-    } else {
-      setIsTextOverflow(false)
-    }
-  }
 
   return (
     <>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useLocation, useOutletContext } from "react-router"
 import CardProducts from "../components/cardproducts/CardProducts"
 import { useFilterCategory } from "../hooks/useFilterCategory"
+import CardSkeleton from "../components/skeleton/CardSkeleton"
 
 function Products() {
   const [filterKeyword, setFilterKeyword] = useState("")
@@ -33,24 +34,27 @@ function Products() {
     filterKeyword,
     pathname
   )
-  if (isLoading)
-    return <h1 className="text-4xl my-20 text-center">Loading...</h1>
+
   return (
     <div className="w-full lg:max-w-6xl lg:mx-auto px-4 pt-20 pb-10 min-h-screen lg:pt-40 grid grid-cols-2 lg:grid-cols-6 gap-3">
-      {data.map(({ id, category, title, image, price, rating }) => {
-        return (
-          <CardProducts
-            key={id}
-            id={id}
-            category={category}
-            title={title}
-            image={image}
-            price={price}
-            rating={rating}
-            urlPath={"/product_detail"}
-          />
-        )
-      })}
+      {isLoading ? (
+        <CardSkeleton cards={screen.width > 1200 ? 6 : 4} />
+      ) : (
+        data.map(({ id, category, title, image, price, rating }) => {
+          return (
+            <CardProducts
+              key={id}
+              id={id}
+              category={category}
+              title={title}
+              image={image}
+              price={price}
+              rating={rating}
+              urlPath={"/product_detail"}
+            />
+          )
+        })
+      )}
     </div>
   )
 }

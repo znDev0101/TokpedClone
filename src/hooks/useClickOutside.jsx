@@ -6,7 +6,7 @@ export default function useClickOutside(
   cb
 ) {
   const handleClickOutside = (e) => {
-    if (!conditionElementRef.current.contains(e.target)) {
+    if (!conditionElementRef?.current.contains(e.target)) {
       if (
         insideElementRef.current &&
         !insideElementRef.current.contains(e.target)

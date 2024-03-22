@@ -50,7 +50,7 @@ const CardBuyProduct = ({
       })
     )
     toast.success("Berhasil menambahkan ke keranjang", {
-      position: "bottom-right",
+      position: "bottom-center",
       autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,

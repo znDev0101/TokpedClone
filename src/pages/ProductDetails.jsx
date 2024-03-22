@@ -117,7 +117,7 @@ const ProductDetails = () => {
     if (wishListHeartBoolean[indexHeartBoolean]?.boolean) {
       dispatch(removeProductFromWishList({ id }))
       toast.info("🗑️, Barang berhasil di hapus dari wishlist", {
-        position: "bottom-right",
+        position: `bottom-center`,
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -140,7 +140,7 @@ const ProductDetails = () => {
         })
       )
       toast.success("❤️, Barang berhasil menambahkan ke wishlist", {
-        position: "bottom-right",
+        position: "bottom-center",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,

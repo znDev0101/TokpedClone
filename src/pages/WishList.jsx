@@ -16,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css"
 import { LuLayoutGrid } from "react-icons/lu"
 
 import useClickOutside from "../hooks/useClickOutside"
+import { FaAngleDown } from "react-icons/fa6"
 
 const WishList = () => {
   const { wishListProduct, checkBoxWishListBoolean } = useSelector(
@@ -27,9 +28,12 @@ const WishList = () => {
   const [selectOptionUrutkan, setSelectOptionUrutkan] = useState(false)
   const { isShowModal, setIsShowModal, aturWishList, setAturWishList } =
     useContext(MyContext)
+  const [valueSelect, setValueSelect] = useState("")
+  const [isClickSelect, setIsClickSelect] = useState(false)
   const modalRef = useRef(null)
   const btnConfirmDeleteRef = useRef(null)
   const btnHapusRef = useRef(null)
+  const selectRef = useRef(null)
 
   const handleDelete = () => {
     dispatch(removeItemsFromWishList())
@@ -73,12 +77,25 @@ const WishList = () => {
     handleClickOutsideModal
   )
 
+  const handleChangeSelect = (e) => {
+    setValueSelect(e.target.value)
+  }
+
+  const handleClickOutsideSelect = (e) => {
+    if (selectRef.current && !selectRef?.current.contains(e.target)) {
+      setIsClickSelect(false)
+    }
+  }
+
   useEffect(() => {
     window.scrollTo(0, 0)
+
+    document.addEventListener("click", handleClickOutsideSelect)
 
     return () => {
       setAturWishList(false)
       dispatch(resetCheckBooleanFalse())
+      document.removeEventListener("click", handleClickOutsideSelect)
     }
   }, [])
 
@@ -177,22 +194,107 @@ const WishList = () => {
 
               {/*SELECT OPTION ONLY ON DESKTOP */}
               <span className="hidden lg:block font-bold">Urutkan</span>
-              <div className="relative">
+              <div
+                className={`hidden lg:flex relative w-52 h-10 border border-gray-400 items-center py-2  rounded-md   ${
+                  isClickSelect && `border focus-within:border-green-500`
+                }  duration-300`}
+                onClick={() => setIsClickSelect(!isClickSelect)}
+                ref={selectRef}>
                 <select
                   name="urutkan-product"
-                  className={`hidden lg:hidden appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline`}>
-                  <option value="Terbaru Disimpan">Terbaru Disimpan</option>
+                  className="w-full absolute top-1 left-0 right-0 bottom-1 px-4 appearance-none  bg-transparent hover:cursor-pointer focus:outline-none z-30"
+                  value={valueSelect}
+                  onChange={handleChangeSelect}>
+                  <option defaultValue="Terbaru Disimpan">
+                    Terbaru Disimpan
+                  </option>
                   <option value="Terlama Disimpan">Terlama Disimpan</option>
                   <option value="Harga Tertinggi">Harga Tertinggi</option>
                   <option value="Harga Terendah">Harga Terendah</option>
                 </select>
-                <div className="content-['\25BC'] absolute top-0 p-5 "></div>
+                <FaAngleDown
+                  className={`absolute top-3 right-4 duration-300 hover:cursor-pointer ${
+                    isClickSelect && `rotate-180`
+                  }`}
+                  onClick={() => setIsClickSelect(!isClickSelect)}
+                />
               </div>
               {/*END SELECT OPTION ONLY ON DESKTOP */}
             </div>
           </div>
           <div className="px-4 mt-7 lg:mt-5 pb-20 lg:pb-10  grid lg:max-w-6xl lg:mx-auto grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3 lg:grid-cols-[repeat(6,1fr)] ">
-            {wishListProduct.map(
+            {valueSelect === "Terlama Disimpan"
+              ? wishListProduct.map(
+                  ({ id, category, title, image, price, rating }) => {
+                    return (
+                      <CardProducts
+                        key={id}
+                        id={id}
+                        category={category}
+                        title={title}
+                        image={image}
+                        price={price}
+                        rating={rating}
+                        urlPath={"/product_detail"}
+                      />
+                    )
+                  }
+                )
+              : valueSelect === "Harga Tertinggi"
+              ? wishListProduct
+                  .slice()
+                  .sort((a, b) => b.price - a.price)
+                  .map(({ id, category, title, image, price, rating }) => {
+                    return (
+                      <CardProducts
+                        key={id}
+                        id={id}
+                        category={category}
+                        title={title}
+                        image={image}
+                        price={price}
+                        rating={rating}
+                        urlPath={"/product_detail"}
+                      />
+                    )
+                  })
+              : valueSelect === "Harga Terendah"
+              ? wishListProduct
+                  .slice()
+                  .sort((a, b) => a.price - b.price)
+                  .map(({ id, category, title, image, price, rating }) => {
+                    return (
+                      <CardProducts
+                        key={id}
+                        id={id}
+                        category={category}
+                        title={title}
+                        image={image}
+                        price={price}
+                        rating={rating}
+                        urlPath={"/product_detail"}
+                      />
+                    )
+                  })
+              : wishListProduct
+                  .slice()
+                  .reverse()
+                  .map(({ id, category, title, image, price, rating }) => {
+                    return (
+                      <CardProducts
+                        key={id}
+                        id={id}
+                        category={category}
+                        title={title}
+                        image={image}
+                        price={price}
+                        rating={rating}
+                        urlPath={"/product_detail"}
+                      />
+                    )
+                  })}
+
+            {/* {wishListProduct.map(
               ({ id, category, title, image, price, rating }) => {
                 return (
                   <CardProducts
@@ -207,7 +309,7 @@ const WishList = () => {
                   />
                 )
               }
-            )}
+            )} */}
           </div>
           <Modal
             handleDelete={handleDelete}

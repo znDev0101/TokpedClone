@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { MdLocationPin } from "react-icons/md"
 
 import CardProducts from "../cardproducts/CardProducts"
@@ -8,6 +8,7 @@ import ScrollToTop from "../scrolltotop/ScrollToTop"
 import { useLocation, useNavigate } from "react-router"
 import { useGetAllProductsQuery } from "../../redux/services/ecommerceApi"
 import { FaCaretDown } from "react-icons/fa"
+import CardSkeleton from "../skeleton/CardSkeleton"
 
 function HomeProducts() {
   const { data, error, isLoading } = useGetAllProductsQuery()
@@ -48,24 +49,22 @@ function HomeProducts() {
       </div>
       {/* <SliderImages /> */}
       {/* Layout Products */}
+      <div
+        className={
+          "w-full min-h-screen mx-auto bg-white mt-8 lg:mt-0 lg:pt-40 pb-20 lg:pb-10 px-4 lg:px-16"
+        }>
+        <Category />
 
-      {isLoading ? (
-        <h1 className="w-full min-h-screen  lg:flex lg:items-center lg:justify-center text-center my-52 lg:my-0  bg-white z-50 text-5xl lg:text-6xl">
-          Loading...
-        </h1>
-      ) : (
         <div
-          className={
-            "w-full min-h-screen mx-auto bg-white mt-8 lg:mt-0 lg:pt-40 pb-20 lg:pb-10 px-4 lg:px-16"
-          }>
-          <Category />
-          <div
-            className={`grid ${
-              pathname !== "/"
-                ? `grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3`
-                : `grid-cols-[repeat(auto-fit,minmax(150px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] mt-6 lg:mt-8 gap-3`
-            } `}>
-            {data?.map(({ id, title, image, price, rating }) => {
+          className={`grid ${
+            pathname !== "/"
+              ? `grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3`
+              : `grid-cols-[repeat(auto-fit,minmax(150px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] mt-6 lg:mt-8 gap-3`
+          } `}>
+          {isLoading ? (
+            <CardSkeleton cards={20} />
+          ) : (
+            data?.map(({ id, title, image, price, rating }) => {
               return (
                 <CardProducts
                   key={id}
@@ -77,21 +76,20 @@ function HomeProducts() {
                   urlPath={"product_detail"}
                 />
               )
-            })}
-          </div>
-
-          <ScrollToTop
-            styleIfTrue={
-              "fixed w-12 justify-center items-center flex h-12 bottom-20 lg:bottom-7 right-6 text-xl rounded-full shadow-lg bg-white z-50 duration-300 translate-y-0 hover:cursor-pointer "
-            }
-            styleIffalse={
-              "fixed w-12 justify-center items-center flex h-12 bottom-0 right-6 rounded-full shadow-lg bg-white duration-300 translate-y-full"
-            }
-            onClick={() => window.scrollTo(0, 0)}
-            numberScrollYWindow={400}
-          />
+            })
+          )}
         </div>
-      )}
+        <ScrollToTop
+          styleIfTrue={
+            "fixed w-12 justify-center items-center flex h-12 bottom-20 lg:bottom-7 right-6 text-xl rounded-full shadow-lg bg-white z-50 duration-300 translate-y-0 hover:cursor-pointer "
+          }
+          styleIffalse={
+            "fixed w-12 justify-center items-center flex h-12 bottom-0 right-6 rounded-full shadow-lg bg-white duration-300 translate-y-full"
+          }
+          onClick={() => window.scrollTo(0, 0)}
+          numberScrollYWindow={400}
+        />
+      </div>
     </>
   )
 }
