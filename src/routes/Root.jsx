@@ -10,7 +10,6 @@ import { useState } from "react"
 import { MyContext } from "../context/MyContext"
 import { ToastContainer } from "react-toastify"
 import NavbarOnDekstop from "../components/navbarondesktop/NavbarOnDekstop"
-import { SkeletonTheme } from "react-loading-skeleton"
 
 function Root() {
   const [isActiveSearchKeyword, setIsActiveSearchKeyword] = useState(false)

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import CardSkeleton from "../skeleton/CardSkeleton"
 import { MdLocationPin } from "react-icons/md"
 
 import CardProducts from "../cardproducts/CardProducts"
@@ -8,7 +9,6 @@ import ScrollToTop from "../scrolltotop/ScrollToTop"
 import { useLocation, useNavigate } from "react-router"
 import { useGetAllProductsQuery } from "../../redux/services/ecommerceApi"
 import { FaCaretDown } from "react-icons/fa"
-import CardSkeleton from "../skeleton/CardSkeleton"
 
 function HomeProducts() {
   const { data, error, isLoading } = useGetAllProductsQuery()
@@ -64,16 +64,15 @@ function HomeProducts() {
           {isLoading ? (
             <CardSkeleton cards={20} />
           ) : (
-            data?.map(({ id, title, image, price, rating }) => {
+            data?.map(({ id, image, title, price, rating }) => {
               return (
                 <CardProducts
                   key={id}
-                  id={id}
-                  title={title}
                   image={image}
+                  title={title}
                   price={price}
                   rating={rating}
-                  urlPath={"product_detail"}
+                  urlPath={`product_detail`}
                 />
               )
             })

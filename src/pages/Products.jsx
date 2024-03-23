@@ -35,10 +35,20 @@ function Products() {
     pathname
   )
 
+  console.log(filterKeyword)
+
   return (
     <div className="w-full lg:max-w-6xl lg:mx-auto px-4 pt-20 pb-10 min-h-screen lg:pt-40 grid grid-cols-2 lg:grid-cols-6 gap-3">
       {isLoading ? (
-        <CardSkeleton cards={screen.width > 1200 ? 6 : 4} />
+        <CardSkeleton
+          cards={
+            filterKeyword === "men's clothing" || filterKeyword === "jewelery"
+              ? 4
+              : (filterKeyword === "electronics" ||
+                  filterKeyword === "women's clothing") &&
+                6
+          }
+        />
       ) : (
         data.map(({ id, category, title, image, price, rating }) => {
           return (

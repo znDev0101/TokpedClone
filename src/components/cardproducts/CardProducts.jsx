@@ -5,7 +5,7 @@ import { setCheckBoxBooleanWishList } from "../../redux/wishlistSlice/wishListSl
 import { MyContext } from "../../context/MyContext"
 import { FaStar } from "react-icons/fa6"
 
-function CardProducts({ title, image, price, rating, urlPath, id }) {
+function CardProducts({ id, image, title, price, rating, urlPath }) {
   const { checkBoxWishListBoolean } = useSelector((state) => state.wishList)
   const [indexCheckBoxBoolean, setIndexCheckBoxBoolean] = useState([])
   const { aturWishList } = useContext(MyContext)
