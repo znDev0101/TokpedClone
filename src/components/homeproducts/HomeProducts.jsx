@@ -68,6 +68,7 @@ function HomeProducts() {
               return (
                 <CardProducts
                   key={id}
+                  id={id}
                   image={image}
                   title={title}
                   price={price}

@@ -165,8 +165,6 @@ const ProductDetails = () => {
     }
   }, [filterVarianProduct])
 
-  console.log(filterVarianProduct[0]?.warna)
-
   return (
     <div className="w-full pt-16  lg:pt-10 bg-white ">
       <BreadCrumbs title={title} category={category} />

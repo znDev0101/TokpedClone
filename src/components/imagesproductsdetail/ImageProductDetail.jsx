@@ -1,12 +1,11 @@
 import React from "react"
+import { ImageProductDetailSkeleton } from "../imgproductdetailskeleton/ImageProductDetailSkeleton"
 
 const ImageProductDetail = ({ image, loading }) => {
   return (
     <div className="w-full h-96 lg:w-72 lg:h-96 lg:sticky lg:top-36  lg:mt-7 lg:self-start">
       {loading ? (
-        <p className="h-full text-4xl font-bold flex justify-center items-center">
-          Image Loading...
-        </p>
+        <ImageProductDetailSkeleton />
       ) : (
         <img
           src={image}
